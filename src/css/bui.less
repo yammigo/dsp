@@ -1,0 +1,423 @@
+.campaign-card {
+    width: 252px;
+    height: 120px;
+    float: left;
+    display: flex;
+    margin-right: 16px;
+    margin-top: 16px;
+    background: #FFFFFF;
+    border: 1px solid #EDF1F5;
+    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    transition: .2s linear
+}
+
+.campaign-card.active {
+    box-shadow: 0 5px 8px 0 rgba(81, 84, 99, 0.21);
+    transform: translateY(-3px);
+    border-bottom: 4px solid #2F88FF
+}
+
+.campaign-card:hover {
+    box-shadow: 0 5px 8px 0 rgba(81, 84, 99, 0.21);
+    transform: translateY(-3px);
+    border-bottom: 4px solid #2F88FF;
+    transition: .2s linear
+}
+
+.campaign-card-img {
+    text-align: center
+}
+
+.campaign-card-img img {
+    vertical-align: baseline
+}
+
+.campaign-card-title {
+    font-size: 14px;
+    color: #333333;
+    text-align: left;
+    margin-bottom: 6px;
+    font-weight: 500
+}
+
+.campaign-card-tip {
+    font-size: 12px;
+    color: #999999;
+    font-weight: 300;
+    margin: 20px 0px 20px 24px;
+    width: 128px
+}
+
+.campaign-card-active {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #2F88FF
+}
+
+.campaign-card-info {
+    word-break: break-all
+}
+
+html:lang(en) .campaign-card {
+    height: 145px
+}
+
+html:lang(ja) .campaign-card {
+    height: 165px
+}
+
+.ad-group-card {
+    width: 346px;
+    height: 98px
+}
+
+.ad-group-card-title {
+    font-size: 14px;
+    color: #333333;
+    text-align: left;
+    margin-bottom: 6px;
+    font-weight: 500
+}
+
+.ad-group-card-tip {
+    width: 202px;
+    margin: 16px 0px
+}
+
+.ad-group-card-img {
+    width: 120px;
+    margin-bottom: 0px;
+    line-height: 140px;
+    margin-top: 0
+}
+
+.campaign {
+    max-width: 1420px
+}
+
+.campaign .active a {
+    color: #333
+}
+
+.campaign a {
+    color: #999
+}
+
+.campaign .bui-icon-search {
+    vertical-align: middle
+}
+
+.campaign .help-frame-link {
+    font-size: 14px;
+    margin-left: 10px
+}
+
+.campaign ul,
+.campaign li {
+    list-style: none;
+    padding: 0;
+    margin: 0
+}
+
+.campaign .group-row-title {
+    margin-top: 40px
+}
+
+.campaign .campaign-row-title {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 16px
+}
+
+.campaign .campaign-row-title-tip {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #999;
+    vertical-align: middle;
+    margin-left: 12px
+}
+
+.campaign-tabs {
+    margin-bottom: 32px
+}
+
+.campaign-create-list {
+    margin-bottom: 48px
+}
+
+.campaign-create-valid {
+    color: #F45858;
+    font-size: 12px
+}
+
+.campaign-create .row-item .budget-type {
+    width: 500px
+}
+
+.campaign-create .row-item .budget-type .byted-select {
+    width: 90px
+}
+
+.campaign-have {
+    width: 520px;
+    // min-height: 500px;
+    // height: calc(100vh - 240px)
+}
+
+.campaign-have-search {
+    width: 520px;
+    margin-bottom: 16px
+}
+
+.campaign-have-search .input-group-btn {
+    font-size: 12px;
+    color: #333
+}
+
+.campaign-have-search .input-group-btn button {
+    background-color: #F8F8F8
+}
+
+.campaign-have-search .input-group-btn img {
+    margin-right: 5px
+}
+
+.campaign-have-header {
+    height: 38px;
+    width: 100%;
+    padding-left: 13px;
+    line-height: 38px;
+    background: #f8f9fa;
+    border-radius: 4px 4px 0px 0px;
+    border-bottom: 1px solid #DADFE3
+}
+
+.campaign-have-list {
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #333;
+    border: 1px solid #DADFE3;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    height: 388px
+}
+
+.campaign-have-list-empty {
+    height: 100%;
+    font-size: 14px;
+    color: #999999;
+    margin: 0 auto
+}
+
+.campaign-have-list-empty img {
+    margin-bottom: 8px
+}
+
+.campaign-have-list ul {
+    width: 100%;
+    height: 350px;
+    padding-top: 6px
+}
+
+.campaign-have-list li {
+    height: 34px;
+    line-height: 34px;
+    padding: 0 12px;
+    cursor: pointer
+}
+
+.campaign-have-list li span {
+    white-space: nowrap
+}
+
+.campaign-have-list li span:nth-child(1) {
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+
+.campaign-have-list li:hover {
+    background: #EDF1F5
+}
+
+.campaign-have-list .landing-type {
+    color: #999;
+    font-size: 12px
+}
+
+.campaign-have-list .quick-selection {
+    font-size: 12px;
+    margin-left: 8px;
+    background: #E4E9ED;
+    height: 22px;
+    line-height: 22px;
+    border-radius: 4px;
+    width: 64px;
+    text-align: center
+}
+
+.campaign-have-list .max-name {
+    max-width: 280px
+}
+
+.daily-budget-input {
+    width: 120px;
+    display: inline-block;
+    margin-right: 16px
+}
+
+.budget-distribute-span {
+    font-size: 14px;
+    line-height: 22px
+}
+
+.budget-distribute-span .collapse-content img {
+    display: block;
+    width: 554px;
+    height: 315px
+}
+
+.budget-distribute-span .collapse-header {
+    margin-bottom: 0px
+}
+
+.budget-distribute-span .collapse-header .byted-icon {
+    margin-left: 4px;
+    margin-top: 4px;
+    vertical-align: top;
+    transition-duration: 0.5s
+}
+
+.budget-distribute-span .collapse-header .deg-180 {
+    transform: rotate(180deg);
+    transition-duration: 0.5s
+}
+
+.byted-tabs .nav-tabs>li.active>a:after {
+    background-color: #2F88FF
+}
+
+.row-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 32px
+}
+.moduler {
+    background: #fff;
+    margin-bottom: 16px;
+    position: relative;
+    min-width: 1130px;
+    padding: 32px 24px 48px 32px;
+    border-radius: 4px;
+    box-shadow: 0px 1px 6px 0px rgba(0,0,0,0.05);
+}
+.moduler-title {
+    display: flex;
+    align-items: center;
+}
+
+.ad-row-title {
+    font-size: 22px;
+    margin-bottom: 32px;
+}
+.row-item .hint-item {
+    width: 24px;
+    min-width: 24px;
+    align-self: flex-start;
+    line-height: 20px;
+    height: 20px;
+    margin-top: 5px
+}
+
+.row-item .hint-item .link-dimension-help {
+    margin-left: -8px;
+    font-size: 12px
+}
+
+.row-item .label-item {
+    position: relative;
+    align-items: flex-start;
+    align-self: flex-start;
+    line-height: 20px;
+    height: 20px;
+    margin-top: 7px
+}
+
+.row-item .label-item.label-size-normal {
+    width: 80px;
+    min-width: 80px
+}
+
+.row-item .label-item.label-size-middle {
+    width: 94px;
+    min-width: 94px
+}
+
+.row-item .label-item.label-size-large {
+    width: 106px;
+    min-width: 106px
+}
+
+.row-item .label-item .text-item {
+    font-size: 14px;
+    width: 80px
+}
+
+.row-item .label-item .des-item {
+    position: absolute;
+    font-size: 12px;
+    color: #999
+}
+
+.row-item .required-item {
+    width: 4px;
+    height: 4px;
+    border-radius: 2px;
+    background: #F45858;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%)
+}
+
+.row-item .input-item {
+    min-width: 480px;
+    position: relative
+}
+
+.row-item .input-item.error .valid-item {
+    color: #F45858
+}
+
+.row-item .input-item.error .byted-select input,
+.row-item .input-item.error .byted-input input {
+    border-color: #F45858;
+    box-shadow: none
+}
+
+.row-item .valid-item {
+    font-size: 12px;
+    top: 4px;
+    position: relative
+}
+
+.row-item:last-of-type {
+    margin-bottom: 0
+}
+
+html:lang(en) .row-item .label-item.label-size-normal {
+    width: 100px;
+    min-width: 100px
+}
+
+html:lang(en) .row-item .label-item .text-item {
+    font-size: 14px;
+    width: 80px
+}
