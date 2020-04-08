@@ -424,7 +424,13 @@ export default {
                     // isSelectedAll: false,
                     products: [],
                 },
-              
+                {
+                    index: 4,
+                    brand: '鲜菜篮子',
+                    title: '天津',
+                    // isSelectedAll: false,
+                    products: [],
+                },
             ],
 
   
