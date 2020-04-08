@@ -288,7 +288,7 @@
                                             <Checkbox :indeterminate="valueProvince.length>0&&valueProvince.length<dataCity.length" :checked="valueProvince.length == dataCity.length">全选</Checkbox>
                                         </div>
                                         <div v-for="(item,index) in dataCity" :key="index" class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check" @click="tabItem(index)">
-                                            <Checkbox v-model="valueProvince"  :value="item">
+                                            <Checkbox  v-model="valueProvince" :value="item">
                                                 {{item.provinceName}}
                                             </Checkbox>
                                             <span class="byted-select-panel-item-toright">
@@ -408,6 +408,7 @@ export default {
                 }
 
             ],
+            currentIndex:-1,
             currentSelet: {},
             valueProvince: [],
             valueCity: [],
@@ -417,22 +418,39 @@ export default {
     },
     methods: {
         tabItem(index) {
-           var self=this;
-            this.currentSelet = JSON.parse(JSON.stringify(self.dataCity[index]));
-             console.log(JSON.stringify(this.currentSelet),this.valueProvince)
-            //检测是否被选中
-            this.valueProvince.forEach(item => {
-                console.log(this.currentSelet.provinceName,item.provinceName)
-               
-                if(this.currentSelet.provinceName==item.provinceName){
-                    console.log(item.cityList)
-                    this.valueCity=item.cityList;
+            var currentSelet = this.dataCity[index];
+            var valueProvince = this.valueProvince;
+            this.currentSelet = currentSelet;
+           
+            if (valueProvince.length == 0) {
+                this.valueCity = [];
+                return
+            }
+            // //检测是否被选中
+            for (let i = 0, len = valueProvince.length; i < len; i++) {
+
+                if (JSON.stringify(valueProvince[i]) == JSON.stringify(currentSelet)) {
+                    this.valueCity = currentSelet.cityList;
+                    this.currentIndex=i;
+                    return
+
+                } else {
+
+                    this.valueCity = []
+                }
+            }
+
+        },
+        change(val){
+            this.valueProvince.forEach((item,index) => {
+                if(JSON.stringify(item)==JSON.stringify(val)){
+                    this.valueProvince.splice(index,1)
                 }else{
-                    console.log(this.valueProvince,"ERROR"+this.currentSelete)
-                     this.valueCity=[];
+                    this.valueProvince.push(item);
                 }
             });
-
+            //  Object.keys(this.valueProvince).forEach()
+            // this.valueProvince.push(val);
         },
         checkAll(e) {
             console.log(e);
@@ -468,9 +486,13 @@ export default {
         // }
     },
     watch: {
-        "valueProvince": {
+        "valueCity": {
             handler: function (val, old) {
-
+                if(val.length==0){
+                    this.valueProvince.splice(this.currentIndex,1);
+                }else{
+                    this.valueProvince.splice(this.currentIndex,1,this.currentSelet);
+                }
                 // if(old.length<val.length){
                 //     console.log(old.length,"当前选中");
                 // }else{
