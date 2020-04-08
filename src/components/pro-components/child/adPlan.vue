@@ -271,7 +271,7 @@
 
                 </div>
                 <div class="label-item label-size-normal">
-                    <div class="text-item"></div>
+                    <div class="text-item">展示数据</div>
                     <!-- <div class="required-item"></div> -->
                 </div>
                 <div class="input-item">
@@ -285,12 +285,11 @@
                                     </div>
                                     <div class="f-select-panel-moduler-container" v-click>
                                         <div class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check">
-                                            <Checkbox :indeterminate="valueProvince.length>0&&valueProvince.length<dataCity.length" :checked="valueProvince.length == dataCity.length">全选</Checkbox>
+                                            <input type="checkbox" name="" @click="selectAll(shops)" v-model="isSelectedAll"><span>全选</span>
                                         </div>
-                                        <div v-for="(item,index) in dataCity" :key="index" class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check" @click="tabItem(index)">
-                                            <Checkbox v-model="valueProvince"  :value="item">
-                                                {{item.provinceName}}
-                                            </Checkbox>
+                                        <div v-for="(shop,index) in shops" v-if="shop.products.length != 0" :key="index" class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check">
+                                            <input type="checkbox" name="" @click="selectAll(shop)" v-model="isShopSelectedAll[shops.indexOf(shop)]">
+                                            <span>{{ shop.title }}</span>
                                             <span class="byted-select-panel-item-toright">
                                                 <div class="byted-icon bui-icon-angle-right"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
                                                         <defs>
@@ -312,17 +311,16 @@
                             <div class="fui-select-panel-left-moduler" style="width: 50%; min-width: 200px;border-top-right-radius: 0;border-bottom-right-radius: 0;">
                                 <div class="f-select-panel-moduler">
                                     <div class="f-select-panel-moduler-header"><span class="f-select-panel-moduler-header-title">城市</span>
-                                        <!---->
+
                                     </div>
+
                                     <div class="f-select-panel-moduler-container">
-                                        <!-- 两种状态切换 未选中 和已选中-->
-                                        <!-- <div v-for="(items,indexs) in dataCity" :key="indexs"> -->
-                                        <div v-for="(item,index) in currentSelet.cityList" :key="index" class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check f-select-panel-item-selected">
-                                            <Checkbox v-model="valueCity" :value="item" style="cursor:porint">
-                                                {{item.cityName}}
-                                            </Checkbox>
+                                        <!-- 两种状态切换 未选中 和已选中 checkBox-->
+                                        <div v-for="(shop,index) in shops" v-if="shop.products.length != 0" :key="index">
+                                            <div v-for="product in shop.products"  class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check">
+                                                <input type="checkbox" name="" value="" v-model="product.isSelected">
+                                            </div>
                                         </div>
-                                        <!-- </div> -->
 
                                     </div>
                                 </div>
@@ -368,6 +366,10 @@
 </template>
 
 <script>
+import {
+    findIndex,
+    findKey
+} from "../../../util/utils"
 export default {
     props: ["id", "name"],
     directives: {
@@ -382,109 +384,114 @@ export default {
     },
     data() {
         return {
-            dataCity: [{
-                    provinceName: '北京',
-                    cityList: []
-                }, {
-                    provinceName: '天津',
-                    cityList: []
-                }, {
-                    provinceName: '河北',
-                    cityList: [{
-                        cityName: '沈阳',
-
-                    }, {
-                        cityName: '唐山'
-                    }]
+            shops: [{
+                    index: 1,
+                  
+                    title: '河北',
+                    // 购物车中每个店铺的商品列表
+                    products: [{
+                            id: 2,
+                            num: 1,
+                            isSelected: true,
+                        },
+                        {
+                            id: 5,
+                            num: 2,
+                            isSelected: true,
+                        },
+                    ],
                 },
                 {
-                    provinceName: '山西',
-                    cityList: [{
-                        cityName: '太原',
-
-                    }, {
-                        cityName: '大同'
-                    }]
-                }
-
+                    index: 2,
+                  
+                    title: '山西',
+                    products: [{
+                            id: 12,
+                            num: 1,
+                            isSelected: false,
+                        },
+                        {
+                            id: 15,
+                            num: 2,
+                            isSelected: false,
+                        },
+                    ],
+                },
+                {
+                    index: 3,
+                   
+                    title: '天津',
+                    // isSelectedAll: false,
+                    products: [],
+                },
+              
             ],
-            currentSelet: {},
-            valueProvince: [],
-            valueCity: [],
+
+  
             value1: '选择1',
             param1: ['选择1', '选择2'],
         };
     },
     methods: {
-        tabItem(index) {
-           var self=this;
-            this.currentSelet = JSON.parse(JSON.stringify(self.dataCity[index]));
-             console.log(JSON.stringify(this.currentSelet),this.valueProvince)
-            //检测是否被选中
-            this.valueProvince.forEach(item => {
-                console.log(this.currentSelet.provinceName,item.provinceName)
-               
-                if(this.currentSelet.provinceName==item.provinceName){
-                    console.log(item.cityList)
-                    this.valueCity=item.cityList;
-                }else{
-                    console.log(this.valueProvince,"ERROR"+this.currentSelete)
-                     this.valueCity=[];
+        //单个省被全选
+        selectAll: function (all) {
+            // 参数all可传入shops数组或者shops数组内的一个对象
+            // all传入shops数组表示所有城市都被选中
+            // all传入一个对象表示某个省城市全选
+            if (all instanceof Array) {
+                var bool = !this.isSelectedAll;
+                // var bool = false;
+                for (var i = 0; i < all.length; i++) {
+                    var products = all[i].products;
+                    for (var j = 0; j < products.length; j++) {
+                        products[j].isSelected = bool;
+                    }
                 }
-            });
-
-        },
-        checkAll(e) {
-            console.log(e);
-            // let arr = this.valueProvince.concat(this.dataCity);
-            // if (!Array.isArray(arr)) {
-            //     console.log('type error!')
-            //     return
-            // }
-            // let res = []
-            // for (let i = 0; i < arr.length; i++) {
-            //     if (res.indexOf(arr[i]) === -1) {
-            //         arr[i].checked=true;
-            //         res.push(arr[i]);
-            //     }else{
-            //         arr[i].checked=true;
-            //     }
-            // }
-            // return res
-
+            } else {
+                var index = this.shops.indexOf(all);
+                var bool = !this.isShopSelectedAll[index];
+                for (var i = 0; i < all.products.length; i++) {
+                    all.products[i].isSelected = bool;
+                }
+            }
         }
     },
+
     created() {
 
     },
     computed: {
-        // checkCity() {
-
-        //     if (!Array.isArray(arr)) {
-        //         console.log('type error!')
-        //         return
-        //     }
-        //     return Array.from(new Set(arr))
-        // }
+        //所有城市是否选择
+        isSelectedAll: {
+            get() {
+                for (var i = 0; i < this.shops.length; i++) {
+                    if (!this.isShopSelectedAll[i]) {
+                        return false;
+                    }
+                }
+                return true;
+            },
+            // 这里要加一个空的setter，因为用v-model绑定时会报错
+            set() {},
+        },
+        //省里面的城市是否全选
+        isShopSelectedAll: function () {
+            var tempArr = [];
+            for (var i = 0; i < this.shops.length; i++) {
+                tempArr[i] = true;
+                var products = this.shops[i].products;
+                for (var j = 0; j < products.length; j++) {
+                    if (!products[j].isSelected) {
+                        tempArr[i] = false;
+                        break;
+                    }
+                }
+            }
+            return tempArr;
+        },
     },
     watch: {
-        "valueProvince": {
-            handler: function (val, old) {
 
-                // if(old.length<val.length){
-                //     console.log(old.length,"当前选中");
-                // }else{
-                //     console.log(old.length-1,"当前取消")
-                // }
-                //  console.log(old.length);
-                // if (val[old.length+1].cityList.length > 0) {
-                //     this.currentSelet = val[old.length+1].cityList;
-                // } else {
-                //     this.currentSelet = [];
-                // }
-
-            }
-        }
     },
 }
 </script>
