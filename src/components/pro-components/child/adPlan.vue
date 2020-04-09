@@ -283,13 +283,13 @@
                                     <div class="f-select-panel-moduler-header"><span class="f-select-panel-moduler-header-title">省份</span>
 
                                     </div>
-                                    <div class="f-select-panel-moduler-container" v-click>
+                                    <div class="f-select-panel-moduler-container">
                                         <div class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check">
-
+                                            <Checkbox @click.native="selectAll(dataCity)" :checked="isSelectedAll" :indeterminate="isIndeterminate">全选{{'半选'+isIndeterminate+'全选'+isSelectedAll}}</Checkbox>
                                         </div>
                                         <div v-for="(item,index) in dataCity" :key="index" class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check">
-                                            <Checkbox :checked="itemSelectAll(index)==1" :indeterminate="itemSelectAll(index)==-1">{{item.provinceName}}</Checkbox>
-                                            <span class="byted-select-panel-item-toright">
+                                            <Checkbox @click.native="selectAll(item)" :checked="isCityListSelect[dataCity.indexOf(item)]">{{item.provinceName}}{{isIndeterminateItem}}</Checkbox>
+                                            <span class="byted-select-panel-item-toright" v-if="item.cityList.length!==1">
                                                 <div class="byted-icon bui-icon-angle-right"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
                                                         <defs>
                                                             <path id="angle-right_svg__a" d="M0 0h48v48H0z"></path>
@@ -310,13 +310,17 @@
                             <div class="fui-select-panel-left-moduler" style="width: 50%; min-width: 200px;border-top-right-radius: 0;border-bottom-right-radius: 0;">
                                 <div class="f-select-panel-moduler">
                                     <div class="f-select-panel-moduler-header"><span class="f-select-panel-moduler-header-title">城市</span>
-                                        <!---->
+
                                     </div>
                                     <div class="f-select-panel-moduler-container">
+                                        <div class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check f-select-panel-item-selected">
+                                            <Checkbox :checked="true">全选</Checkbox>
+                                        </div>
+
                                         <!-- 两种状态切换 未选中 和已选中-->
                                         <!-- <div v-for="(items,indexs) in dataCity" :key="indexs"> -->
-                                        <div class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check f-select-panel-item-selected">
-
+                                        <div v-for="(item,index) in currentList.cityList" :key="index" class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check f-select-panel-item-selected">
+                                            <Checkbox :checked="item.checked" @click.native="item.checked=!item.checked">{{item.cityName}}</Checkbox>
                                         </div>
                                         <!-- </div> -->
 
@@ -371,10 +375,16 @@ export default {
         return {
             dataCity: [{
                     provinceName: '北京',
-                    cityList: []
+                    cityList: [{
+                        cityName: '北京',
+                        checked: true,
+                    }]
                 }, {
                     provinceName: '天津',
-                    cityList: []
+                    cityList: [{
+                        cityName: '天津',
+                        checked: true,
+                    }]
                 }, {
                     provinceName: '河北',
                     cityList: [{
@@ -393,43 +403,124 @@ export default {
                         checked: true
 
                     }, {
-                        cityName: '大同'
+                        cityName: '大同',
+                        checked: false
                     }]
                 }
             ],
+            //当前需要展现的列表
+            currentList: {},
+
             value1: '选择1',
             param1: ['选择1', '选择2'],
         }
     },
     methods: {
-        itemSelectAll(index) {
+        selectAll: function (all) {
+            //展示当前选中的列表
 
-            let checkedList = [],
-                clityList = this.dataCity[index].cityList;
-            for (let i, len = clityList.length; i < len; i++) {
-                if (cityList[i].checked) {
-                    checkedList.push(cityList[i]);
-
+            if (all instanceof Array) {
+                var bool = !this.isSelectedAll;
+                for (var i = 0; i < all.length; i++) {
+                    var cityList = all[i].cityList;
+                    for (var j = 0; j < cityList.length; j++) {
+                        cityList[j].checked = bool;
+                    }
                 }
+            } else {
+                this.currentList = all;
+                var index = this.dataCity.indexOf(all);
+                var bool = !this.isCityListSelect[index];
+                for (var i = 0; i < all.cityList.length; i++) {
+                    all.cityList[i].checked = bool;
+                }
+            }
+        },
 
-            }
-            if (checkedList.length == clityList.length) {
-                return 1
-            }
-            if (checkedList.length > 0 && checkedList.length < clityList.length) {
-                return 0
-            }
-            if (checkedList.length == 0) {
-                return -1
-            }
-        }
     },
 
     created() {
 
     },
     computed: {
-      
+        //所有省份是否被选中
+        isSelectedAll: {
+            get() {
+
+                for (var i = 0; i < this.dataCity.length; i++) {
+                    if (!this.isCityListSelect[i]) {
+
+                        return false;
+                    }
+                }
+                return true;
+            },
+            // 这里要加一个空的setter，因为用v-model绑定时会报错
+            set() {},
+        },
+        //一级选项是否半选
+        isIndeterminate: {
+            get() {
+                var flag=false
+                //所有城市是否都被选中
+                for(var i=0,len=this.dataCity.length;i<len;i++){
+                     for(var j=0,jlen=this.dataCity[i].cityList.length;j<jlen;j++){
+                         if(this.dataCity[i].cityList[j].checked&&i>=0&&i<len){
+                              return true
+                         }
+                     }
+                }
+               
+            },
+
+            set() {},
+        },
+
+        //二级选项是否半选
+        isIndeterminateItem: {
+            get() {
+                //取出所有的不去定元素
+                var tempArr = [],flagList=[];
+                for (var i = 0; i < this.dataCity.length; i++) {
+                    tempArr[i] = false;
+                    var cityList = this.dataCity[i].cityList;
+                    for (var j = 0; j < cityList.length; j++) {
+                        
+                        if (cityList[j].checked&&i==cityList.length) {   
+                             
+                            tempArr[i] = false;
+                            // break;
+                        }else{
+                            tempArr[i] = true;
+                        }
+                    }
+                }
+                console.log(tempArr)
+                // return tempArr;
+                return true
+              
+            },
+            set() {
+
+            }
+        },
+        //每个省份下的所有城市是否被选中
+        isCityListSelect() {
+            var tempArr = [];
+            for (var i = 0; i < this.dataCity.length; i++) {
+                tempArr[i] = true;
+
+                var cityList = this.dataCity[i].cityList;
+                for (var j = 0; j < cityList.length; j++) {
+                    if (!cityList[j].checked) {
+                        tempArr[i] = false;
+                        break;
+                    }
+                }
+            }
+            return tempArr;
+        }
+
     },
     watch: {
 
