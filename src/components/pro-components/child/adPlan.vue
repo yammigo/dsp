@@ -271,7 +271,7 @@
 
                 </div>
                 <div class="label-item label-size-normal">
-                    <div class="text-item">展示数据</div>
+                    <div class="text-item"></div>
                     <!-- <div class="required-item"></div> -->
                 </div>
                 <div class="input-item">
@@ -285,11 +285,10 @@
                                     </div>
                                     <div class="f-select-panel-moduler-container" v-click>
                                         <div class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check">
-                                            <input type="checkbox" name="" @click="selectAll(shops)" v-model="isSelectedAll"><span>全选</span>
+
                                         </div>
-                                        <div v-for="(shop,index) in shops" v-if="shop.products.length != 0" :key="index" class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check">
-                                            <input type="checkbox" name="" @click="selectAll(shop)" v-model="isShopSelectedAll[shops.indexOf(shop)]">
-                                            <span>{{ shop.title }}</span>
+                                        <div v-for="(item,index) in dataCity" :key="index" class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check">
+                                            <Checkbox :checked="itemSelectAll(index)==1" :indeterminate="itemSelectAll(index)==-1">{{item.provinceName}}</Checkbox>
                                             <span class="byted-select-panel-item-toright">
                                                 <div class="byted-icon bui-icon-angle-right"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
                                                         <defs>
@@ -311,16 +310,15 @@
                             <div class="fui-select-panel-left-moduler" style="width: 50%; min-width: 200px;border-top-right-radius: 0;border-bottom-right-radius: 0;">
                                 <div class="f-select-panel-moduler">
                                     <div class="f-select-panel-moduler-header"><span class="f-select-panel-moduler-header-title">城市</span>
-
+                                        <!---->
                                     </div>
-
                                     <div class="f-select-panel-moduler-container">
-                                        <!-- 两种状态切换 未选中 和已选中 checkBox-->
-                                        <div v-for="(shop,index) in shops" v-if="shop.products.length != 0" :key="index">
-                                            <div v-for="product in shop.products"  class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check">
-                                                <input type="checkbox" name="" value="" v-model="product.isSelected">
-                                            </div>
+                                        <!-- 两种状态切换 未选中 和已选中-->
+                                        <!-- <div v-for="(items,indexs) in dataCity" :key="indexs"> -->
+                                        <div class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check f-select-panel-item-selected">
+
                                         </div>
+                                        <!-- </div> -->
 
                                     </div>
                                 </div>
@@ -366,99 +364,63 @@
 </template>
 
 <script>
-import {
-    findIndex,
-    findKey
-} from "../../../util/utils"
 export default {
     props: ["id", "name"],
-    directives: {
-        'click': {
-            inserted: function (el, binding, vnode) {
-                // el.addEventListener('click',vnode.context.checkAll)
-            },
-            unbind: function (el, binding, vnode) {
 
-            }
-        }
-    },
     data() {
         return {
-            shops: [{
-                    index: 1,
-                  
-                    title: '河北',
-                    // 购物车中每个店铺的商品列表
-                    products: [{
-                            id: 2,
-                            num: 1,
-                            isSelected: true,
-                        },
-                        {
-                            id: 5,
-                            num: 2,
-                            isSelected: true,
-                        },
-                    ],
-                },
-                {
-                    index: 2,
-                  
-                    title: '山西',
-                    products: [{
-                            id: 12,
-                            num: 1,
-                            isSelected: false,
-                        },
-                        {
-                            id: 15,
-                            num: 2,
-                            isSelected: false,
-                        },
-                    ],
-                },
-                {
-                    index: 3,
-                   
-                    title: '天津',
-                    // isSelectedAll: false,
-                    products: [],
-                },
-                {
-                    index: 4,
-                    brand: '鲜菜篮子',
-                    title: '天津',
-                    // isSelectedAll: false,
-                    products: [],
-                },
-            ],
+            dataCity: [{
+                    provinceName: '北京',
+                    cityList: []
+                }, {
+                    provinceName: '天津',
+                    cityList: []
+                }, {
+                    provinceName: '河北',
+                    cityList: [{
+                        cityName: '沈阳',
+                        checked: true,
 
-  
+                    }, {
+                        cityName: '唐山',
+                        checked: true,
+                    }]
+                },
+                {
+                    provinceName: '山西',
+                    cityList: [{
+                        cityName: '太原',
+                        checked: true
+
+                    }, {
+                        cityName: '大同'
+                    }]
+                }
+            ],
             value1: '选择1',
             param1: ['选择1', '选择2'],
-        };
+        }
     },
     methods: {
-        //单个省被全选
-        selectAll: function (all) {
-            // 参数all可传入shops数组或者shops数组内的一个对象
-            // all传入shops数组表示所有城市都被选中
-            // all传入一个对象表示某个省城市全选
-            if (all instanceof Array) {
-                var bool = !this.isSelectedAll;
-                // var bool = false;
-                for (var i = 0; i < all.length; i++) {
-                    var products = all[i].products;
-                    for (var j = 0; j < products.length; j++) {
-                        products[j].isSelected = bool;
-                    }
+        itemSelectAll(index) {
+
+            let checkedList = [],
+                clityList = this.dataCity[index].cityList;
+            for (let i, len = clityList.length; i < len; i++) {
+                if (cityList[i].checked) {
+                    checkedList.push(cityList[i]);
+
                 }
-            } else {
-                var index = this.shops.indexOf(all);
-                var bool = !this.isShopSelectedAll[index];
-                for (var i = 0; i < all.products.length; i++) {
-                    all.products[i].isSelected = bool;
-                }
+
+            }
+            if (checkedList.length == clityList.length) {
+                return 1
+            }
+            if (checkedList.length > 0 && checkedList.length < clityList.length) {
+                return 0
+            }
+            if (checkedList.length == 0) {
+                return -1
             }
         }
     },
@@ -467,37 +429,10 @@ export default {
 
     },
     computed: {
-        //所有城市是否选择
-        isSelectedAll: {
-            get() {
-                for (var i = 0; i < this.shops.length; i++) {
-                    if (!this.isShopSelectedAll[i]) {
-                        return false;
-                    }
-                }
-                return true;
-            },
-            // 这里要加一个空的setter，因为用v-model绑定时会报错
-            set() {},
-        },
-        //省里面的城市是否全选
-        isShopSelectedAll: function () {
-            var tempArr = [];
-            for (var i = 0; i < this.shops.length; i++) {
-                tempArr[i] = true;
-                var products = this.shops[i].products;
-                for (var j = 0; j < products.length; j++) {
-                    if (!products[j].isSelected) {
-                        tempArr[i] = false;
-                        break;
-                    }
-                }
-            }
-            return tempArr;
-        },
+      
     },
     watch: {
 
-    },
+    }
 }
 </script>
