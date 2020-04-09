@@ -461,7 +461,7 @@ export default {
         //一级选项是否半选
         isIndeterminate: {
             get() {
-                var flag=false
+               
                 //所有城市是否都被选中
                 for(var i=0,len=this.dataCity.length;i<len;i++){
                      for(var j=0,jlen=this.dataCity[i].cityList.length;j<jlen;j++){
@@ -470,6 +470,7 @@ export default {
                          }
                      }
                 }
+                return false
                
             },
 
@@ -489,9 +490,7 @@ export default {
                         if (cityList[j].checked&&i==cityList.length) {   
                              
                             tempArr[i] = false;
-                            // break;
-                        }else{
-                            tempArr[i] = true;
+                            break;
                         }
                     }
                 }
