@@ -280,15 +280,17 @@
                         <div class="fui-select-panel-left" style="margin-right: 16px; width:500px;">
                             <div class="fui-select-panel-left-moduler" style="width: 50%; min-width: 200px;">
                                 <div class="f-select-panel-moduler">
-                                    <div class="f-select-panel-moduler-header"><span class="f-select-panel-moduler-header-title">省份</span>
+                                    <div class="f-select-panel-moduler-header">
+                                      
+                                        <span class="f-select-panel-moduler-header-title">省份</span>
 
                                     </div>
                                     <div class="f-select-panel-moduler-container">
                                         <div class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check">
-                                            <Checkbox @click.native="selectAll(dataCity)" :checked="isSelectedAll" :indeterminate="isIndeterminate">全选{{'半选'+isIndeterminate+'全选'+isSelectedAll}}</Checkbox>
+                                            <Checkbox @click.native="selectAll(dataCity)" :checked="isSelectedAll" :indeterminate="isIndeterminate">全选</Checkbox>
                                         </div>
-                                        <div v-for="(item,index) in dataCity" :key="index" class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check">
-                                            <Checkbox @click.native="selectAll(item)" :checked="isCityListSelect[dataCity.indexOf(item)]">{{item.provinceName}}{{isIndeterminateItem}}</Checkbox>
+                                        <div v-for="(item,index) in dataCity" :key="index" class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check" @click.self="clickProvince(index)">
+                                            <Checkbox @click.native="selectAll(item)" :checked="isCityListSelect[dataCity.indexOf(item)]" :indeterminate="item.indeterminate">{{item.provinceName}}</Checkbox>
                                             <span class="byted-select-panel-item-toright" v-if="item.cityList.length!==1">
                                                 <div class="byted-icon bui-icon-angle-right"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
                                                         <defs>
@@ -313,14 +315,14 @@
 
                                     </div>
                                     <div class="f-select-panel-moduler-container">
-                                        <div class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check f-select-panel-item-selected">
+                                        <!-- <div class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check f-select-panel-item-selected">
                                             <Checkbox :checked="true">全选</Checkbox>
-                                        </div>
+                                        </div> -->
 
                                         <!-- 两种状态切换 未选中 和已选中-->
                                         <!-- <div v-for="(items,indexs) in dataCity" :key="indexs"> -->
                                         <div v-for="(item,index) in currentList.cityList" :key="index" class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check f-select-panel-item-selected">
-                                            <Checkbox :checked="item.checked" @click.native="item.checked=!item.checked">{{item.cityName}}</Checkbox>
+                                            <Checkbox :checked="item.checked" @click.native="changeCityItem(item)">{{item.cityName}}</Checkbox>
                                         </div>
                                         <!-- </div> -->
 
@@ -398,6 +400,7 @@ export default {
                 },
                 {
                     provinceName: '山西',
+                    indeterminate:true,
                     cityList: [{
                         cityName: '太原',
                         checked: true
@@ -416,6 +419,25 @@ export default {
         }
     },
     methods: {
+        clickProvince(index){
+                this.currentList=this.dataCity[index];
+        },
+        changeCityItem(item){
+               item.checked=!item.checked;
+               let idx=this.dataCity.indexOf(this.currentList),a=0;
+                // if(this.dataCity[idx])
+                for(var i=0,len=this.dataCity[idx].cityList.length;i<len;i++){
+                        if(this.dataCity[idx].cityList[i].checked){
+                            a+=1
+                        }
+                }
+                if(a>0&&a<this.dataCity[idx].cityList.length){
+                    this.dataCity[idx].indeterminate=true
+                }else{
+                    this.dataCity[idx].indeterminate=false
+                }
+                
+        },
         selectAll: function (all) {
             //展示当前选中的列表
 
