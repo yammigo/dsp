@@ -6,7 +6,7 @@ const DefaultParam = { repeatable: false };
 
 let ajax = {
   PREFIX: '/api',
-  Author: Utils.getAuthor() || 'heyui',
+  Author: Utils.getAuthor() || 'fanjiantao',
   requestingApi: new Set(),
   extractUrl: function (url) {
     return url ? url.split('?')[0] : '';

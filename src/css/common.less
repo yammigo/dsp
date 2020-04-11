@@ -27,7 +27,13 @@
     min-height: 47px;
   }
 }
-
+.clearfix {
+  zoom: 1;
+}
+.clearfix:after, .clearfix:before {
+  content: "";
+  display: table;
+}
 .common-filter-bar {
   padding: 17px 0 8px;
   min-height: 66px;

@@ -1,725 +1,487 @@
+<style lang="less">
+.byted-weektime {
+    margin-left: 104px;
+    margin-bottom: 10px;
+
+    .pull-left {
+        float: left !important;
+    }
+
+    .pull-right {
+        float: right !important;
+        cursor: pointer;
+        color: #2F88FF;
+        font-size: 14px;
+    }
+
+    .td-selected-time {
+        text-align: left;
+        line-height: 2.4em;
+    }
+
+    .week-td {
+        width: 75px;
+        padding: 20px 0;
+    }
+
+    .calendar {
+        -webkit-user-select: none;
+        position: relative;
+        display: inline-block;
+
+        .schedule {
+            background: #2F88FF;
+            width: 0;
+            height: 0;
+            position: fixed;
+
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            -webkit-transition: all 400ms ease;
+            -moz-transition: all 400ms ease;
+            -ms-transition: all 400ms ease;
+            transition: all 400ms ease;
+        }
+
+        .calendar-table {
+            border-collapse: collapse;
+            border-radius: 4px;
+
+            thead th,
+            thead td {
+                background: #F8F9FA;
+            }
+
+            .td-table-tip {
+                line-height: 2.4em;
+                padding: 0 12px 0 19px;
+                background: #fff !important;
+
+                .pull-left {
+                    font-size: 14px;
+                    color: #333333;
+                }
+            }
+
+            .tip-text {
+                color: #999;
+                margin-right: 8px;
+            }
+
+            tr,
+            td,
+            th {
+                border: 1px solid #E4E9ED;
+                font-size: 12px;
+                text-align: center;
+                min-width: 11px;
+                line-height: 1.8em;
+                -webkit-transition: background 200ms ease;
+                -moz-transition: background 200ms ease;
+                -ms-transition: background 200ms ease;
+                transition: background 200ms ease;
+            }
+
+            tr .ui-selected {
+                background: #2F88FF;
+            }
+
+            tr .calendar-selected {
+                background: red;
+            }
+
+            tr .calendar-atom-time:hover {
+                background: #f5f5f5;
+            }
+
+            tr .calendar-selected:hover {
+                background: red;
+            }
+
+            tr .ui-selected:hover {
+                background: #2F88FF;
+            }
+        }
+    }
+}
+</style>
 <template>
-<div>
-    <div @click="testT='2'">渲染数据</div>
-    <div id="table2-1" @click='clickRef'></div>
-</div>
+    <div class="byted-weektime">
+        <div class="calendar">
+            <div v-show="scheduleShow" class="schedule" ref="schedule" :style="scheduleStyle" :class="scheduleClass" style="opacity:0;"></div>
+            <table class="calendar-table">
+                <thead class="calendar-head">
+                    <tr>
+                        <th rowspan="8" class="week-td">星期/时间</th>
+                        <th colspan="24">00:00 - 12:00</th>
+                        <th colspan="24">12:00 - 24:00</th>
+                    </tr>
+                    <tr>
+                        <td colspan="2" v-for="(item, index) in dayHour" :key="index">{{item}}</td>
+
+                    </tr>
+                </thead>
+                <tbody class="calendar-body">
+                    <tr v-for="(item1, index1) in weekName" :key="index1">
+                        <td>{{item1}}</td>
+                        <td ref="calendarAtomTime" v-for="(item,index) in dayHalfHour" :key="index" :data-week="index1" :data-time="item" @mousemove="setShadow" @mouseenter="setHoverData($event, {time:item,week:index1+''})" @mousedown="setFirstSource(index1, item, $event)" @mouseleave="removeHoverData" class="calendar-atom-time" :class="{'calendar-selected':value[index1]&&value[index1].indexOf(item) >= 0,'calendar-disabled':disabledDate(index1, item) || !1}"></td>
+
+                    </tr>
+
+                    <tr>
+                        <td colspan="49" class="td-table-tip">
+                            <div class="clearfix"><span class="pull-left tip-text">{{!isPopover?"可拖动鼠标选择时间":"已选择的时间"}}</span> <a class="pull-right" @click="onResetAllClick">清空</a></div>
+                            <div class="td-selected-time">
+                                <p v-for="(item,index) in timePeriodStrArr" :key="index" v-if="item">
+                                    <span class="tip-text">
+                                        {{weekMap[index]}}：
+                                    </span>
+                                    <span>{{item}}</span>
+                                </p>
+                                
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </template>
 
 <script>
 export default {
-    data() {
-        let list = [{
-                id: 1,
-                title: '一级',
-                treeIcon: 'h-icon-user'
-            },
-            {
-                id: 2,
-                title: '二级',
-                treeIcon: 'h-icon-user'
-            },
-            {
-                id: 3,
-                title: '三级',
-                disabled: true,
-                treeIcon: 'h-icon-user'
-            },
-            {
-                id: 10,
-                title: '一级-0',
-                parent: 1
-            },
-            {
-                id: 11,
-                title: '一级-1',
-                parent: 1
-            },
-            {
-                id: 12,
-                title: '一级-2',
-                parent: 1
-            },
-            {
-                id: 13,
-                title: '一级-3',
-                parent: 1
-            },
-            {
-                id: 14,
-                title: '一级-4',
-                parent: 1
-            },
-            {
-                id: 20,
-                title: '二级-0',
-                parent: 2
-            },
-            {
-                id: 21,
-                title: '二级-1',
-                parent: 2
-            },
-            {
-                id: 22,
-                title: '二级-2',
-                parent: 2
-            },
-            {
-                id: 23,
-                title: '二级-3',
-                parent: 2
-            },
-            {
-                id: 24,
-                title: '二级-4',
-                parent: 2
-            },
-            {
-                id: 30,
-                title: '三级-0',
-                parent: 3
-            },
-            {
-                id: 31,
-                title: '三级-1',
-                parent: 3
-            },
-            {
-                id: 32,
-                title: '三级-2',
-                parent: 3
-            },
-            {
-                id: 33,
-                title: '三级-3',
-                parent: 3
-            },
-            {
-                id: 34,
-                title: '三级-4',
-                parent: 3
-            }
-        ];
-        let list2 = [{
-                title: 'Dashboard',
-                key: 'Home',
-                icon: 'icon-monitor',
-                count: 1
-            },
-            {
-                title: 'Icons',
-                key: 'Icons',
-                icon: 'icon-heart'
-            },
-            {
-                title: '列表应用',
-                key: 'tablelist',
-                icon: 'icon-grid-2',
-                children: [{
-                        title: '基础表格',
-                        key: 'TableBasic'
-                    },
-                    {
-                        title: '查询列表',
-                        key: 'TableSearch'
-                    }
-                ]
-            },
-            {
-                title: '表单应用',
-                key: 'form-folder',
-                icon: 'icon-paper',
-                children: [{
-                        title: '基础表单',
-                        key: 'Form'
-                    },
-                    {
-                        title: '表单详情',
-                        key: 'FormDetail'
-                    }
-                ]
-            },
-            {
-                title: '模糊匹配',
-                key: 'AutoComplete-folder',
-                icon: 'icon-disc',
-                children: [{
-                        title: '模糊搜索',
-                        key: 'Autocomplete1'
-                    },
-                    {
-                        title: '场景应用',
-                        key: 'Autocomplete2'
-                    },
-                    {
-                        title: '复杂场景',
-                        key: 'Autocomplete3'
-                    }
-                ]
-            },
-            {
-                title: '扩展组件',
-                key: 'Advance-folder',
-                icon: 'icon-bar-graph-2',
-                children: [{
-                        title: '图表',
-                        key: 'Chart'
-                    },
-                    {
-                        title: '富文本编辑器',
-                        key: 'RicktextEditor'
-                    },
-                    {
-                        title: '代码编辑器',
-                        key: 'CodeEditor'
-                    },
-                    {
-                        title: 'Markdown编辑器',
-                        key: 'MarkdownEditor'
-                    },
-                    {
-                        title: '百度地图',
-                        key: 'BaiduMap'
-                    }
-                ]
-            },
-            {
-                title: '系统设置',
-                key: 'SysSetting',
-                icon: 'icon-cog',
-                children: [{
-                        title: '个人中心',
-                        key: 'AccountBasic'
-                    },
-                    {
-                        title: '安全设置',
-                        key: 'SecuritySetting'
-                    },
-                    {
-                        title: '权限设置',
-                        key: 'Authorization'
-                    }
+
+    props: {
+        value: {
+            type: Array,
+            default: () => {
+                return [
+                    [],
+                    [],
+                    [],
+                    [],
+                    [],
+                    [],
+                    []
+
                 ]
             }
-        ];
-        let tData = [{
-                AMPLITUDE: 0.9309,
-                PREVCLOSINGPRICE: 7.52,
-                TURNOVERDEALS: 0,
-                HIGHESTPRICE: 7.56,
-                TURNOVERVOL: 36268940,
-                TRADINGDAY: 1345478400000,
-                TOTALSHARE: 18653471415,
-                SECUCODE: '600000',
-                EPS: 0.9217,
-                LOWESTPRICE: 7.49,
-                OPENINGPRICE: 7.51,
-                SECUABBR: '浦发银行',
-                ALISTEDSHARE: 14922777132,
-                ID: 3131258,
-                WCOSTAVG: 8.7968,
-                NETCASHFLOWOPERPS: 1.125,
-                SECUNAME: '上海浦东发展银行股份有限公司',
-                CLOSINGPRICE: 7.51,
-                DAYCHANGERATE: -0.133,
-                TURNOVERVAL: 272732527,
-                BVPS: 8.686,
-                DAYCHANGE: -0.01,
-                PE: 5.134,
-                TURNOVERRATE: 0.243,
-                ADJUSTCLOSINGPRICE: 51.8586,
-                PB: 0.9409
-            },
-            {
-                AMPLITUDE: 2.0472,
-                PREVCLOSINGPRICE: 6.35,
-                TURNOVERDEALS: 0,
-                HIGHESTPRICE: 6.41,
-                TURNOVERVOL: 1278011,
-                TRADINGDAY: 1345478400000,
-                TOTALSHARE: 1150000000,
-                SECUCODE: '600004',
-                EPS: 0.1567,
-                LOWESTPRICE: 6.28,
-                OPENINGPRICE: 6.34,
-                SECUABBR: '白云机场',
-                ALISTEDSHARE: 1150000000,
-                ID: 3131387,
-                WCOSTAVG: 6.8846,
-                NETCASHFLOWOPERPS: 0.23,
-                SECUNAME: '广州白云国际机场股份有限公司',
-                CLOSINGPRICE: 6.39,
-                DAYCHANGERATE: 0.6299,
-                TURNOVERVAL: 8115183,
-                BVPS: 6.13,
-                DAYCHANGE: 0.04,
-                PE: 10.5415,
-                TURNOVERRATE: 0.1111,
-                ADJUSTCLOSINGPRICE: 9.429,
-                PB: 1.0697
-            },
-            {
-                AMPLITUDE: 1.5504,
-                PREVCLOSINGPRICE: 2.58,
-                TURNOVERDEALS: 0,
-                HIGHESTPRICE: 2.61,
-                TURNOVERVOL: 10685141,
-                TRADINGDAY: 1345478400000,
-                TOTALSHARE: 10093779823,
-                SECUCODE: '600005',
-                EPS: 0.0043,
-                LOWESTPRICE: 2.57,
-                OPENINGPRICE: 2.59,
-                SECUABBR: '武钢股份',
-                ALISTEDSHARE: 10093779823,
-                ID: 3131671,
-                WCOSTAVG: 3.0629,
-                NETCASHFLOWOPERPS: 0.09,
-                SECUNAME: '武汉钢铁股份有限公司',
-                CLOSINGPRICE: 2.6,
-                DAYCHANGERATE: 0.7752,
-                TURNOVERVAL: 27677196,
-                BVPS: 3.562,
-                DAYCHANGE: 0.02,
-                PE: 24.2193,
-                TURNOVERRATE: 0.1059,
-                ADJUSTCLOSINGPRICE: 13.4817,
-                PB: 0.7308
-            },
-            {
-                AMPLITUDE: 2.069,
-                PREVCLOSINGPRICE: 2.9,
-                TURNOVERDEALS: 0,
-                HIGHESTPRICE: 2.95,
-                TURNOVERVOL: 2511165,
-                TRADINGDAY: 1345478400000,
-                TOTALSHARE: 2000000000,
-                SECUCODE: '600006',
-                EPS: 0.0266,
-                LOWESTPRICE: 2.89,
-                OPENINGPRICE: 2.9,
-                SECUABBR: '东风汽车',
-                ALISTEDSHARE: 2000000000,
-                ID: 3131903,
-                WCOSTAVG: 3.5362,
-                NETCASHFLOWOPERPS: -0.4041,
-                SECUNAME: '东风汽车股份有限公司',
-                CLOSINGPRICE: 2.9,
-                DAYCHANGERATE: 0,
-                TURNOVERVAL: 7316381,
-                BVPS: 3.0533,
-                DAYCHANGE: 0,
-                PE: 12.4963,
-                TURNOVERRATE: 0.1256,
-                ADJUSTCLOSINGPRICE: 10.0741,
-                PB: 0.9581
-            },
-            {
-                AMPLITUDE: 1.9704,
-                PREVCLOSINGPRICE: 10.15,
-                TURNOVERDEALS: 0,
-                HIGHESTPRICE: 10.35,
-                TURNOVERVOL: 155609,
-                TRADINGDAY: 1345478400000,
-                TOTALSHARE: 1007282534,
-                SECUCODE: '600007',
-                EPS: 0.0887,
-                LOWESTPRICE: 10.15,
-                OPENINGPRICE: 10.15,
-                SECUABBR: '中国国贸',
-                ALISTEDSHARE: 1007282534,
-                ID: 3132032,
-                WCOSTAVG: 9.8783,
-                NETCASHFLOWOPERPS: 0.22,
-                SECUNAME: '中国国际贸易中心股份有限公司',
-                CLOSINGPRICE: 10.26,
-                DAYCHANGERATE: 1.0837,
-                TURNOVERVAL: 1599848,
-                BVPS: 4.5,
-                DAYCHANGE: 0.11,
-                PE: 53.2288,
-                TURNOVERRATE: 0.0154,
-                ADJUSTCLOSINGPRICE: 16.142,
-                PB: 2.3261
-            },
-            {
-                AMPLITUDE: 2.7211,
-                PREVCLOSINGPRICE: 4.41,
-                TURNOVERDEALS: 0,
-                HIGHESTPRICE: 4.53,
-                TURNOVERVOL: 3872525,
-                TRADINGDAY: 1345478400000,
-                TOTALSHARE: 2200000000,
-                SECUCODE: '600008',
-                EPS: 0.0714,
-                LOWESTPRICE: 4.41,
-                OPENINGPRICE: 4.42,
-                SECUABBR: '首创股份',
-                ALISTEDSHARE: 2200000000,
-                ID: 3131442,
-                WCOSTAVG: 5.2878,
-                NETCASHFLOWOPERPS: 0.055,
-                SECUNAME: '北京首创股份有限公司',
-                CLOSINGPRICE: 4.49,
-                DAYCHANGERATE: 1.8141,
-                TURNOVERVAL: 17341208,
-                BVPS: 2.3832,
-                DAYCHANGE: 0.08,
-                PE: 18.8918,
-                TURNOVERRATE: 0.176,
-                ADJUSTCLOSINGPRICE: 15.1655,
-                PB: 1.8324
-            },
-            {
-                AMPLITUDE: 0.7389,
-                PREVCLOSINGPRICE: 12.18,
-                TURNOVERDEALS: 0,
-                HIGHESTPRICE: 12.22,
-                TURNOVERVOL: 1332194,
-                TRADINGDAY: 1345478400000,
-                TOTALSHARE: 1926958448,
-                SECUCODE: '600009',
-                EPS: 0.1909,
-                LOWESTPRICE: 12.13,
-                OPENINGPRICE: 12.19,
-                SECUABBR: '上海机场',
-                ALISTEDSHARE: 1093476397,
-                ID: 3131171,
-                WCOSTAVG: 12.8369,
-                NETCASHFLOWOPERPS: -0.04,
-                SECUNAME: '上海国际机场股份有限公司',
-                CLOSINGPRICE: 12.14,
-                DAYCHANGERATE: -0.3284,
-                TURNOVERVAL: 16207539,
-                BVPS: 8.16,
-                DAYCHANGE: -0.04,
-                PE: 15.5997,
-                TURNOVERRATE: 0.1218,
-                ADJUSTCLOSINGPRICE: 33.1878,
-                PB: 1.523
-            },
-            {
-                AMPLITUDE: 3.9604,
-                PREVCLOSINGPRICE: 6.06,
-                TURNOVERDEALS: 0,
-                HIGHESTPRICE: 6.11,
-                TURNOVERVOL: 95948038,
-                TRADINGDAY: 1345478400000,
-                TOTALSHARE: 6423643659,
-                SECUCODE: '600010',
-                EPS: 0.0017,
-                LOWESTPRICE: 5.87,
-                OPENINGPRICE: 6.06,
-                SECUABBR: '包钢股份',
-                ALISTEDSHARE: 6423643659,
-                ID: 3133528,
-                WCOSTAVG: 5.6692,
-                NETCASHFLOWOPERPS: -0.09,
-                SECUNAME: '内蒙古包钢钢联股份有限公司',
-                CLOSINGPRICE: 5.99,
-                DAYCHANGERATE: -1.1551,
-                TURNOVERVAL: 572896242,
-                BVPS: 2.01,
-                DAYCHANGE: -0.07,
-                PE: 77.53,
-                TURNOVERRATE: 1.4937,
-                ADJUSTCLOSINGPRICE: 17.6883,
-                PB: 2.9846
-            },
-            {
-                AMPLITUDE: 2.0864,
-                PREVCLOSINGPRICE: 6.71,
-                TURNOVERDEALS: 0,
-                HIGHESTPRICE: 6.8,
-                TURNOVERVOL: 8203502,
-                TRADINGDAY: 1345478400000,
-                TOTALSHARE: 14055383440,
-                SECUCODE: '600011',
-                EPS: 0.1571,
-                LOWESTPRICE: 6.66,
-                OPENINGPRICE: 6.78,
-                SECUABBR: '华能国际',
-                ALISTEDSHARE: 10000000000,
-                ID: 3132159,
-                WCOSTAVG: 5.7905,
-                NETCASHFLOWOPERPS: 0.91,
-                SECUNAME: '华能国际电力股份有限公司',
-                CLOSINGPRICE: 6.68,
-                DAYCHANGERATE: -0.4471,
-                TURNOVERVAL: 55167434,
-                BVPS: 3.66,
-                DAYCHANGE: -0.03,
-                PE: 74.0314,
-                TURNOVERRATE: 0.082,
-                ADJUSTCLOSINGPRICE: 23.7094,
-                PB: 1.875
-            },
-            {
-                AMPLITUDE: 0.7712,
-                PREVCLOSINGPRICE: 3.89,
-                TURNOVERDEALS: 0,
-                HIGHESTPRICE: 3.91,
-                TURNOVERVOL: 418515,
-                TRADINGDAY: 1345478400000,
-                TOTALSHARE: 1658610000,
-                SECUCODE: '600012',
-                EPS: 0.1278,
-                LOWESTPRICE: 3.88,
-                OPENINGPRICE: 3.89,
-                SECUABBR: '皖通高速',
-                ALISTEDSHARE: 1165600000,
-                ID: 3133590,
-                WCOSTAVG: 4.4675,
-                NETCASHFLOWOPERPS: 0.25,
-                SECUNAME: '安徽皖通高速公路股份有限公司',
-                CLOSINGPRICE: 3.9,
-                DAYCHANGERATE: 0.2571,
-                TURNOVERVAL: 1632075,
-                BVPS: 3.8226,
-                DAYCHANGE: 0.01,
-                PE: 7.5503,
-                TURNOVERRATE: 0.0359,
-                ADJUSTCLOSINGPRICE: 6.945,
-                PB: 1.0322
-            },
-            {
-                AMPLITUDE: 0.8037,
-                PREVCLOSINGPRICE: 8.71,
-                TURNOVERDEALS: 0,
-                HIGHESTPRICE: 8.75,
-                TURNOVERVOL: 14473038,
-                TRADINGDAY: 1345478400000,
-                TOTALSHARE: 6849725776,
-                SECUCODE: '600015',
-                EPS: 0.8869,
-                LOWESTPRICE: 8.68,
-                OPENINGPRICE: 8.71,
-                SECUABBR: '华夏银行',
-                ALISTEDSHARE: 4990528316,
-                ID: 3133403,
-                WCOSTAVG: 10.581,
-                NETCASHFLOWOPERPS: 2,
-                SECUNAME: '华夏银行股份有限公司',
-                CLOSINGPRICE: 8.7,
-                DAYCHANGERATE: -0.1148,
-                TURNOVERVAL: 126109959,
-                BVPS: 10.01,
-                DAYCHANGE: -0.01,
-                PE: 6.4621,
-                TURNOVERRATE: 0.29,
-                ADJUSTCLOSINGPRICE: 16.1875,
-                PB: 0.9326
-            },
-            {
-                AMPLITUDE: 1.0135,
-                PREVCLOSINGPRICE: 5.92,
-                TURNOVERDEALS: 0,
-                HIGHESTPRICE: 5.94,
-                TURNOVERVOL: 47828421,
-                TRADINGDAY: 1345478400000,
-                TOTALSHARE: 28365585227,
-                SECUCODE: '600016',
-                EPS: 0.3433,
-                LOWESTPRICE: 5.88,
-                OPENINGPRICE: 5.91,
-                SECUABBR: '民生银行',
-                ALISTEDSHARE: 22587602387,
-                ID: 3132062,
-                WCOSTAVG: 6.1797,
-                NETCASHFLOWOPERPS: -1.61,
-                SECUNAME: '中国民生银行股份有限公司',
-                CLOSINGPRICE: 5.91,
-                DAYCHANGERATE: -0.1689,
-                TURNOVERVAL: 282428002,
-                BVPS: 5.2,
-                DAYCHANGE: -0.01,
-                PE: 6.0043,
-                TURNOVERRATE: 0.2117,
-                ADJUSTCLOSINGPRICE: 83.8993,
-                PB: 1.2936
-            },
-            {
-                AMPLITUDE: 1.8657,
-                PREVCLOSINGPRICE: 2.68,
-                TURNOVERDEALS: 0,
-                HIGHESTPRICE: 2.72,
-                TURNOVERVOL: 2086859,
-                TRADINGDAY: 1345478400000,
-                TOTALSHARE: 3075653888,
-                SECUCODE: '600017',
-                EPS: 0.1249,
-                LOWESTPRICE: 2.67,
-                OPENINGPRICE: 2.69,
-                SECUABBR: '日照港',
-                ALISTEDSHARE: 2630631660,
-                ID: 3133407,
-                WCOSTAVG: 3.0421,
-                NETCASHFLOWOPERPS: 0.122,
-                SECUNAME: '日照港股份有限公司',
-                CLOSINGPRICE: 2.71,
-                DAYCHANGERATE: 1.1194,
-                TURNOVERVAL: 5634455,
-                BVPS: 2.674,
-                DAYCHANGE: 0.03,
-                PE: 17.342,
-                TURNOVERRATE: 0.0793,
-                ADJUSTCLOSINGPRICE: 8.5585,
-                PB: 1.2871
+        },
+        showFooter: {
+            type: Boolean,
+            default: !0
+        },
+        type: {
+            type: String,
+            default: "normal"
+        },
+        shortcuts: {
+            type: Array,
+            default: function () {
+                return []
             }
-        ];
-        let fixed2 = function (val) {
-            return val.toFixed(2);
-        };
-        let highliht = function (val) {
-            if (val > 0) {
-                return '<span style="color: #b00">' + fixed2(val) + '</span>';
-            } else if (val < 0) {
-                return '<span style="color: #0b0">' + fixed2(val) + '</span>';
+        },
+        showCheckbox: {
+            type: Boolean,
+            default: !1
+        },
+        disabledDate: {
+            type: Function,
+            default: function () {
+                return !1
             }
-            return fixed2(val);
-        };
-        let fixed2percentage = function (val) {
-            return fixed2(val) + '%';
         }
+    },
+    data() {
+
         return {
-            testT: '1',
-            toggleOnSelect: true,
-            value: null,
-            value2: null,
-            fixed2: fixed2,
-            highliht: highliht,
-            fixed2percentage: fixed2percentage,
-            tData: tData,
-            param: {
-                keyName: 'id',
-                parentName: 'parent',
-                titleName: 'title',
-                dataMode: 'list',
-                datas() {
-                    // 可以使用方法
-                    return list;
-                }
+            dayHour: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+            weekName: ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
+            dayHalfHour: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47],
+            weekMap: {
+                "0": "星期一",
+                "1": "星期二",
+                "2": "星期三",
+                "3": "星期四",
+                "4": "星期五",
+                "5": "星期六",
+                "6": "星期日"
             },
-            menuOption: {
-                datas: list2
+            start_td: "",
+            end_td: "",
+            start_point: {
+                x: "",
+                y: ""
             },
-            cols: [{
-                    title: '行情',
-                    name: '',
-                    width: 30,
-                    align: 'center',
-                    lockDisplay:true,
-                    renderer: (val, item, rowIndex) => {
-                          
-                    }
-                },
-                {
-                    title: '股票代码',
-                    name: 'SECUCODE',
-                    width: 100,
-                    align: 'center'
-                },
-                {
-                    title: '股票名称',
-                    name: 'SECUABBR',
-                    width: 100,
-                    align: 'center'
-                },
-                {
-                    title: '今收盘',
-                    name: 'CLOSINGPRICE',
-                    width: 60,
-                    align: 'right',
-                    renderer: this.fixed2,
-                    sortable: true,
-                },
-                {
-                    title: '涨跌幅',
-                    name: 'DAYCHANGERATE',
-                    width: 60,
-                    align: 'right',
-                    renderer: this.highliht
-                },
-                {
-                    title: '涨跌额',
-                    name: 'DAYCHANGE',
-                    width: 60,
-                    align: 'right',
-                    renderer: this.highliht
-                },
-                {
-                    title: '振幅',
-                    name: 'AMPLITUDE',
-                    width: 60,
-                    align: 'right',
-                    renderer: this.fixed2percentage
-                },
-                {
-                    title: '成交量(手)',
-                    name: 'TURNOVERVOL',
-                    width: 100,
-                    align: 'right',
-                    renderer: function (val) {
-                        return (val / 100).toFixed(2);
-                    }
-                },
-                {
-                    title: '成交额(万)',
-                    name: 'TURNOVERVAL',
-                    width: 100,
-                    align: 'right',
-                    renderer: function (val) {
-                        return (val / 10000).toFixed(2);
-                    }
-                },
-                {
-                    title: '昨收盘',
-                    name: 'PREVCLOSINGPRICE',
-                    width: 60,
-                    align: 'right',
-                    renderer: this.fixed2
-                },
-                {
-                    title: '今开盘',
-                    name: 'OPENINGPRICE',
-                    width: 60,
-                    align: 'right',
-                    renderer: this.fixed2
-                },
-                {
-                    title: '最高价',
-                    name: 'HIGHESTPRICE',
-                    width: 60,
-                    align: 'right',
-                    renderer: this.fixed2
-                },
-                {
-                    title: '最低价',
-                    name: 'LOWESTPRICE',
-                    width: 60,
-                    align: 'right',
-                    renderer: this.fixed2
-                }
-            ]
-        };
+            isAdd: !1,
+            hoverWeek: "",
+            hoverTime: "",
+            hoverTimeoutId: 0,
+            isPopover: !1,
+            popOverCanShow: !1,
+            timePeriodStrArr: ["", "", "", "", "", "", ""],
+            scheduleShow: !1,
+            scheduleStyle: {},
+            hoverTipObj: {},
+            scheduleClass: {
+                "no-transition": !1
+            },
+            weekCheckbox: [!1, !1, !1, !1, !1, !1, !1],
+            weekIndeterminate: [!1, !1, !1, !1, !1, !1, !1]
+        }
     },
     mounted() {
-        // var self = this;
-        // var Tabale;
-        
-        // setTimeout(() => {
-        //     Tabale = $('#table2-1').mmGrid({
-        //         cols: self.cols,
-        //         width: 'auto',
-        //         height: 'auto',
-        //         items: self.tData
-        //     });
-        // }, 20)
+        document.addEventListener('mouseup', this.scheduleEnd);
+        document.addEventListener('mousewheel', this.scheduleEnd)
 
     },
-    methods: {
-    
+    destroyed() {
+        document.removeEventListener('mouseup', this.scheduleEnd);
+        document.removeEventListener('mousewheel', this.scheduleEnd)
     },
-    computed: {}
-};
+    methods: {
+        weekTimeArr(e) {
+            if (!(e instanceof Array))
+                return console.error("ERROR: getContinuousChildArr() Input is not Array."),
+                    [];
+            var t = [],
+                i = 0,
+                n = 0;
+            return e.forEach(function (e, a, r) {
+                    var o = a + 1;
+                    r[o] === e + 1 ? n = o : (i !== n ? t.push([r[i], r[n]]) : t.push([e]),
+                        i = o,
+                        n = o)
+                }),
+                t
+        },
+        n(e) {
+            if (Array.isArray(e)) {
+                for (var t = 0, i = Array(e.length); t < e.length; t++)
+                    i[t] = e[t];
+                return i
+            }
+            return Array.from(e)
+        },
+        r(e, t) {
+            if (!Number.isInteger(e))
+                return console.error("ERROR: getClockString() Input id is not integer."),
+                    "";
+            if ("start" !== t && "end" !== t)
+                return console.error("ERROR: getClockString() Input type is not legal."),
+                    "";
+            var i = "",
+                n = Math.floor(e / 2),
+                a = e % 2;
+            return "end" === t && 1 === a && (n += 1),
+                i += n <= 9 ? "0" + n : n,
+                i += "start" === t ? 1 === a ? ":30" : ":00" : 0 === a ? ":30" : ":00"
+        },
+
+        changeSelctValue: function (e) {
+            //参数1
+            var t = [
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                []
+            ];
+            e.forEach(function (e) {
+                    t[e] = [].concat(n(new Array(48).keys()))
+                }),
+                this.$emit("input", t)
+        },
+        handleWeekCheck: function (e) {
+            //e是索引
+            this.weekCheckbox[e] ? this.value[e] = [].concat(n(new Array(48).keys())) : this.value[e] = [],
+                this.$emit("input", this.value.slice())
+        },
+        setShadow: function (e) {
+            this.curtd = e.target;
+            var t = this.getClientPosition(this.curtd, !0);
+            if (this.start_point) {
+                var i = t.x - this.start_point.x,
+                    n = t.y - this.start_point.y,
+                    a = n > 0 ? this.start_point.y : t.y - 20,
+                    r = i > 0 ? this.start_point.x : t.x - 10,
+                    o = i > 0 ? Math.abs(i) : Math.abs(i) + 22,
+                    s = n > 0 ? Math.abs(n) : Math.abs(n) + 42;
+                this.scheduleStyle = {
+                    opacity: .6,
+                    top: a + "px",
+                    left: r + "px",
+                    width: o + "px",
+                    height: s + "px"
+                }
+            }
+        },
+        setHoverData: function (e, t) {
+            var i = this;
+            this.hoverTipObj = t,
+                this.popOverCanShow = !0;
+            var n = Math.floor(t.time / 2) < 10 ? "0" + Math.floor(t.time / 2) : Math.floor(t.time / 2),
+                a = t.time % 2 ? n + ":30 - " + (+n + 1 < 10 ? "0" + (+n + 1) : +n + 1) + ":00" : n + ":00 - " + n + ":30";
+            this.hoverTimeoutId && clearTimeout(this.hoverTimeoutId),
+                this.$refs.weektime && (this.$refs.weektime.referenceEle = e.target),
+                this.hoverTimeoutId = setTimeout(() => {
+                    i.hoverWeek = this.weekMap[t.week],
+                        i.hoverTime = a,
+                        i.isPopover = !!i.popOverCanShow,
+                        clearTimeout(i.hoverTimeoutId)
+                }, 500)
+        },
+        removeHoverData: function () {
+            this.popOverCanShow = !1,
+                this.hoverWeek = "",
+                this.hoverTime = "",
+                this.isPopover = !1
+        },
+        setFirstSource: function (e, t, i) {
+            var n = this.value[e];
+            this.isAdd = !n || -1 === n.indexOf(t),
+                1 === i.which && (this.start_td = i.target,
+                    this.start_point = this.getClientPosition(i.target),
+                    this.scheduleShow = !0,
+                    this.scheduleStyle = {
+                        left: this.start_point.x + "px",
+                        top: this.start_point.y + "px",
+                        width: 0,
+                        height: 0,
+                        opacity: .6
+                    },
+                    this.scheduleClass["no-transition"] = !0)
+        },
+        resetTimePeriodStrArr: function () {
+            this.timePeriodStrArr = ["", "", "", "", "", "", ""]
+        },
+        onResetAllClick: function () {
+            // this.value=[[],[],[],[],[],[],[],]
+            this.$emit("clear-week-schedule", this.value=[[],[],[],[],[],[],[],]),
+            this.$emit("input", [
+                    [],
+                    [],
+                    [],
+                    [],
+                    [],
+                    [],
+                    []
+            ]),
+            this.resetTimePeriodStrArr()
+        },
+        getClientPosition: function (e, t) {
+            var i = e.getBoundingClientRect();
+            return {
+                x: i.left + (t ? i.width : 0),
+                y: i.top + (t ? i.height : 0)
+            }
+        },
+        scheduleEnd: function (e) {
+
+            this.start_point && (this.start_point = null,
+                this.end_td = this.curtd,
+                this.scheduleClass["no-transition"] = !1,
+                this.highlightScheduleArea(this.start_td, this.end_td))
+        },
+        highlightScheduleArea: function (e, t, i) {
+            if (e) {
+                var n = parseInt(e.getAttribute("data-week")),
+                    a = parseInt(e.getAttribute("data-time")),
+                    r = parseInt(t.getAttribute("data-week")),
+                    o = parseInt(t.getAttribute("data-time")),
+                    s = Math.min(n, r),
+                    l = Math.max(n, r),
+                    u = Math.min(a, o),
+                    d = Math.max(a, o);
+                this.scheduleStyle.opacity = 0,
+                    this.scheduleShow = !1,
+                    this.getSelectedCollection(u, s, d, l)
+            }
+        },
+        getSelectedCollection: function (e, t, i, n) {
+            var a = this;
+            this.$refs.calendarAtomTime.forEach(function (r) {
+                    var o = parseInt(r.getAttribute("data-time")),
+                        s = parseInt(r.getAttribute("data-week")),
+                        l = a.value[s].indexOf(o);
+                    o >= e && o <= i && s >= t && s <= n && (void 0 === a.value[s] && (Vue.set(a.value, s, []),
+                            a.value[s].push(o)),
+                        a.value[s] && (a.isAdd ? -1 === l && a.value[s].push(o) : l > -1 && a.value[s].splice(l, 1)))
+                }),
+                this.$emit("input", this.value),
+                this.changeTimeStr(t, n)
+        },
+        changeTimeStr: function (e, t) {
+            for (var i = e; i <= t; i++)
+                this.transformTimeArrToString(this.value[i], i)
+        },
+        initiateTimePeriodStr: function () {
+            for (var e = 0; e < this.value.length; e++)
+                0 !== this.value[e].length && this.transformTimeArrToString(this.value[e], e)
+        },
+        sortArr: function (e) {
+            return e.slice().sort(function (e, t) {
+                return e - t
+            })
+        },
+        transformTimeArrToString: function (e, t) {
+            var i = this.sortArr(e),
+                n = this.weekTimeArr(i),
+                o = n.map((e) => {
+                    var t = void 0,
+                        i = this.r(e[0], "start");
+                    return 1 === e.length ? t = this.r(e[0] + 1, "start") : 2 === e.length && (t = this.r(e[1], "end")),
+                        [i, t].join("~")
+                }).join("、");
+            console.log(o);
+            this.$set(this.timePeriodStrArr, t, o);
+        }
+
+    },
+    computed: {
+        hasSelectedTime: function () {
+            return this.value.some(function (e) {
+                return e.length >= 1
+            })
+        },
+        baseClass: function () {
+            // return [o.CSS_PREFIX + "schedule", o.CSS_PREFIX + "schedule-" + this.type]
+        },
+        isOptionSelected: function () {
+            var e = this.weekCheckbox;
+            return function () {
+                return (arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : []).every(function (t) {
+                    return e[t]
+                })
+            }
+        }
+
+    },
+    watch: {
+        value: {
+            immediate: true,
+            handler: function (e, t) {
+                var i = this;
+                this.value.map(function (e, t) {
+                        for (var n = e.length - 1; n >= 0; n--) {
+                            var a = e[n];
+                            i.disabledDate(t, a) && e.splice(n, 1)
+                        }
+                    }),
+                    this.$emit("input", this.value),
+                    this.$emit("change", this.value),
+                    this.resetTimePeriodStrArr(),
+                    this.initiateTimePeriodStr(),
+                    this.weekCheckbox.map(function (e, t) {
+                        var n = i.value[t].length;
+                        48 === n ? i.weekCheckbox.splice(t, 1, !0) : i.weekCheckbox.splice(t, 1, !1),
+                            i.weekIndeterminate[t] = n < 48 && n > 0
+                    })
+            }
+        }
+    },
+}
 </script>

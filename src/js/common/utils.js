@@ -19,3 +19,4 @@ export default utils.extend({}, utils, {
     return false;
   }
 });
+
