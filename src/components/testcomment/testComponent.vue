@@ -3,14 +3,17 @@
 <template>
 <div style="background:#fff;">
     <weekTime v-model="timeValue"></weekTime>
+    <selectCity></selectCity>
+    
 </div>
 </template>
-
 <script>
-import weekTime from "../baseComponent/weekTime"
+import weekTime from "../baseComponent/weekTime";
+import selectCity from "../baseComponent/selectCity";
 export default {
     components:{
-        weekTime
+        weekTime,
+        selectCity
     },
     data() {
         return {

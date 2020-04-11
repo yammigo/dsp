@@ -315,16 +315,11 @@
 
                                     </div>
                                     <div class="f-select-panel-moduler-container">
-                                        <!-- <div class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check f-select-panel-item-selected">
-                                            <Checkbox :checked="true">全选</Checkbox>
-                                        </div> -->
-
-                                        <!-- 两种状态切换 未选中 和已选中-->
-                                        <!-- <div v-for="(items,indexs) in dataCity" :key="indexs"> -->
+                                     
                                         <div v-for="(item,index) in currentList.cityList" :key="index" class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check f-select-panel-item-selected">
                                             <Checkbox :checked="item.checked" @click.native="changeCityItem(item)">{{item.cityName}}</Checkbox>
                                         </div>
-                                        <!-- </div> -->
+                                       
 
                                     </div>
                                 </div>
@@ -413,7 +408,6 @@ export default {
             ],
             //当前需要展现的列表
             currentList: {},
-
             value1: '选择1',
             param1: ['选择1', '选择2'],
         }
@@ -453,6 +447,7 @@ export default {
                 }
             } else {
                 this.currentList = all;
+                all.indeterminate=false;
                 var index = this.dataCity.indexOf(all);
                 var bool = !this.isCityListSelect[index];
                 for (var i = 0; i < all.cityList.length; i++) {

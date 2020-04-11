@@ -1,6 +1,6 @@
 <style lang="less">
 .f-weektime {
-    margin-left: 104px;
+
     margin-bottom: 10px;
 
     .pull-left {
