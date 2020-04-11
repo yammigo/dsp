@@ -56,6 +56,10 @@
                 background: #F8F9FA;
             }
 
+            tbody tr td:first-child {
+                background: #F8F9FA;
+            }
+
             .td-table-tip {
                 line-height: 2.4em;
                 padding: 0 12px 0 19px;
@@ -91,7 +95,7 @@
             }
 
             tr .calendar-selected {
-                background:#2f88ff;
+                background: #2f88ff;
             }
 
             tr .calendar-atom-time:hover {
@@ -99,7 +103,7 @@
             }
 
             tr .calendar-selected:hover {
-                background:#2f88ff;
+                background: #2f88ff;
             }
 
             tr .ui-selected:hover {
@@ -371,7 +375,7 @@ export default {
         },
         onResetAllClick: function () {
             // this.value=[[],[],[],[],[],[],[],]
-            this.$emit("clear-week-schedule",[
+            this.$emit("clear-week-schedule", [
                     [],
                     [],
                     [],

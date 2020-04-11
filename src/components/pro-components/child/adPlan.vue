@@ -445,8 +445,10 @@ export default {
                 var bool = !this.isSelectedAll;
                 for (var i = 0; i < all.length; i++) {
                     var cityList = all[i].cityList;
+                    all[i].indeterminate=false;
                     for (var j = 0; j < cityList.length; j++) {
                         cityList[j].checked = bool;
+                
                     }
                 }
             } else {

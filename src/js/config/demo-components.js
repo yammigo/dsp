@@ -119,5 +119,11 @@ export default [{
   name: 'testvue',
   component: (resolve) => require(['components/testcomment/test.vue'], resolve),
   meta: { title: '组件测试页面' }
+},
+{
+  path: '/testComponent',
+  name: 'testComponent',
+  component: (resolve) => require(['components/testcomment/testComponent.vue'], resolve),
+  meta: { title: '测试组件' }
 }
 ];
