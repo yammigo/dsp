@@ -10,7 +10,6 @@
 // 由于七牛和plupload的封装不是es6模式的，所以我们自己封装了两个对应的es6包
 import qiniujs from 'qiniu-js-es6';
 import utils from 'hey-utils';
-
 export default {
   props: {
     options: {

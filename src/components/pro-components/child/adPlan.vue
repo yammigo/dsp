@@ -212,7 +212,6 @@
                     <div class="required-item"></div>
                 </div>
                 <div class="input-item">
-
                     <input v-width="480" type="text" value="test" />
                 </div>
 
@@ -249,7 +248,10 @@
                     <div class="required-item"></div>
                 </div>
                 <div class="input-item">
-                    <SwitchList v-model="value1" :datas="param1"></SwitchList>
+                    <p>
+                        <Checkbox :indeterminate="formData.value2.length>0&&formData.value2.length<4" :checked="formData.value2.length == 4" @click.native="checkAll" style="margin-right:40px;">全选</Checkbox>
+                        <Checkbox v-model="formData.value2" :datas="param3"></Checkbox>
+                    </p>
                 </div>
 
             </div>
@@ -262,7 +264,41 @@
                     <div class="required-item"></div>
                 </div>
                 <div class="input-item">
-                    <SwitchList v-model="value1" :datas="param1"></SwitchList>
+                    <selectCity v-model="selectCity"></selectCity>
+                </div>
+
+            </div>
+         
+
+        </div>
+    </div>
+
+    <!-- 匀速 快速 -->
+    <!-- 预算与出价 -->
+    <div class="moduler">
+        <div class="ad-row-title moduler-title">
+            预算与出价
+            <!-- <span class="help-frame-link no-selec">了解详情</span> -->
+        </div>
+        <div class="ad-range">
+            <div class="row-item">
+                <div class="hint-item">
+
+                </div>
+                <div class="label-item label-size-normal">
+                    <div class="text-item">预算</div>
+                    <div class="required-item"></div>
+                </div>
+                <div class="input-item">
+                    <div class="h-input-group" v-width="300">
+                        <div class="h-input-addon">
+                            <div style="padding-left:10px;padding-right:10px;">日预算</div>
+                        </div>
+                        <!-- <FormItem prop="money.minData" label="起始金额" :show-label="false"> -->
+                        <input  type="text" placeholder="预算金额" v-model="formData.money" />
+                        <!-- </FormItem> -->
+                        <span class="h-input-addon">元</span>
+                    </div>
                 </div>
 
             </div>
@@ -271,92 +307,56 @@
 
                 </div>
                 <div class="label-item label-size-normal">
-                    <div class="text-item"></div>
-                    <!-- <div class="required-item"></div> -->
+                    <div class="text-item">投放时间</div>
+                    <div class="required-item"></div>
+                </div>
+                <div class="input-item">
+                    <div>
+                        <DatePicker v-model="formData.startTime" aria-disabled="" placeholder="请选择开始日期" :option="{end:formData.endTime}"></DatePicker>
+                        -
+                        <DatePicker v-model="formData.endTime" placeholder="请选择结束日期" :option="{start:formData.startTime}"></DatePicker>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row-item">
+                <div class="hint-item">
+
+                </div>
+                <div class="label-item label-size-normal">
+                    <div class="text-item">投放时段</div>
+                    <div class="required-item"></div>
                 </div>
                 <div class="input-item">
                     <!-- 下拉组件 -->
-                    <div class="f-select-panel">
-                        <div class="fui-select-panel-left" style="margin-right: 16px; width:500px;">
-                            <div class="fui-select-panel-left-moduler" style="width: 50%; min-width: 200px;">
-                                <div class="f-select-panel-moduler">
-                                    <div class="f-select-panel-moduler-header">
-                                      
-                                        <span class="f-select-panel-moduler-header-title">省份</span>
-
-                                    </div>
-                                    <div class="f-select-panel-moduler-container">
-                                        <div class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check">
-                                            <Checkbox @click.native="selectAll(dataCity)" :checked="isSelectedAll" :indeterminate="isIndeterminate">全选</Checkbox>
-                                        </div>
-                                        <div v-for="(item,index) in dataCity" :key="index" class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check" @click.self="clickProvince(index)">
-                                            <Checkbox @click.native="selectAll(item)" :checked="isCityListSelect[dataCity.indexOf(item)]" :indeterminate="item.indeterminate">{{item.provinceName}}</Checkbox>
-                                            <span class="byted-select-panel-item-toright" v-if="item.cityList.length!==1">
-                                                <div class="byted-icon bui-icon-angle-right"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
-                                                        <defs>
-                                                            <path id="angle-right_svg__a" d="M0 0h48v48H0z"></path>
-                                                        </defs>
-                                                        <g fill-rule="evenodd" transform="rotate(-90 24 24)">
-                                                            <mask id="angle-right_svg__b" fill="#fff">
-                                                                <use xlink:href="#angle-right_svg__a"></use>
-                                                            </mask>
-                                                            <use opacity=".01" xlink:href="#angle-right_svg__a"></use>
-                                                            <path fill-rule="nonzero" d="M16.586 35.324a2 2 0 0 0 2.828 2.828l12-12a2 2 0 0 0 0-2.828l-12-12a2 2 0 0 0-2.828 2.828l10.586 10.586-10.586 10.586z" transform="rotate(90 24 24.738)"></path>
-                                                        </g>
-                                                    </svg></div>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="fui-select-panel-left-moduler" style="width: 50%; min-width: 200px;border-top-right-radius: 0;border-bottom-right-radius: 0;">
-                                <div class="f-select-panel-moduler">
-                                    <div class="f-select-panel-moduler-header"><span class="f-select-panel-moduler-header-title">城市</span>
-
-                                    </div>
-                                    <div class="f-select-panel-moduler-container">
-                                     
-                                        <div v-for="(item,index) in currentList.cityList" :key="index" class="f-select-panel-item f-select-panel-item-active f-select-panel-item-check f-select-panel-item-selected">
-                                            <Checkbox :checked="item.checked" @click.native="changeCityItem(item)">{{item.cityName}}</Checkbox>
-                                        </div>
-                                       
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="fui-select-panel-right" style="width: 200px;">
-                            <div class="f-select-panel-moduler">
-                                <div class="f-select-panel-moduler-header"><span class="f-select-panel-moduler-header-title">已选</span> <span class="f-select-panel-moduler-header-clear">清空</span></div>
-                                <div class="f-select-panel-moduler-container">
-
-                                    <div class="f-select-panel-item f-select-panel-item-remove f-select-panel-item-selected">
-                                        <span class="f-select-panel-item-name">北京</span>
-                                        <span class="f-select-panel-item-closeicon">
-                                            <div class="byted-icon bui-icon-close">
-                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
-                                                    <defs>
-                                                        <path id="close_svg__a" d="M0 0h48v48H0z"></path>
-                                                    </defs>
-                                                    <g fill-rule="evenodd">
-                                                        <mask id="close_svg__b" fill="#fff">
-                                                            <use xlink:href="#close_svg__a"></use>
-                                                        </mask>
-                                                        <use fill="#FFF" fill-opacity=".01" xlink:href="#close_svg__a"></use>
-                                                        <path fill-rule="nonzero" d="M24 21.172l8.586-8.586a2 2 0 0 1 2.828 2.828L26.828 24l8.586 8.586a2 2 0 0 1-2.828 2.828L24 26.828l-8.586 8.586a2 2 0 0 1-2.828-2.828L21.172 24l-8.586-8.586a2 2 0 0 1 2.828-2.828L24 21.172z"></path>
-                                                    </g>
-                                                </svg>
-                                            </div>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <weekTime v-model="weekTimeData"></weekTime>
                     <!-- end -->
                 </div>
 
             </div>
+        </div>
+    </div>
+     <div class="moduler">
+        <div class="ad-row-title moduler-title">
+           计划名称
+            <!-- <span class="help-frame-link no-selec">了解详情</span> -->
+        </div>
+        <div class="ad-range">
+            <div class="row-item">
+                <div class="hint-item">
+
+                </div>
+                <div class="label-item label-size-normal">
+                    <div class="text-item">计划名称</div>
+                    <div class="required-item"></div>
+                </div>
+                <div class="input-item">
+                      <input v-width="480" type="text" value="这里填写计划的名称" />
+                </div>
+
+            </div>
+        
+         
 
         </div>
     </div>
@@ -365,97 +365,47 @@
 </template>
 
 <script>
+import selectCity from "../../baseComponent/selectCity"
+import weekTime from "../../baseComponent/weekTime"
+import {
+    format
+} from 'url'
 export default {
+    components: {
+        selectCity,
+        weekTime
+    },
     props: ["id", "name"],
-
     data() {
         return {
-            dataCity: [{
-                    provinceName: '北京',
-                    cityList: [{
-                        cityName: '北京',
-                        checked: true,
-                    }]
-                }, {
-                    provinceName: '天津',
-                    cityList: [{
-                        cityName: '天津',
-                        checked: true,
-                    }]
-                }, {
-                    provinceName: '河北',
-                    cityList: [{
-                        cityName: '沈阳',
-                        checked: true,
-
-                    }, {
-                        cityName: '唐山',
-                        checked: true,
-                    }]
-                },
-                {
-                    provinceName: '山西',
-                    indeterminate:true,
-                    cityList: [{
-                        cityName: '太原',
-                        checked: true
-
-                    }, {
-                        cityName: '大同',
-                        checked: false
-                    }]
-                }
+            formData: {
+                value1: [],
+                value2: []
+            },
+            selectCity: [],
+            weekTimeData: [
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                []
             ],
-            //当前需要展现的列表
-            currentList: {},
             value1: '选择1',
             param1: ['选择1', '选择2'],
+            param2: ["WIFI", "2G", "3G", "4G"],
+            param3: ["IOS", "Android"]
         }
     },
     methods: {
-        clickProvince(index){
-                this.currentList=this.dataCity[index];
-        },
-        changeCityItem(item){
-               item.checked=!item.checked;
-               let idx=this.dataCity.indexOf(this.currentList),a=0;
-                // if(this.dataCity[idx])
-                for(var i=0,len=this.dataCity[idx].cityList.length;i<len;i++){
-                        if(this.dataCity[idx].cityList[i].checked){
-                            a+=1
-                        }
-                }
-                if(a>0&&a<this.dataCity[idx].cityList.length){
-                    this.dataCity[idx].indeterminate=true
-                }else{
-                    this.dataCity[idx].indeterminate=false
-                }
-                
-        },
-        selectAll: function (all) {
-            //展示当前选中的列表
-
-            if (all instanceof Array) {
-                var bool = !this.isSelectedAll;
-                for (var i = 0; i < all.length; i++) {
-                    var cityList = all[i].cityList;
-                    all[i].indeterminate=false;
-                    for (var j = 0; j < cityList.length; j++) {
-                        cityList[j].checked = bool;
-                
-                    }
-                }
+        checkAll() {
+            if (this.formData.value1.length == 4) {
+                this.formData.value1.splice(0, 4);
             } else {
-                this.currentList = all;
-                all.indeterminate=false;
-                var index = this.dataCity.indexOf(all);
-                var bool = !this.isCityListSelect[index];
-                for (var i = 0; i < all.cityList.length; i++) {
-                    all.cityList[i].checked = bool;
-                }
+                this.formData.value1 = ["WIFI", "2G", "3G", "4G"];
             }
-        },
-
+        }
     },
 
     created() {
@@ -480,17 +430,17 @@ export default {
         //一级选项是否半选
         isIndeterminate: {
             get() {
-               
+
                 //所有城市是否都被选中
-                for(var i=0,len=this.dataCity.length;i<len;i++){
-                     for(var j=0,jlen=this.dataCity[i].cityList.length;j<jlen;j++){
-                         if(this.dataCity[i].cityList[j].checked&&i>=0&&i<len){
-                              return true
-                         }
-                     }
+                for (var i = 0, len = this.dataCity.length; i < len; i++) {
+                    for (var j = 0, jlen = this.dataCity[i].cityList.length; j < jlen; j++) {
+                        if (this.dataCity[i].cityList[j].checked && i >= 0 && i < len) {
+                            return true
+                        }
+                    }
                 }
                 return false
-               
+
             },
 
             set() {},
@@ -500,14 +450,15 @@ export default {
         isIndeterminateItem: {
             get() {
                 //取出所有的不去定元素
-                var tempArr = [],flagList=[];
+                var tempArr = [],
+                    flagList = [];
                 for (var i = 0; i < this.dataCity.length; i++) {
                     tempArr[i] = false;
                     var cityList = this.dataCity[i].cityList;
                     for (var j = 0; j < cityList.length; j++) {
-                        
-                        if (cityList[j].checked&&i==cityList.length) {   
-                             
+
+                        if (cityList[j].checked && i == cityList.length) {
+
                             tempArr[i] = false;
                             break;
                         }
@@ -516,7 +467,7 @@ export default {
                 console.log(tempArr)
                 // return tempArr;
                 return true
-              
+
             },
             set() {
 
