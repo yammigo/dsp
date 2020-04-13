@@ -3,7 +3,7 @@
 <template>
 <div style="background:#fff;">
     <weekTime v-model="timeValue"></weekTime>
-    <selectCity></selectCity>
+    <selectCity v-model="selectCity"></selectCity>
     
 </div>
 </template>
@@ -25,7 +25,8 @@ export default {
                 [],
                 [],
                 []
-            ]
+            ],
+            selectCity:["2002","2004"]
         }
     },
     mounted() {

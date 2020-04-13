@@ -488,7 +488,7 @@ export default {
             immediate: true,
             handler: function (e, t) {
                 var i = this;
-                this.value.map(function (e, t) {
+                    this.value.map(function (e, t) {
                         for (var n = e.length - 1; n >= 0; n--) {
                             var a = e[n];
                             i.disabledDate(t, a) && e.splice(n, 1)
