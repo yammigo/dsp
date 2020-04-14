@@ -64,12 +64,26 @@ const initRouter = () => {
 
   let router = new VueRouter(routerParam);
   let isFirstRouter = true;
-
   router.beforeEach((to, from, next) => {
-    if (!isFirstRouter && !isAuthPage(to.name)) {
-      next({ name: 'PermissionError' });
-      return;
+    // if (!isFirstRouter && !isAuthPage(to.name)) {
+    //   next({ name: 'PermissionError' });
+    //   return;
+    // }
+    let token = !!Utils.getCookie('token');
+    if (!token && to.name != 'Login') {  // 判断是否已经登录且前往的页面不是登录页
+      next({
+        name: 'Login'
+      });
+      return false
+    }else{
+      if(token &&  to.name == 'Login'){
+        next({
+          name: from.name
+        });
+        return false;
+      }
     }
+
     HeyUI.$LoadingBar.start();
     if (to.meta && to.meta.title) {
       document.title = to.meta.title + ' - 管理';

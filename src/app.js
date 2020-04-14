@@ -10,11 +10,14 @@ import store from 'js/vuex/store';
 import 'js/vue/components';
 import 'js/vue/filters';
 import './css/app.less';
+G.set('env', {
+  apiDomin:process.env.NODE_ENV == 'development' ? '//10.0.0.84' : '//103.22.43.12:8000'
+});
 // require('./css/app.less');
 // 开发环境判断
 // process.env.NODE_ENV == 'development'
 // 使用mock文件， 自己开发的时候请删除
-require('./mock/index');
+// require('./mock/index');
 // HeyUI已经设定为全局变量，无需引用
 // 设定全局变量请参考根目录下的hey.conf.js文件
 heyuiConfig();

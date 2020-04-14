@@ -2,10 +2,14 @@ import axios from 'axios';
 import qs from 'qs';
 import Utils from './utils';
 
-const DefaultParam = { repeatable: false };
+// admin：10.0.0.15
+// user：10.0.0.84
+const DefaultParam = { repeatable: true };
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+axios.defaults.baseURL = G.get("env").apiDomin
 
 let ajax = {
-  PREFIX: '/api',
+  PREFIX: '', //前缀
   Author: Utils.getAuthor() || 'fanjiantao',
   requestingApi: new Set(),
   extractUrl: function (url) {
@@ -38,16 +42,24 @@ let ajax = {
     var params = {
       url,
       method: 'POST'
+      
     };
-    if (param) params.data = qs.stringify(param);
-    return this.ajax(params, extendParam);
+     let paramA = {
+      body: param,
+      header: {
+          token: "ceshisadasd",
+          cmdType:'1'
+      }
+  };
+    if (param) params.data = JSON.stringify(paramA);
+    return this.ajax(params,extendParam);
   },
   postJson: function (url, paramJson, extendParam) {
     return this.ajax({
       url,
       method: 'POST',
       data: paramJson
-    }, extendParam);
+    },extendParam);
   },
   patchJson: function (url, paramJson, dataType, extendParam) {
     return this.ajax({
@@ -64,6 +76,7 @@ let ajax = {
   },
   ajax: function (param, extendParam) {
     let params = Utils.extend({}, DefaultParam, param, extendParam || {});
+   
     params.crossDomain = params.url.indexOf('http') === 0;
     let url = params.url;
     if (!params.crossDomain) {
@@ -78,8 +91,11 @@ let ajax = {
       }
     }
     let header = {
-      author: this.Author,
-      Authorization: Utils.getLocal('token')
+      // author: this.Author,
+      // Authorization: Utils.getLocal('token'),
+      // author: 'fanjiantao',
+      // Authorization: 'fanjiantao',
+      'Content-Type': 'application/x-www-form-urlencoded',
     };
     let defaultParam = {
       headers: header,
@@ -88,6 +104,7 @@ let ajax = {
         return true;
       },
       paramsSerializer: (params) => {
+       
         return qs.stringify(params, { allowDots: true });
       }
     };
@@ -101,10 +118,6 @@ let ajax = {
         that.deleteRequest(params.url);
         let data = response.data;
         let status = response.status;
-        // 如果后端统一封装返回，即所有的请求都是200, 错误码由返回结果提供，则使用以下代码获取状态
-        // if (status == 200) {
-        //   status = data.status;
-        // }
         if (status != 200) {
           if (status == 401) {
             window.top.location = '/login';
@@ -118,7 +131,10 @@ let ajax = {
             HeyUI.$Message.error(data._msg || '请求异常');
           }
         }
-        data.ok = data.status == 200;
+        data.ok = data.code == 0;
+        if(!data.ok){
+          HeyUI.$Message.error(data.msg);
+        }
         resolve(data);
       }).catch(() => {
         that.deleteRequest(params.url);

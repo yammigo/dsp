@@ -265,7 +265,8 @@ export default {
         activeStep(val){
             // console.log(val,"接收的参数")
             this.stepData=val;
-        }
+        },
+        
     },
     computed: {}
 };

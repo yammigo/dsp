@@ -7,8 +7,9 @@ const Request = {
     }
   },
   Dict: {
+    //获取字典信息
     get() {
-      return Ajax.get(`/dict`);
+      return Ajax.get('/dict');
     }
   },
   Home: {
@@ -24,7 +25,7 @@ const Request = {
   Login: {
     //登录
     login(param) {
-      return Ajax.postJson('/login', param);
+      return Ajax.post('/pub/login.do', param);
     },
     //登出
     logout(param) {

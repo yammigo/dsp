@@ -1,10 +1,7 @@
 <template>
 <div class="m-image-upload">
     <p v-for="(file,index) in files" :key="index">{{file.name}}{{ file.progress }} %</p>
-    <!-- <Button @click="upload">上传文件1</Button> -->
-    <fileUpload :add-index="true" input-id="file2" ref="uploader" :thread="5" v-model="files" extensions="jpg,gif,png,webp" post-action="https://jsonplaceholder.typicode.com/posts/" @input-file="inputFile">
-    <Button >上传文件1</Button>
-    </fileUpload>
+    <Button @click="upload">上传文件2</Button>
     <!-- <div v-for="(file, index) in value" :key="index">
         <img :src="file.thumb || file.url" @click="preview(index)" />
         <bttton @click="remove(index, true)">删除</bttton>
@@ -38,11 +35,22 @@ export default {
     },
     data() {
         return {
+            uploadData:{
+                token:Utils.getCookie('token'),
+                cmdType:JSON.parse(Utils.getCookie('userInfo')).cmdType,
+                adType:1,
+                adTypeStyle:1
+            },
+            uplodUrl:G.get("env").apiDomin+"/pub/upload/library.do",
             files: [], // 存放在组件的file对象
             filList: {
 
             }
         }
+    },
+    mounted() {
+        console.log(G.get("env").apiDomin);
+        console.log(document.querySelector("input[type='file']"));
     },
     methods: {
         upload() {
@@ -52,14 +60,13 @@ export default {
         // 当 add, update, remove File 这些事件的时候会触发
         inputFile(newFile, oldFile) {
             if (newFile && !oldFile) {
-                console.log("add",newFile.id);
+                console.log("add", newFile);
                 // 添加文件
             }
-
-            // this.filList[newFile.id+'']=""
+            
             // 上传完成
             if (newFile && oldFile && !newFile.active && oldFile.active) {
-                 console.log("update",newFile.id);
+                console.log("update", newFile);
                 // 获得相应数据
                 if (newFile.xhr) {
                     console.log(newFile.response);

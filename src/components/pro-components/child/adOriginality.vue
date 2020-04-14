@@ -443,7 +443,7 @@
                                             <div data-v-43fe58d8="" class="video-card video-card__video">
                                                 <div data-v-b4926adc="" data-v-43fe58d8="" class="card-create card-create-15 card-create-">
                                                     <div data-v-b4926adc="" class="card-create-upload">
-                                                        <div data-v-f0212714="" data-v-43fe58d8="" class="upload" data-v-b4926adc="">
+                                                        <div data-v-f0212714="" data-v-43fe58d8="" class="upload" data-v-b4926adc="" @click="openModal">
                                                             <p data-v-f0212714="" class="upload-area-text">
                                                                 <div data-v-f0212714="" class="upload-icon byted-icon bui-icon-upload" style="fill: rgb(153, 153, 153);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="100%" height="100%">
                                                                         <g fill-rule="nonzero">
@@ -455,7 +455,7 @@
                                                         </div>
                                                     </div>
                                                     <div data-v-b4926adc="" class="card-create-button">
-                                                        <button class="h-btn" style="width:100%;background:#F8F8F8">素材库</button>
+                                                        <button class="h-btn" @click="openModal" style="width:100%;background:#F8F8F8">素材库</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -528,6 +528,23 @@
 
         </div>
     </div>
+    <Modal v-model="opened" :closeOnMask="false">
+        <div slot="header" style="padding:20px 0px;">素材库</div>
+        <div style="width:907px;height:500px;position:relative">
+
+            <div class="h-uploader-browse-button h-uploader-drop-element" style="height:300px;width:100%;position:absolute; z-index: 1;">
+
+                <div style="text-align:center;width:300px;height:120px;position:absolute;top:50%;left:50%;margin-left:-150px;margin-top:-60px;">
+                    <i class="h-icon-upload blue-color" style="font-size: 30px;"></i>
+                    <p class="text-center">点击或将文件拖拽到这里上传</p>
+                </div>
+                <fileUpload :data="uploadData"  :drop="true" :add-index="true" input-id="fileUplaod" ref="uploader" :thread="5" v-model="files" extensions="jpg,gif,png,webp" :post-action="uplodUrl" @input-file="inputFile"></fileUpload>
+
+            </div>
+
+        </div>
+        <div slot="footer"><button class="h-btn" @click="opened=false">取消</button></div>
+    </Modal>
 </div>
 </template>
 
@@ -535,12 +552,80 @@
 export default {
     data() {
         return {
+            opened: false,
             value1: "",
-            param1: ["横幅", "插屏", "激励视频", "信息流"]
+            param1: ["横幅", "插屏", "激励视频", "信息流"],
+            //素材上传相关
+            uploadData: {
+                token: Utils.getCookie('token'),
+                cmdType: JSON.parse(Utils.getCookie('userInfo')).cmdType,
+                adType: 1,
+                adTypeStyle: 1
+            },
+            uplodUrl: G.get("env").apiDomin + "/pub/upload/library.do",
+            files: [], // 存放在组件的file对象
+            filList: {
+
+            }
         };
     },
     methods: {
+        openModal() {
+            this.opened = true;
+        },
+        upload() {
+            // this.$refs.uploadPush.click();
+            document.getElementById('fileUplaod').click();
+        },
+        // 当 add, update, remove File 这些事件的时候会触发
+        inputFile(newFile, oldFile) {
+            if (newFile && !oldFile) {
+                console.log("add", newFile);
+                // 添加文件
+            }
 
+            // 上传完成
+            if (newFile && oldFile && !newFile.active && oldFile.active) {
+                console.log("update", newFile);
+                // 获得相应数据
+                if (newFile.xhr) {
+                    console.log(newFile.response);
+                    // this.filList[newFile.id+='']=
+                    // this.value.push(newFile.response.data) 
+                    this.$refs.uploader.remove(newFile)
+                    this.$emit('update:value', this.value)
+                }
+            }
+
+            // 自动上传
+            if (Boolean(newFile) !== Boolean(oldFile) || oldFile.error !== newFile.error) {
+                if (!this.$refs.uploader.active) {
+                    this.$refs.uploader.active = true
+                }
+            }
+        },
+        // 文件过滤，可以通过 prevent 来阻止上传
+        inputFilter(newFile, oldFile, prevent) {
+            if (newFile && (!oldFile || newFile.file !== oldFile.file)) {
+                // 自动压缩
+
+                this.$refs.uploader.update(newFile, {
+                    error: err.message || 'compress'
+                })
+
+            }
+        },
+        remove(index, isValue) {
+            if (isValue) {
+                this.value.splice(index, 1)
+                this.$emit('update:value', this.value)
+            } else {
+                this.$refs.uploader.remove(this.files[index])
+            }
+        },
+        preview(index) {
+            console.log(index);
+        }
     },
     computed: {
 

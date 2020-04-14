@@ -15,9 +15,9 @@
             <Content>
                 <div class="app-frame-content">
                     <!-- <keep-alive> -->
-                    <transition name="fade" mode="out-in">
+                    <!-- <transition name="fade" mode="out-in"> -->
                         <router-view></router-view>
-                    </transition>
+                    <!-- </transition> -->
                     <!-- </keep-alive> -->
                 </div>
                 <HFooter>
@@ -63,10 +63,8 @@ export default {
     mounted() {
         // 如果无后台数据，将此处屏蔽
         this.init();
-
         // 如果无后台数据，将此处打开
-        // this.loading = false;
-
+        this.loading = false;
         const listener = G.addlistener('SYS_MENU_REFRESH', () => {
             this.initMenu();
         });
@@ -76,28 +74,30 @@ export default {
     },
     methods: {
         init() {
-            this.$Loading('加载中');
-            R.User.info().then(resp => {
-                if (resp.ok) {
-                    resp.body.avatar = require('../../images/avatar.png');
-                    G.set('account', resp.body);
-                    store.dispatch('updateAccount', resp.body);
+            // this.$Loading('加载中');
+            
+            // R.User.info().then(resp => {
+            //     if (resp.ok) {
+            //         resp.body.avatar = require('../../images/avatar.png');
+            //         G.set('account', resp.body);
+            //         store.dispatch('updateAccount', resp.body);
                     this.initDict();
                     this.initMenu();
-                }
-            });
+            //     }
+            // });
         },
         initDict() {
-            R.Dict.get().then(resp => {
-                if (resp.ok) {
-                    let dicts = resp.body;
-                    for (let dict of dicts) {
-                        HeyUI.addDict(dict.name, dict.data);
-                    }
-                }
-                this.loading = false;
-                this.$Loading.close();
-            });
+            //初始化字典
+            // R.Dict.get().then(resp => {
+            //     if (resp.ok) {
+            //         let dicts = resp.body;
+            //         for (let dict of dicts) {
+            //             HeyUI.addDict(dict.name, dict.data);
+            //         }
+            //     }
+            //     this.loading = false;
+            //     this.$Loading.close();
+            // });
         },
         updateLayoutConfig({
             key,
@@ -109,30 +109,29 @@ export default {
             console.log('保存权限');
             // 如果使用权限配置，配合后端获取请求的数据
             // setTimeout(() => {
-            //     let menus = Utils.getLocal2Json('SYS_CONFIG_MENU') || fullMenuKeys;
-            //     console.log(menus, '菜单')
-            //     G.set('SYS_MENUS', menus);
-            //     G.trigger('SYS_MENU_UPDATE');
-            //     if (!isAuthPage(this.$route.name)) {
-            //         this.$router.replace({
-            //             name: 'PermissionError'
-            //         });
-            //     }
+                let menus = Utils.getLocal2Json('SYS_CONFIG_MENU') || fullMenuKeys;
+                // console.log(menus, '菜单')
+                G.set('SYS_MENUS', menus);
+                G.trigger('SYS_MENU_UPDATE');
+                if (!isAuthPage(this.$route.name)) {
+                    this.$router.replace({
+                        name: 'PermissionError'
+                    });
+                }
             // },3000)
             //走服务端权限判断
-            R.Account.menus().then(resp => {
-                if (resp.ok) {
-                    let menus = resp.body;
-                    // console.log(menus,"菜单");
-                    G.set('SYS_MENUS', menus);
-                    G.trigger('SYS_MENU_UPDATE');
-                    if (!isAuthPage(this.$route.name)) {
-                        this.$router.replace({
-                            name: 'PermissionError'
-                        });
-                    }
-                }
-            });
+            // R.Account.menus().then(resp => {
+            //     if (resp.ok) {
+            //         let menus = resp.body;
+            //         G.set('SYS_MENUS', menus);
+            //         G.trigger('SYS_MENU_UPDATE');
+            //         if (!isAuthPage(this.$route.name)) {
+            //             this.$router.replace({
+            //                 name: 'PermissionError'
+            //             });
+            //         }
+            //     }
+            // });
 
             // let menus = Utils.getLocal2Json('SYS_CONFIG_MENU') || fullMenuKeys;
             // G.set('SYS_MENUS', menus);

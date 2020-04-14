@@ -1,4 +1,7 @@
+
 export default new Model({
-  username: '',
-  password: ''
+  loginName: '',
+  passWord: '',
+  verifyCode:'',
+  id:'',
 });
