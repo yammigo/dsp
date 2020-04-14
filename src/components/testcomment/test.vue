@@ -1,8 +1,9 @@
 <template>
 <div class="m-image-upload">
     <p v-for="(file,index) in files" :key="index">{{file.name}}{{ file.progress }} %</p>
-     <Button @click="upload">上传文件1</Button>
-    <fileUpload input-id="file2" ref="uploader" v-model="files" multiple :thread="10" extensions="jpg,gif,png,webp" post-action="https://jsonplaceholder.typicode.com/posts/" @input-file="inputFile">
+    <!-- <Button @click="upload">上传文件1</Button> -->
+    <fileUpload :add-index="true" input-id="file2" ref="uploader" :thread="5" v-model="files" extensions="jpg,gif,png,webp" post-action="https://jsonplaceholder.typicode.com/posts/" @input-file="inputFile">
+    <Button >上传文件1</Button>
     </fileUpload>
     <!-- <div v-for="(file, index) in value" :key="index">
         <img :src="file.thumb || file.url" @click="preview(index)" />
@@ -29,32 +30,43 @@
 export default {
     name: 'testvue',
     props: {
-        value: Array ,
-        default:()=>{
+        value: Array,
+        default: () => {
             return []
         }
-        
+
     },
     data() {
         return {
-            files: [] // 存放在组件的file对象
+            files: [], // 存放在组件的file对象
+            filList: {
+
+            }
         }
     },
     methods: {
-        upload(){
+        upload() {
             // this.$refs.uploadPush.click();
             document.getElementById('file2').click();
         },
         // 当 add, update, remove File 这些事件的时候会触发
         inputFile(newFile, oldFile) {
+            if (newFile && !oldFile) {
+                console.log("add",newFile.id);
+                // 添加文件
+            }
+
+            // this.filList[newFile.id+'']=""
             // 上传完成
             if (newFile && oldFile && !newFile.active && oldFile.active) {
+                 console.log("update",newFile.id);
                 // 获得相应数据
-                if (newFile.xhr && newFile.xhr.status === 200) {
-                    console.log(newFile.response)
-                    this.value.push(newFile.response.data) 
-                    this.$refs.uploader.remove(newFile) 
-                    this.$emit('update:value', this.value) 
+                if (newFile.xhr) {
+                    console.log(newFile.response);
+                    // this.filList[newFile.id+='']=
+                    // this.value.push(newFile.response.data) 
+                    this.$refs.uploader.remove(newFile)
+                    this.$emit('update:value', this.value)
                 }
             }
 
