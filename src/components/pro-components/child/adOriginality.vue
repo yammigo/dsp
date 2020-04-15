@@ -1,5 +1,6 @@
 <style lang="less">
 .adOrigin {
+
     .ad-creative-components-wrap a {
         outline: none;
         cursor: pointer;
@@ -307,6 +308,28 @@
     }
 
 }
+
+.uploadIconClose,
+.uploadCheckbox {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 10px;
+    z-index: 10;
+    text-align: center;
+    line-height: 30px;
+    background: #ffffffb8;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.uploadCheckbox {
+    left: 10px;
+}
+
+.uploadIconClose {
+    right: 10px;
+}
 </style>
 <template>
 <div class="adOrigin">
@@ -318,6 +341,7 @@
             计划名称：<strong data-no-translate="">1.20-头条-APP行为-儿童玩具（1656236015459380）</strong></div>
     </div>
     <div class="moduler">
+
         <div class="ad-row-title moduler-title">
             制作创意
             <!-- <span class="help-frame-link no-selec">了解详情</span> -->
@@ -344,9 +368,9 @@
                 </div>
                 <div class="input-item">
                     <!-- 创意选框 -->
-                    <div data-v-467d7170="" data-v-25da4e55="" class="creative-type-tab-procedural" id="row_id_making_procedural_info">
-                        <div data-v-467d7170="" class="ctt-type-list">
-                            <div data-v-467d7170="" class="fui-tabs fui-tabs-sm fui-tabs-line">
+                    <div   class="creative-type-tab-procedural" id="row_id_making_procedural_info">
+                        <div  class="ctt-type-list">
+                            <div  class="fui-tabs fui-tabs-sm fui-tabs-line">
                                 <div class="fui-tabs-header">
                                     <div class="fui-tabs-wrapper">
                                         <div style="display:none" class="fui-icon fui-icon-angle-left tabs-angle-left is-disabled"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
@@ -364,50 +388,50 @@
                                         <div class="fui-tabs-scroll">
                                             <ul class="fui-tabs-nav">
                                                 <li class="active fui-tabs-nav-item"><a class="fui-tab-nav">
-                                                        <div data-v-c8213c9c="" data-v-467d7170="" class="image-mode-tab image-mode-tab-active image-mode-tab-closable">
+                                                        <div   class="image-mode-tab image-mode-tab-active image-mode-tab-closable">
                                                             <!---->
-                                                            <div data-v-c8213c9c="" class="img-box"><img data-v-c8213c9c="" src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V5/15_S.svg" alt=""></div>
-                                                            <div data-v-c8213c9c="" class="title">
+                                                            <div  class="img-box"><img  src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V5/15_S.svg" alt=""></div>
+                                                            <div  class="title">
                                                                 竖版视频
                                                             </div>
 
                                                         </div>
                                                     </a></li>
                                                 <li class="fui-tabs-nav-item"><a class="fui-tab-nav">
-                                                        <div data-v-c8213c9c="" data-v-467d7170="" class="image-mode-tab image-mode-tab-active image-mode-tab-closable">
+                                                        <div   class="image-mode-tab image-mode-tab-active image-mode-tab-closable">
                                                             <!---->
-                                                            <div data-v-c8213c9c="" class="img-box"><img data-v-c8213c9c="" src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V5/5_S.svg" alt=""></div>
-                                                            <div data-v-c8213c9c="" class="title">
+                                                            <div  class="img-box"><img  src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V5/5_S.svg" alt=""></div>
+                                                            <div  class="title">
                                                                 横版视频
                                                             </div>
 
                                                         </div>
                                                     </a></li>
                                                 <li class="fui-tabs-nav-item"><a class="fui-tab-nav">
-                                                        <div data-v-c8213c9c="" data-v-467d7170="" class="image-mode-tab image-mode-tab-closable">
+                                                        <div   class="image-mode-tab image-mode-tab-closable">
                                                             <!---->
-                                                            <div data-v-c8213c9c="" class="img-box"><img data-v-c8213c9c="" src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V3/3_S.svg" alt=""></div>
-                                                            <div data-v-c8213c9c="" class="title">
+                                                            <div  class="img-box"><img  src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V3/3_S.svg" alt=""></div>
+                                                            <div  class="title">
                                                                 大图横图
                                                             </div>
 
                                                         </div>
                                                     </a></li>
                                                 <li class="fui-tabs-nav-item"><a class="fui-tab-nav">
-                                                        <div data-v-c8213c9c="" data-v-467d7170="" class="image-mode-tab image-mode-tab-closable">
+                                                        <div   class="image-mode-tab image-mode-tab-closable">
                                                             <!---->
-                                                            <div data-v-c8213c9c="" class="img-box"><img data-v-c8213c9c="" src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V5/2_S.svg" alt=""></div>
-                                                            <div data-v-c8213c9c="" class="title">
+                                                            <div  class="img-box"><img  src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V5/2_S.svg" alt=""></div>
+                                                            <div  class="title">
                                                                 小图
                                                             </div>
 
                                                         </div>
                                                     </a></li>
                                                 <li class="fui-tabs-nav-item"><a class="fui-tab-nav">
-                                                        <div data-v-c8213c9c="" data-v-467d7170="" class="image-mode-tab image-mode-tab-closable">
+                                                        <div   class="image-mode-tab image-mode-tab-closable">
                                                             <!---->
-                                                            <div data-v-c8213c9c="" class="img-box"><img data-v-c8213c9c="" src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V3/16_S.svg" alt=""></div>
-                                                            <div data-v-c8213c9c="" class="title">
+                                                            <div  class="img-box"><img  src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V3/16_S.svg" alt=""></div>
+                                                            <div  class="title">
                                                                 大图竖图
                                                             </div>
 
@@ -431,21 +455,21 @@
                                 </div>
                             </div>
                         </div>
-                        <div data-v-467d7170="" class="fui-card fui-card-none-shadow ctt-panel">
+                        <div  class="fui-card fui-card-none-shadow ctt-panel">
                             <!---->
                             <div class="byted-card-header" style="border: none; padding:12px;">
                                 <Button color="primary">添加素材</Button>
                             </div>
                             <div class="fui-card-body" style="padding: 0px;">
-                                <div data-v-25da4e55="" class="creative-card-container" style="width: calc(50% - 24px);">
-                                    <div data-v-43fe58d8="" data-v-25da4e55="" class="creative-video-card procedural-card">
-                                        <div data-v-43fe58d8="" class="creative-video-card-wrapper creative-video-card-wrapper-15">
-                                            <div data-v-43fe58d8="" class="video-card video-card__video">
-                                                <div data-v-b4926adc="" data-v-43fe58d8="" class="card-create card-create-15 card-create-">
-                                                    <div data-v-b4926adc="" class="card-create-upload">
-                                                        <div data-v-f0212714="" data-v-43fe58d8="" class="upload" data-v-b4926adc="" @click="openModal">
-                                                            <p data-v-f0212714="" class="upload-area-text">
-                                                                <div data-v-f0212714="" class="upload-icon byted-icon bui-icon-upload" style="fill: rgb(153, 153, 153);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="100%" height="100%">
+                                <div  class="creative-card-container" style="width: calc(50% - 24px);">
+                                    <div   class="creative-video-card procedural-card">
+                                        <div  class="creative-video-card-wrapper creative-video-card-wrapper-15">
+                                            <div  class="video-card video-card__video">
+                                                <div   class="card-create card-create-15 card-create-">
+                                                    <div  class="card-create-upload">
+                                                        <div   class="upload"  @click="openModal">
+                                                            <p  class="upload-area-text">
+                                                                <div  class="upload-icon byted-icon bui-icon-upload" style="fill: rgb(153, 153, 153);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="100%" height="100%">
                                                                         <g fill-rule="nonzero">
                                                                             <path fill-opacity=".01" d="M0 0h16v16H0z"></path>
                                                                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.667 8.575v4.092a.667.667 0 0 1-1.334 0v-4.08L6.161 9.765a.667.667 0 1 1-.945-.941l2.312-2.32c.26-.26.68-.26.942-.002l2.377 2.36a.667.667 0 0 1-.94.946l-1.24-1.232zM4.373 7.22a.664.664 0 0 1-.326.187 2.668 2.668 0 1 0 1.349 5.16.667.667 0 0 1 .363 1.283A4.002 4.002 0 0 1 3.354 6.22a4.667 4.667 0 0 1 9.295.033 4 4 0 1 1-2.497 7.595.667.667 0 0 1 .363-1.282A2.669 2.669 0 0 0 13.911 10a2.668 2.668 0 0 0-2.047-2.594.667.667 0 0 1-.507-.561.667.667 0 0 1-.024-.178 3.333 3.333 0 1 0-6.666 0c0 .23-.117.432-.294.552z"></path>
@@ -454,29 +478,29 @@
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <div data-v-b4926adc="" class="card-create-button">
+                                                    <div  class="card-create-button">
                                                         <button class="h-btn" @click="openModal" style="width:100%;background:#F8F8F8">素材库</button>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div data-v-76b48f24="" data-v-43fe58d8="" class="card-tip">
-                                                <div data-v-76b48f24="" class="card-tip-info">
-                                                    <div data-v-43fe58d8="" data-v-76b48f24="">
+                                            <div   class="card-tip">
+                                                <div  class="card-tip-info">
+                                                    <div  >
                                                         宽高比9:16,视频码率≥516kbps,大小≤100M,分辨率≥720*1280,时长≥4s
                                                     </div>
                                                 </div>
                                                 <!---->
                                             </div>
                                         </div>
-                                        <div data-v-43fe58d8="" class="creative-video-card-wrapper creative-video-card-wrapper-15">
-                                            <div data-v-c6ac33dc="" data-v-43fe58d8="" class="creative-image-card image-card-15">
-                                                <div data-v-c6ac33dc="" class="creative-image-card-wrapper">
-                                                    <div data-v-c6ac33dc="" class="image-card">
-                                                        <div data-v-b4926adc="" data-v-c6ac33dc="" class="card-create card-create-15 card-create-md">
-                                                            <div data-v-b4926adc="" class="card-create-upload">
-                                                                <div data-v-f0212714="" data-v-c6ac33dc="" class="upload" data-v-b4926adc="">
-                                                                    <p data-v-f0212714="" class="upload-area-text">
-                                                                        <div data-v-f0212714="" class="upload-icon byted-icon bui-icon-upload" style="fill: rgb(153, 153, 153);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="100%" height="100%">
+                                        <div  class="creative-video-card-wrapper creative-video-card-wrapper-15">
+                                            <div   class="creative-image-card image-card-15">
+                                                <div  class="creative-image-card-wrapper">
+                                                    <div  class="image-card">
+                                                        <div   class="card-create card-create-15 card-create-md">
+                                                            <div  class="card-create-upload">
+                                                                <div   class="upload" >
+                                                                    <p  class="upload-area-text">
+                                                                        <div  class="upload-icon byted-icon bui-icon-upload" style="fill: rgb(153, 153, 153);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="100%" height="100%">
                                                                                 <g fill-rule="nonzero">
                                                                                     <path fill-opacity=".01" d="M0 0h16v16H0z"></path>
                                                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.667 8.575v4.092a.667.667 0 0 1-1.334 0v-4.08L6.161 9.765a.667.667 0 1 1-.945-.941l2.312-2.32c.26-.26.68-.26.942-.002l2.377 2.36a.667.667 0 0 1-.94.946l-1.24-1.232zM4.373 7.22a.664.664 0 0 1-.326.187 2.668 2.668 0 1 0 1.349 5.16.667.667 0 0 1 .363 1.283A4.002 4.002 0 0 1 3.354 6.22a4.667 4.667 0 0 1 9.295.033 4 4 0 1 1-2.497 7.595.667.667 0 0 1 .363-1.282A2.669 2.669 0 0 0 13.911 10a2.668 2.668 0 0 0-2.047-2.594.667.667 0 0 1-.507-.561.667.667 0 0 1-.024-.178 3.333 3.333 0 1 0-6.666 0c0 .23-.117.432-.294.552z"></path>
@@ -485,18 +509,18 @@
                                                                     </p>
                                                                 </div>
                                                             </div>
-                                                            <div data-v-b4926adc="" class="card-create-button">
-                                                                <div data-v-c6ac33dc="" data-v-b4926adc="" style="width: 100%; text-align: center;"> <button class="h-btn" style="width:100%;background:#F8F8F8">素材库</button></div>
+                                                            <div  class="card-create-button">
+                                                                <div   style="width: 100%; text-align: center;"> <button class="h-btn" style="width:100%;background:#F8F8F8">素材库</button></div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <!---->
-                                                    <div data-v-76b48f24="" data-v-c6ac33dc="" class="card-tip">
-                                                        <div data-v-76b48f24="" class="card-tip-error">
+                                                    <div   class="card-tip">
+                                                        <div  class="card-tip-error">
 
                                                         </div>
-                                                        <div data-v-76b48f24="" class="card-tip-info">
-                                                            <div data-v-c6ac33dc="" data-v-76b48f24="">
+                                                        <div  class="card-tip-info">
+                                                            <div  >
                                                                 建议最佳：宽高比,720*1280≤尺寸≤1440*2560,支持JPG、PNG等图片格式
                                                             </div>
                                                         </div>
@@ -506,7 +530,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div data-v-25da4e55="" class="remove-card-icon byted-icon bui-icon-close-circle" style="fill: rgb(204, 204, 204);"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
+                                    <div  class="remove-card-icon byted-icon bui-icon-close-circle" style="fill: rgb(204, 204, 204);"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
                                             <defs>
                                                 <path id="close-circle_svg__a" d="M0 0h48v48H0z"></path>
                                             </defs>
@@ -529,22 +553,58 @@
         </div>
     </div>
     <Modal v-model="opened" :closeOnMask="false">
-        <div slot="header" style="padding:20px 0px;">素材库</div>
-        <div style="width:907px;height:500px;position:relative">
+        <div slot="header" style="padding:10px 10px;">
+            <div class="tab-header">
+                <Tabs :datas="param" class-name="h-tabs-Upload" v-model="selected" @change="change"></Tabs>
+            </div>
+            <div v-show="selected=='module2'" style="font-size:14px;">已选：{{selectImg.length}}个素材</div>
+        </div>
+        <!-- 本地上传 -->
+        <div v-show="selected=='module1'" style="width:907px;height:500px;position:relative">
 
-            <div class="h-uploader-browse-button h-uploader-drop-element" style="height:300px;width:100%;position:absolute; z-index: 1;">
+            <div class="h-uploader-browse-button h-uploader-drop-element" style="height:300px;width:100%;position:relative">
+                <label for="fileUplaod">
+                    <div style="text-align:center;width:250px;height:120px;position:absolute;top:50%;left:50%;margin-left:-150px;margin-top:-60px;">
+                        <i class="h-icon-upload blue-color" style="font-size: 30px;"></i>
+                        <p class="text-center">点击此处上传文件</p>
+                        <p class="text-center">上传确认尺寸信息</p>
+                    </div>
+                </label>
 
-                <div style="text-align:center;width:300px;height:120px;position:absolute;top:50%;left:50%;margin-left:-150px;margin-top:-60px;">
-                    <i class="h-icon-upload blue-color" style="font-size: 30px;"></i>
-                    <p class="text-center">点击或将文件拖拽到这里上传</p>
+            </div>
+            <div class="clearfix" style="width:100%;margin-top:10px;margin-bottom:10px;padding:10px;"><span style="float:left;">文件名/类型</span><span style="float:right;">上传状态</span></div>
+            <div style="height:120px;width:100%;overflow-y:scroll;border:solid 1px #eee">
+                <div class="clearfix" style="padding:10px;" v-for="(file,index) in files" :key="index">
+                    <div style="float:left">{{file.name}}</div>
+                    <div style="float:right;width:200px;"><span>{{Math.floor(Number(file.speed/1000))}}kb/s</span><Progress :percent="Number(file.progress)" :stroke-width="6"><span slot="text" style="width:20px;">{{ file.progress }} %</span></Progress></div>
                 </div>
-                <fileUpload :data="uploadData"  :drop="true" :add-index="true" input-id="fileUplaod" ref="uploader" :thread="5" v-model="files" extensions="jpg,gif,png,webp" :post-action="uplodUrl" @input-file="inputFile"></fileUpload>
-
             </div>
 
         </div>
-        <div slot="footer"><button class="h-btn" @click="opened=false">取消</button></div>
+        <!-- 本地上传end -->
+        <!-- 素材库 -->
+        <div v-show="selected=='module2'" style="padding:10px;width:907px;height:500px;position:relative;overflow-y:scroll;border:solid 1px #eee">
+            <waterfall :col='4' :data="LibraryList" :width="210" ref="waterfall">
+                <template>
+                    <div v-for="(item,index) in LibraryList" :key="index" style="width:100%;position:relative;">
+                        <div class="uploadIconClose"><i class="h-icon-error"></i></div>
+                        <div class="uploadCheckbox">
+                            <!-- <Checkbox v-model="selectImg" :value="item.img" :disabled="selectImg.length>=3&&!!selectImg.indexOf(item.img)"></Checkbox> -->
+                            <Checkbox v-model="selectImg" :value="item.img"></Checkbox>
+                        </div>
+                        <img v-if="item.img" :lazy-src="item.img" width="100%" alt="load error" style="border-radius:5px;overflow:hidden;" @click="openPreview(item.img)" />
+                    </div>
+                </template>
+            </waterfall>
+        </div>
+        <!-- 素材库 end-->
+        <fileUpload :data="uploadData" :multiple="true" :drop="true" input-id="fileUplaod" ref="uploader" :thread="5" v-model="files" extensions="jpg,gif,png,webp" :post-action="uplodUrl" @input-file="inputFile">
+        </fileUpload>
+        <div slot="footer"><Button :loading="files.length>0" color="primary" @click="opened=false">关闭</Button>
+            <Poptip style="margin-left:20px;" v-if="files.length>0" :content="'你确定要取消当前正在进行的'+files.length+'个上传任务吗？'" @confirm="stopUpload"><button class="h-btn">取消上传</button></Poptip>
+        </div>
     </Modal>
+
 </div>
 </template>
 
@@ -564,14 +624,63 @@ export default {
             },
             uplodUrl: G.get("env").apiDomin + "/pub/upload/library.do",
             files: [], // 存放在组件的file对象
-            filList: {
+            param: {
+                module1: '本地上传',
+                module2: '素材库选择'
+            },
+            selected: 'module1',
+            selectImg: [],
+            LibraryList: [{
+                    img: require("../../../images/upload/1.jpg"),
+                },
+                {
+                    img: require("../../../images/upload/2.jpg"),
+                },
+                {
+                    img: require("../../../images/upload/3.png"),
+                },
+                {
+                    img: require("../../../images/upload/10.jpg"),
+                },
+                {
+                    img: require("../../../images/upload/11.jpg"),
+                },
+                {
+                    img: require("../../../images/upload/13.jpg"),
+                },
 
-            }
+            ]
         };
     },
     methods: {
+        change(data) {
+            this.$Message.info(`切换至${data.title}`, 1000);
+            if (data.key == "module2") {
+                this.$nextTick(() => {
+                    this.$waterfall.forceUpdate();
+                })
+                R.Library.getLibrary({
+                    page: 1,
+                    limit: 10,
+                    data: {
+                        adType: 1,
+                        adTypeStyle: 1
+                    }
+                }).then(resp => {
+                    console.log(resp)
+                })
+
+            }
+
+        },
         openModal() {
             this.opened = true;
+        },
+        stopUpload() {
+            this.$refs.uploader.active = false;
+            this.$refs.uploader.clear();
+            this.files = [];
+            this.opened = false;
         },
         upload() {
             // this.$refs.uploadPush.click();
@@ -580,20 +689,22 @@ export default {
         // 当 add, update, remove File 这些事件的时候会触发
         inputFile(newFile, oldFile) {
             if (newFile && !oldFile) {
-                console.log("add", newFile);
+
                 // 添加文件
             }
 
             // 上传完成
             if (newFile && oldFile && !newFile.active && oldFile.active) {
-                console.log("update", newFile);
+
                 // 获得相应数据
                 if (newFile.xhr) {
-                    console.log(newFile.response);
-                    // this.filList[newFile.id+='']=
-                    // this.value.push(newFile.response.data) 
+                    // console.log(newFile.response);
+                    // this.value.push(newFile.response.data);
                     this.$refs.uploader.remove(newFile)
-                    this.$emit('update:value', this.value)
+                    if (newFile.response.code == 0) {
+                        this.$refs.uploader.remove(newFile);
+                    }
+                    this.$emit('update:value', this.value);
                 }
             }
 
@@ -625,10 +736,21 @@ export default {
         },
         preview(index) {
             console.log(index);
-        }
+        },
+        //图片预览
+        openPreview(url) {
+        
+            this.$ImagePreview(url);
+        },
+
     },
     computed: {
-
-    }
+        // itemWidth() {
+        //     return (138 * 0.5 * (document.documentElement.clientWidth / 375))
+        // },
+        // gutterWidth() {
+        //     return (9 * 0.5 * (document.documentElement.clientWidth / 375))
+        // }
+    },
 }
 </script>

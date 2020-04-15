@@ -193,7 +193,28 @@
     }
   }
 }
+.h-tabs-Upload {
+  >.h-tabs-item {
+      margin-right: 24px;
+      color: #999;
+  }
 
+  >.h-tabs-item-selected {
+      color: #333;
+      font-weight: 700;
+  }
+
+  >.h-tabs-item-selected::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: inline-block;
+      height: 2px;
+      background-color: #2f88ff;
+  }
+}
 .error-page {
   height: calc(~"100vh - @{layout-header-height} -100px");
   text-align: center;

@@ -10,6 +10,8 @@ import store from 'js/vuex/store';
 import 'js/vue/components';
 import 'js/vue/filters';
 import './css/app.less';
+import waterfall from 'vue-waterfall2'
+Vue.use(waterfall);
 G.set('env', {
   apiDomin:process.env.NODE_ENV == 'development' ? '//10.0.0.84' : '//103.22.43.12:8000'
 });

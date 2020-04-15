@@ -1,7 +1,10 @@
 <template>
 <div class="m-image-upload">
-    <p v-for="(file,index) in files" :key="index">{{file.name}}{{ file.progress }} %</p>
-    <Button @click="upload">上传文件2</Button>
+    <VirtualCollection :cellSizeAndPositionGetter="cellSizeAndPositionGetter" :collection="items" :height="500" :width="330">
+        <div slot="cell" slot-scope="props">{{props.data}}</div>
+    </VirtualCollection>
+    <!-- <p v-for="(file,index) in files" :key="index">{{file.name}}{{ file.progress }} %</p>
+    <Button @click="upload">上传文件2</Button> -->
     <!-- <div v-for="(file, index) in value" :key="index">
         <img :src="file.thumb || file.url" @click="preview(index)" />
         <bttton @click="remove(index, true)">删除</bttton>
@@ -25,6 +28,7 @@
 
 <script>
 export default {
+
     name: 'testvue',
     props: {
         value: Array,
@@ -35,17 +39,20 @@ export default {
     },
     data() {
         return {
-            uploadData:{
-                token:Utils.getCookie('token'),
-                cmdType:JSON.parse(Utils.getCookie('userInfo')).cmdType,
-                adType:1,
-                adTypeStyle:1
+            uploadData: {
+                token: Utils.getCookie('token'),
+                cmdType: JSON.parse(Utils.getCookie('userInfo')).cmdType,
+                adType: 1,
+                adTypeStyle: 1
             },
-            uplodUrl:G.get("env").apiDomin+"/pub/upload/library.do",
+            uplodUrl: G.get("env").apiDomin + "/pub/upload/library.do",
             files: [], // 存放在组件的file对象
             filList: {
 
-            }
+            },
+            items: new Array(1000).fill(0).map((_, index) => ({
+                data: '#' + index
+            })),
         }
     },
     mounted() {
@@ -53,6 +60,15 @@ export default {
         console.log(document.querySelector("input[type='file']"));
     },
     methods: {
+        cellSizeAndPositionGetter(item, index) {
+            // compute size and position
+            return {
+                width: 100,
+                height: 150,
+                x: (index % 2) * 110,
+                y: parseInt(index / 2) * 160
+            }
+        },
         upload() {
             // this.$refs.uploadPush.click();
             document.getElementById('file2').click();
@@ -63,7 +79,7 @@ export default {
                 console.log("add", newFile);
                 // 添加文件
             }
-            
+
             // 上传完成
             if (newFile && oldFile && !newFile.active && oldFile.active) {
                 console.log("update", newFile);

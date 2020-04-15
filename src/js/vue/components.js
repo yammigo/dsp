@@ -6,6 +6,7 @@ import BItem from 'components/common-item/b-item';
 import fileUpload from "vue-upload-component";
 //扩展组件
 Vue.component('fileUpload',fileUpload);
+// Vue.component('VirtualCollection',VirtualCollection);
 Vue.component('SubMenu', SubMenu);
 Vue.component('AItem', AItem);
 Vue.component('BItem', BItem);

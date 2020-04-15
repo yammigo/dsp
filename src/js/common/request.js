@@ -41,6 +41,11 @@ const Request = {
     roles(params) {
       return Ajax.get('/management/roles', params);
     }
+  },
+  Library:{
+    getLibrary(params){
+        return Ajax.post('/ad/library/list.do',params)
+    }
   }
 };
 

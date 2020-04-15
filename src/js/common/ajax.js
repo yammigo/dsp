@@ -47,7 +47,7 @@ let ajax = {
      let paramA = {
       body: param,
       header: {
-          token: "ceshisadasd",
+          token:  Utils.getCookie('token'),
           cmdType:'1'
       }
   };
