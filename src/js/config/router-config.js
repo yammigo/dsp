@@ -69,20 +69,20 @@ const initRouter = () => {
     //   next({ name: 'PermissionError' });
     //   return;
     // }
-    let token = !!Utils.getCookie('token');
-    if (!token && to.name != 'Login') {  // 判断是否已经登录且前往的页面不是登录页
-      next({
-        name: 'Login'
-      });
-      return false
-    }else{
-      if(token &&  to.name == 'Login'){
-        next({
-          name: from.name
-        });
-        return false;
-      }
-    }
+    // let token = !!Utils.getCookie('token');
+    // if (!token && to.name != 'Login') { 
+    //   next({
+    //     name: 'Login'
+    //   });
+    //   return false
+    // }else{
+    //   if(token &&  to.name == 'Login'){
+    //     next({
+    //       name: from.name
+    //     });
+    //     return false;
+    //   }
+    // }
 
     HeyUI.$LoadingBar.start();
     if (to.meta && to.meta.title) {

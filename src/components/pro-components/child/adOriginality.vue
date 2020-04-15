@@ -368,9 +368,9 @@
                 </div>
                 <div class="input-item">
                     <!-- 创意选框 -->
-                    <div   class="creative-type-tab-procedural" id="row_id_making_procedural_info">
-                        <div  class="ctt-type-list">
-                            <div  class="fui-tabs fui-tabs-sm fui-tabs-line">
+                    <div class="creative-type-tab-procedural" id="row_id_making_procedural_info">
+                        <div class="ctt-type-list">
+                            <div class="fui-tabs fui-tabs-sm fui-tabs-line">
                                 <div class="fui-tabs-header">
                                     <div class="fui-tabs-wrapper">
                                         <div style="display:none" class="fui-icon fui-icon-angle-left tabs-angle-left is-disabled"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
@@ -388,50 +388,50 @@
                                         <div class="fui-tabs-scroll">
                                             <ul class="fui-tabs-nav">
                                                 <li class="active fui-tabs-nav-item"><a class="fui-tab-nav">
-                                                        <div   class="image-mode-tab image-mode-tab-active image-mode-tab-closable">
+                                                        <div class="image-mode-tab image-mode-tab-active image-mode-tab-closable">
                                                             <!---->
-                                                            <div  class="img-box"><img  src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V5/15_S.svg" alt=""></div>
-                                                            <div  class="title">
+                                                            <div class="img-box"><img src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V5/15_S.svg" alt=""></div>
+                                                            <div class="title">
                                                                 竖版视频
                                                             </div>
 
                                                         </div>
                                                     </a></li>
                                                 <li class="fui-tabs-nav-item"><a class="fui-tab-nav">
-                                                        <div   class="image-mode-tab image-mode-tab-active image-mode-tab-closable">
+                                                        <div class="image-mode-tab image-mode-tab-active image-mode-tab-closable">
                                                             <!---->
-                                                            <div  class="img-box"><img  src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V5/5_S.svg" alt=""></div>
-                                                            <div  class="title">
+                                                            <div class="img-box"><img src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V5/5_S.svg" alt=""></div>
+                                                            <div class="title">
                                                                 横版视频
                                                             </div>
 
                                                         </div>
                                                     </a></li>
                                                 <li class="fui-tabs-nav-item"><a class="fui-tab-nav">
-                                                        <div   class="image-mode-tab image-mode-tab-closable">
+                                                        <div class="image-mode-tab image-mode-tab-closable">
                                                             <!---->
-                                                            <div  class="img-box"><img  src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V3/3_S.svg" alt=""></div>
-                                                            <div  class="title">
+                                                            <div class="img-box"><img src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V3/3_S.svg" alt=""></div>
+                                                            <div class="title">
                                                                 大图横图
                                                             </div>
 
                                                         </div>
                                                     </a></li>
                                                 <li class="fui-tabs-nav-item"><a class="fui-tab-nav">
-                                                        <div   class="image-mode-tab image-mode-tab-closable">
+                                                        <div class="image-mode-tab image-mode-tab-closable">
                                                             <!---->
-                                                            <div  class="img-box"><img  src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V5/2_S.svg" alt=""></div>
-                                                            <div  class="title">
+                                                            <div class="img-box"><img src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V5/2_S.svg" alt=""></div>
+                                                            <div class="title">
                                                                 小图
                                                             </div>
 
                                                         </div>
                                                     </a></li>
                                                 <li class="fui-tabs-nav-item"><a class="fui-tab-nav">
-                                                        <div   class="image-mode-tab image-mode-tab-closable">
+                                                        <div class="image-mode-tab image-mode-tab-closable">
                                                             <!---->
-                                                            <div  class="img-box"><img  src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V3/16_S.svg" alt=""></div>
-                                                            <div  class="title">
+                                                            <div class="img-box"><img src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V3/16_S.svg" alt=""></div>
+                                                            <div class="title">
                                                                 大图竖图
                                                             </div>
 
@@ -455,94 +455,98 @@
                                 </div>
                             </div>
                         </div>
-                        <div  class="fui-card fui-card-none-shadow ctt-panel">
+                        <div class="fui-card fui-card-none-shadow ctt-panel">
                             <!---->
                             <div class="byted-card-header" style="border: none; padding:12px;">
                                 <Button color="primary">添加素材</Button>
                             </div>
                             <div class="fui-card-body" style="padding: 0px;">
-                                <div  class="creative-card-container" style="width: calc(50% - 24px);">
-                                    <div   class="creative-video-card procedural-card">
-                                        <div  class="creative-video-card-wrapper creative-video-card-wrapper-15">
-                                            <div  class="video-card video-card__video">
-                                                <div   class="card-create card-create-15 card-create-">
-                                                    <div  class="card-create-upload">
-                                                        <div   class="upload"  @click="openModal">
-                                                            <p  class="upload-area-text">
-                                                                <div  class="upload-icon byted-icon bui-icon-upload" style="fill: rgb(153, 153, 153);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="100%" height="100%">
-                                                                        <g fill-rule="nonzero">
-                                                                            <path fill-opacity=".01" d="M0 0h16v16H0z"></path>
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.667 8.575v4.092a.667.667 0 0 1-1.334 0v-4.08L6.161 9.765a.667.667 0 1 1-.945-.941l2.312-2.32c.26-.26.68-.26.942-.002l2.377 2.36a.667.667 0 0 1-.94.946l-1.24-1.232zM4.373 7.22a.664.664 0 0 1-.326.187 2.668 2.668 0 1 0 1.349 5.16.667.667 0 0 1 .363 1.283A4.002 4.002 0 0 1 3.354 6.22a4.667 4.667 0 0 1 9.295.033 4 4 0 1 1-2.497 7.595.667.667 0 0 1 .363-1.282A2.669 2.669 0 0 0 13.911 10a2.668 2.668 0 0 0-2.047-2.594.667.667 0 0 1-.507-.561.667.667 0 0 1-.024-.178 3.333 3.333 0 1 0-6.666 0c0 .23-.117.432-.294.552z"></path>
-                                                                        </g>
-                                                                    </svg></div>上传视频
-                                                            </p>
+                                <!-- 视频 -->
+                                <div>
+                                    <div v-for="(item,index) in  adOrigin.adType1.video" :key="index" class="creative-card-container" style="width: calc(50% - 26px);display:inline-block">
+                                        <div class="creative-video-card procedural-card">
+                                            <div class="creative-video-card-wrapper creative-video-card-wrapper-15">
+                                                <div class="video-card video-card__video">
+                                                    <div class="card-create card-create-15 card-create-">
+                                                        <div class="card-create-upload">
+                                                            <div class="upload" @click="openModal">
+                                                                <p class="upload-area-text">
+                                                                    <div class="upload-icon byted-icon bui-icon-upload" style="fill: rgb(153, 153, 153);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="100%" height="100%">
+                                                                            <g fill-rule="nonzero">
+                                                                                <path fill-opacity=".01" d="M0 0h16v16H0z"></path>
+                                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.667 8.575v4.092a.667.667 0 0 1-1.334 0v-4.08L6.161 9.765a.667.667 0 1 1-.945-.941l2.312-2.32c.26-.26.68-.26.942-.002l2.377 2.36a.667.667 0 0 1-.94.946l-1.24-1.232zM4.373 7.22a.664.664 0 0 1-.326.187 2.668 2.668 0 1 0 1.349 5.16.667.667 0 0 1 .363 1.283A4.002 4.002 0 0 1 3.354 6.22a4.667 4.667 0 0 1 9.295.033 4 4 0 1 1-2.497 7.595.667.667 0 0 1 .363-1.282A2.669 2.669 0 0 0 13.911 10a2.668 2.668 0 0 0-2.047-2.594.667.667 0 0 1-.507-.561.667.667 0 0 1-.024-.178 3.333 3.333 0 1 0-6.666 0c0 .23-.117.432-.294.552z"></path>
+                                                                            </g>
+                                                                        </svg></div>上传视频
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-create-button">
+                                                            <button class="h-btn" @click="openModal" style="width:100%;background:#F8F8F8">素材库</button>
                                                         </div>
                                                     </div>
-                                                    <div  class="card-create-button">
-                                                        <button class="h-btn" @click="openModal" style="width:100%;background:#F8F8F8">素材库</button>
-                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div   class="card-tip">
-                                                <div  class="card-tip-info">
-                                                    <div  >
-                                                        宽高比9:16,视频码率≥516kbps,大小≤100M,分辨率≥720*1280,时长≥4s
-                                                    </div>
-                                                </div>
-                                                <!---->
-                                            </div>
-                                        </div>
-                                        <div  class="creative-video-card-wrapper creative-video-card-wrapper-15">
-                                            <div   class="creative-image-card image-card-15">
-                                                <div  class="creative-image-card-wrapper">
-                                                    <div  class="image-card">
-                                                        <div   class="card-create card-create-15 card-create-md">
-                                                            <div  class="card-create-upload">
-                                                                <div   class="upload" >
-                                                                    <p  class="upload-area-text">
-                                                                        <div  class="upload-icon byted-icon bui-icon-upload" style="fill: rgb(153, 153, 153);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="100%" height="100%">
-                                                                                <g fill-rule="nonzero">
-                                                                                    <path fill-opacity=".01" d="M0 0h16v16H0z"></path>
-                                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.667 8.575v4.092a.667.667 0 0 1-1.334 0v-4.08L6.161 9.765a.667.667 0 1 1-.945-.941l2.312-2.32c.26-.26.68-.26.942-.002l2.377 2.36a.667.667 0 0 1-.94.946l-1.24-1.232zM4.373 7.22a.664.664 0 0 1-.326.187 2.668 2.668 0 1 0 1.349 5.16.667.667 0 0 1 .363 1.283A4.002 4.002 0 0 1 3.354 6.22a4.667 4.667 0 0 1 9.295.033 4 4 0 1 1-2.497 7.595.667.667 0 0 1 .363-1.282A2.669 2.669 0 0 0 13.911 10a2.668 2.668 0 0 0-2.047-2.594.667.667 0 0 1-.507-.561.667.667 0 0 1-.024-.178 3.333 3.333 0 1 0-6.666 0c0 .23-.117.432-.294.552z"></path>
-                                                                                </g>
-                                                                            </svg></div>上传封面
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <div  class="card-create-button">
-                                                                <div   style="width: 100%; text-align: center;"> <button class="h-btn" style="width:100%;background:#F8F8F8">素材库</button></div>
-                                                            </div>
+                                                <div class="card-tip">
+                                                    <div class="card-tip-info">
+                                                        <div>
+                                                            宽高比9:16,视频码率≥516kbps,大小≤100M,分辨率≥720*1280,时长≥4s
                                                         </div>
                                                     </div>
                                                     <!---->
-                                                    <div   class="card-tip">
-                                                        <div  class="card-tip-error">
-
-                                                        </div>
-                                                        <div  class="card-tip-info">
-                                                            <div  >
-                                                                建议最佳：宽高比,720*1280≤尺寸≤1440*2560,支持JPG、PNG等图片格式
+                                                </div>
+                                            </div>
+                                            <div class="creative-video-card-wrapper creative-video-card-wrapper-15">
+                                                <div class="creative-image-card image-card-15">
+                                                    <div class="creative-image-card-wrapper">
+                                                        <div class="image-card">
+                                                            <div class="card-create card-create-15 card-create-md">
+                                                                <div class="card-create-upload">
+                                                                    <div class="upload">
+                                                                        <p class="upload-area-text">
+                                                                            <div class="upload-icon byted-icon bui-icon-upload" style="fill: rgb(153, 153, 153);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="100%" height="100%">
+                                                                                    <g fill-rule="nonzero">
+                                                                                        <path fill-opacity=".01" d="M0 0h16v16H0z"></path>
+                                                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.667 8.575v4.092a.667.667 0 0 1-1.334 0v-4.08L6.161 9.765a.667.667 0 1 1-.945-.941l2.312-2.32c.26-.26.68-.26.942-.002l2.377 2.36a.667.667 0 0 1-.94.946l-1.24-1.232zM4.373 7.22a.664.664 0 0 1-.326.187 2.668 2.668 0 1 0 1.349 5.16.667.667 0 0 1 .363 1.283A4.002 4.002 0 0 1 3.354 6.22a4.667 4.667 0 0 1 9.295.033 4 4 0 1 1-2.497 7.595.667.667 0 0 1 .363-1.282A2.669 2.669 0 0 0 13.911 10a2.668 2.668 0 0 0-2.047-2.594.667.667 0 0 1-.507-.561.667.667 0 0 1-.024-.178 3.333 3.333 0 1 0-6.666 0c0 .23-.117.432-.294.552z"></path>
+                                                                                    </g>
+                                                                                </svg></div>上传封面
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card-create-button">
+                                                                    <div style="width: 100%; text-align: center;"> <button class="h-btn" style="width:100%;background:#F8F8F8">素材库</button></div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <!---->
+                                                        <div class="card-tip">
+                                                            <div class="card-tip-error">
+
+                                                            </div>
+                                                            <div class="card-tip-info">
+                                                                <div>
+                                                                    建议最佳：宽高比,720*1280≤尺寸≤1440*2560,支持JPG、PNG等图片格式
+                                                                </div>
+                                                            </div>
+                                                            <!---->
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="remove-card-icon byted-icon bui-icon-close-circle" style="fill: rgb(204, 204, 204);"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
+                                                <defs>
+                                                    <path id="close-circle_svg__a" d="M0 0h48v48H0z"></path>
+                                                </defs>
+                                                <g fill-rule="evenodd">
+                                                    <mask id="close-circle_svg__b" fill="#fff">
+                                                        <use xlink:href="#close-circle_svg__a"></use>
+                                                    </mask>
+                                                    <use fill="#FFF" opacity=".01" xlink:href="#close-circle_svg__a"></use>
+                                                    <path fill-rule="nonzero" d="M26.828 24l4.243-4.243a2 2 0 1 0-2.828-2.828L24 21.172l-4.243-4.243a2 2 0 1 0-2.828 2.828L21.172 24l-4.243 4.243a2 2 0 1 0 2.828 2.828L24 26.828l4.243 4.243a2 2 0 1 0 2.828-2.828L26.828 24zM24 46C11.85 46 2 36.15 2 24S11.85 2 24 2s22 9.85 22 22-9.85 22-22 22z"></path>
+                                                </g>
+                                            </svg></div>
                                     </div>
-                                    <div  class="remove-card-icon byted-icon bui-icon-close-circle" style="fill: rgb(204, 204, 204);"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
-                                            <defs>
-                                                <path id="close-circle_svg__a" d="M0 0h48v48H0z"></path>
-                                            </defs>
-                                            <g fill-rule="evenodd">
-                                                <mask id="close-circle_svg__b" fill="#fff">
-                                                    <use xlink:href="#close-circle_svg__a"></use>
-                                                </mask>
-                                                <use fill="#FFF" opacity=".01" xlink:href="#close-circle_svg__a"></use>
-                                                <path fill-rule="nonzero" d="M26.828 24l4.243-4.243a2 2 0 1 0-2.828-2.828L24 21.172l-4.243-4.243a2 2 0 1 0-2.828 2.828L21.172 24l-4.243 4.243a2 2 0 1 0 2.828 2.828L24 26.828l4.243 4.243a2 2 0 1 0 2.828-2.828L26.828 24zM24 46C11.85 46 2 36.15 2 24S11.85 2 24 2s22 9.85 22 22-9.85 22-22 22z"></path>
-                                            </g>
-                                        </svg></div>
                                 </div>
+                                <!-- 视频end -->
                             </div>
                         </div>
                     </div>
@@ -618,7 +622,7 @@ export default {
             //素材上传相关
             uploadData: {
                 token: Utils.getCookie('token'),
-                cmdType: JSON.parse(Utils.getCookie('userInfo')).cmdType,
+                cmdType: JSON.parse(Utils.getCookie('userInfo')) && JSON.parse(Utils.getCookie('userInfo')).cmdType || 1,
                 adType: 1,
                 adTypeStyle: 1
             },
@@ -649,7 +653,43 @@ export default {
                     img: require("../../../images/upload/13.jpg"),
                 },
 
-            ]
+            ],
+            //素材框内容
+            adOrigin: {
+                //横幅
+                adType1: {
+                    video: [{
+                            videoUrl: '',
+                            vidoImg: ''
+                        },
+                        {
+                            videoUrl: '',
+                            vidoImg: ''
+                        },
+                         {
+                            videoUrl: '',
+                            vidoImg: ''
+                        },
+                         {
+                            videoUrl: '',
+                            vidoImg: ''
+                        },
+
+
+
+                    ],
+
+                },
+                adType2: {
+                    img1: [{
+                        url: '',
+                    }],
+                    img2: [{
+                        url: '',
+                    }]
+
+                }
+            }
         };
     },
     methods: {
@@ -739,7 +779,7 @@ export default {
         },
         //图片预览
         openPreview(url) {
-        
+
             this.$ImagePreview(url);
         },
 
