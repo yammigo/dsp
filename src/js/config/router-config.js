@@ -65,24 +65,24 @@ const initRouter = () => {
   let router = new VueRouter(routerParam);
   let isFirstRouter = true;
   router.beforeEach((to, from, next) => {
-    // if (!isFirstRouter && !isAuthPage(to.name)) {
-    //   next({ name: 'PermissionError' });
-    //   return;
-    // }
-    // let token = !!Utils.getCookie('token');
-    // if (!token && to.name != 'Login') { 
-    //   next({
-    //     name: 'Login'
-    //   });
-    //   return false
-    // }else{
-    //   if(token &&  to.name == 'Login'){
-    //     next({
-    //       name: from.name
-    //     });
-    //     return false;
-    //   }
-    // }
+    if (!isFirstRouter && !isAuthPage(to.name)) {
+      next({ name: 'PermissionError' });
+      return;
+    }
+    let token = !!Utils.getCookie('token');
+    if (!token && to.name != 'Login') { 
+      next({
+        name: 'Login'
+      });
+      return false
+    }else{
+      if(token &&  to.name == 'Login'){
+        next({
+          name: from.name
+        });
+        return false;
+      }
+    }
 
     HeyUI.$LoadingBar.start();
     if (to.meta && to.meta.title) {

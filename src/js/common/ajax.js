@@ -131,6 +131,10 @@ let ajax = {
             HeyUI.$Message.error(data._msg || '请求异常');
           }
         }
+        if(data.code==-2){
+            Utils.clearCookie();
+            window.location.href('/');
+        }
         data.ok = data.code == 0;
         if(!data.ok){
           HeyUI.$Message.error(data.msg);

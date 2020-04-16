@@ -327,6 +327,13 @@
     left: 10px;
 }
 
+.uploadIconClose:hover {
+    color: #66a4f2;
+    transform: rotate(180deg);
+    transition: all ease 0.5s;
+
+}
+
 .uploadIconClose {
     right: 10px;
 }
@@ -356,7 +363,7 @@
                     <!-- <div class="required-item"></div> -->
                 </div>
                 <div class="input-item">
-                    <SwitchList v-model="value1" :datas="param1"></SwitchList>
+                    <SwitchList keyName="id" titleName="name" v-model="selectedAdType" :datas="adTypeList"></SwitchList>
                 </div>
             </div>
             <div class="row-item">
@@ -387,56 +394,18 @@
                                             </svg></div>
                                         <div class="fui-tabs-scroll">
                                             <ul class="fui-tabs-nav">
-                                                <li class="active fui-tabs-nav-item"><a class="fui-tab-nav">
-                                                        <div class="image-mode-tab image-mode-tab-active image-mode-tab-closable">
+                                                <!-- image-mode-tab-active  选中class-->
+                                                <li class="fui-tabs-nav-item" v-for="(item,index) in adStyle" :key="index" @click="selectedAdstyle=item.id,selectMediaType=item.mediaType"><a class="fui-tab-nav">
+                                                        <div class="image-mode-tab  image-mode-tab-closable" :class="{'image-mode-tab-active':item.id==selectedAdstyle}">
                                                             <!---->
-                                                            <div class="img-box"><img src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V5/15_S.svg" alt=""></div>
+                                                            <div class="img-box"><img :src="item.icon" alt=""></div>
                                                             <div class="title">
-                                                                竖版视频
+                                                                {{item.name}}
                                                             </div>
 
                                                         </div>
                                                     </a></li>
-                                                <li class="fui-tabs-nav-item"><a class="fui-tab-nav">
-                                                        <div class="image-mode-tab image-mode-tab-active image-mode-tab-closable">
-                                                            <!---->
-                                                            <div class="img-box"><img src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V5/5_S.svg" alt=""></div>
-                                                            <div class="title">
-                                                                横版视频
-                                                            </div>
 
-                                                        </div>
-                                                    </a></li>
-                                                <li class="fui-tabs-nav-item"><a class="fui-tab-nav">
-                                                        <div class="image-mode-tab image-mode-tab-closable">
-                                                            <!---->
-                                                            <div class="img-box"><img src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V3/3_S.svg" alt=""></div>
-                                                            <div class="title">
-                                                                大图横图
-                                                            </div>
-
-                                                        </div>
-                                                    </a></li>
-                                                <li class="fui-tabs-nav-item"><a class="fui-tab-nav">
-                                                        <div class="image-mode-tab image-mode-tab-closable">
-                                                            <!---->
-                                                            <div class="img-box"><img src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V5/2_S.svg" alt=""></div>
-                                                            <div class="title">
-                                                                小图
-                                                            </div>
-
-                                                        </div>
-                                                    </a></li>
-                                                <li class="fui-tabs-nav-item"><a class="fui-tab-nav">
-                                                        <div class="image-mode-tab image-mode-tab-closable">
-                                                            <!---->
-                                                            <div class="img-box"><img src="//sf1-ttcdn-tos.pstatp.com/obj/ttfe/adfe/platform/creative_type/V3/16_S.svg" alt=""></div>
-                                                            <div class="title">
-                                                                大图竖图
-                                                            </div>
-
-                                                        </div>
-                                                    </a></li>
                                             </ul>
                                         </div>
                                         <div style="display:none" class="fui-icon fui-icon-angle-right tabs-angle-right is-disabled"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
@@ -458,12 +427,12 @@
                         <div class="fui-card fui-card-none-shadow ctt-panel">
                             <!---->
                             <div class="byted-card-header" style="border: none; padding:12px;">
-                                <Button color="primary">添加素材</Button>
+                                <Button color="primary" @click="addViewBox">添加素材</Button>
                             </div>
                             <div class="fui-card-body" style="padding: 0px;">
                                 <!-- 视频 -->
                                 <div>
-                                    <div v-for="(item,index) in  adOrigin.adType1.video" :key="index" class="creative-card-container" style="width: calc(50% - 26px);display:inline-block">
+                                    <div v-if="addCurrentView" class="creative-card-container" style="width: calc(50% - 26px);display:inline-block">
                                         <div class="creative-video-card procedural-card">
                                             <div class="creative-video-card-wrapper creative-video-card-wrapper-15">
                                                 <div class="video-card video-card__video">
@@ -532,7 +501,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="remove-card-icon byted-icon bui-icon-close-circle" style="fill: rgb(204, 204, 204);"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
+                                        <div @click="addCurrentView=null" class="remove-card-icon byted-icon bui-icon-close-circle" style="fill: rgb(204, 204, 204);"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
                                                 <defs>
                                                     <path id="close-circle_svg__a" d="M0 0h48v48H0z"></path>
                                                 </defs>
@@ -588,23 +557,26 @@
         <!-- 本地上传end -->
         <!-- 素材库 -->
         <div v-show="selected=='module2'" style="padding:10px;width:907px;height:500px;position:relative;overflow-y:scroll;border:solid 1px #eee">
-            <waterfall :col='4' :data="LibraryList" :width="210" ref="waterfall">
+            <waterfall v-if="LibraryList" :col='4' :data="LibraryList" :width="210" ref="waterfall">
                 <template>
                     <div v-for="(item,index) in LibraryList" :key="index" style="width:100%;position:relative;">
-                        <div class="uploadIconClose"><i class="h-icon-error"></i></div>
-                        <div class="uploadCheckbox">
+                        <div class="uploadIconClose" @click="deleteLib(item.id)" v-if="selectImg.indexOf(item.libraryUrl)<0"><i class="h-icon-error"></i></div>
+                        <div class="uploadCheckbox" v-show="selectImg.indexOf(item.libraryUrl)>-1||selectImg.length==0">
                             <!-- <Checkbox v-model="selectImg" :value="item.img" :disabled="selectImg.length>=3&&!!selectImg.indexOf(item.img)"></Checkbox> -->
-                            <Checkbox v-model="selectImg" :value="item.img"></Checkbox>
+                            <Checkbox v-model="selectImg" :value="item.libraryUrl" :disabled="selectImg.length>=2&&selectImg.splice(1,1)"></Checkbox>
                         </div>
-                        <img v-if="item.img" :lazy-src="item.img" width="100%" alt="load error" style="border-radius:5px;overflow:hidden;" @click="openPreview(item.img)" />
+                        <img v-if="item.libraryUrl" :src="item.libraryUrl" width="100%" alt="load error" style="border-radius:5px;overflow:hidden;" @click="openPreview(item.libraryUrl)" />
                     </div>
                 </template>
             </waterfall>
         </div>
         <!-- 素材库 end-->
-        <fileUpload :data="uploadData" :multiple="true" :drop="true" input-id="fileUplaod" ref="uploader" :thread="5" v-model="files" extensions="jpg,gif,png,webp" :post-action="uplodUrl" @input-file="inputFile">
+        <fileUpload :data="uploadData" :multiple="true" :drop="true" input-id="fileUplaod" ref="uploader" :thread="5" v-model="files" :accept="uploadFilter.accept" extensions="jpg,gif,png,webp,mp4" :post-action="uplodUrl" @input-file="inputFile">
         </fileUpload>
-        <div slot="footer"><Button :loading="files.length>0" color="primary" @click="opened=false">关闭</Button>
+        <div slot="footer">
+            <Pagination  v-if="selected=='module2'" v-model="pagination" @change="currentChange" layout="pager" small></Pagination>
+            <Button v-if="selectImg.length>0" color="primary">保存</Button>
+            <Button :loading="files.length>0" color="primary" @click="opened=false,selectImg=[]">关闭</Button>
             <Poptip style="margin-left:20px;" v-if="files.length>0" :content="'你确定要取消当前正在进行的'+files.length+'个上传任务吗？'" @confirm="stopUpload"><button class="h-btn">取消上传</button></Poptip>
         </div>
     </Modal>
@@ -613,110 +585,107 @@
 </template>
 
 <script>
+import {
+    access
+} from 'fs';
 export default {
     data() {
         return {
-            opened: false,
-            value1: "",
-            param1: ["横幅", "插屏", "激励视频", "信息流"],
-            //素材上传相关
-            uploadData: {
-                token: Utils.getCookie('token'),
-                cmdType: JSON.parse(Utils.getCookie('userInfo')) && JSON.parse(Utils.getCookie('userInfo')).cmdType || 1,
-                adType: 1,
-                adTypeStyle: 1
+            pagination: {
+                
+                page: 1,
+                size: 20,
+                total:20
+                
             },
+            opened: false,
+            idea: '', //创意id
+            //广告类型
+            selectedAdType: "1",
+            adTypeList: [],
+            //广告类型的样式
+            adStyle: [],
+            selectedAdstyle: "",
+            selectMediaType: '1',
+            mediaTypeDict: {
+                "1": "图片",
+                "2": "视频"
+            },
+            uploadFilterDict: {
+                "1": "image/*",
+                "2": "video/*"
+            },
+
             uplodUrl: G.get("env").apiDomin + "/pub/upload/library.do",
             files: [], // 存放在组件的file对象
             param: {
                 module1: '本地上传',
                 module2: '素材库选择'
             },
-            selected: 'module1',
-            selectImg: [],
-            LibraryList: [{
-                    img: require("../../../images/upload/1.jpg"),
-                },
-                {
-                    img: require("../../../images/upload/2.jpg"),
-                },
-                {
-                    img: require("../../../images/upload/3.png"),
-                },
-                {
-                    img: require("../../../images/upload/10.jpg"),
-                },
-                {
-                    img: require("../../../images/upload/11.jpg"),
-                },
-                {
-                    img: require("../../../images/upload/13.jpg"),
-                },
+            selected: 'module1', //上传框选项
+            selectImg: [], //素材库选中的素材
+            LibraryList: [],
+            formData: {},
+            addCurrentView: null
 
-            ],
-            //素材框内容
-            adOrigin: {
-                //横幅
-                adType1: {
-                    video: [{
-                            videoUrl: '',
-                            vidoImg: ''
-                        },
-                        {
-                            videoUrl: '',
-                            vidoImg: ''
-                        },
-                         {
-                            videoUrl: '',
-                            vidoImg: ''
-                        },
-                         {
-                            videoUrl: '',
-                            vidoImg: ''
-                        },
-
-
-
-                    ],
-
-                },
-                adType2: {
-                    img1: [{
-                        url: '',
-                    }],
-                    img2: [{
-                        url: '',
-                    }]
-
-                }
-            }
         };
+    },
+    mounted() {
+        //获取AdType
+        R.Library.getAdType({
+            parentId: 0,
+            appType: 1
+        }).then(resp => {
+            if (resp.ok) {
+                Utils.isArray(resp.data) && (this.adTypeList = resp.data);
+
+            }
+        })
+        //获取Idea
+        R.Library.getIdea({}).then((resp) => {
+            if (resp.ok) {
+                this.ideaId = resp.id;
+            }
+        })
     },
     methods: {
         change(data) {
-            this.$Message.info(`切换至${data.title}`, 1000);
+            // this.$Message.info(`切换至${data.title}`, 1000);
             if (data.key == "module2") {
-                this.$nextTick(() => {
-                    this.$waterfall.forceUpdate();
-                })
-                R.Library.getLibrary({
-                    page: 1,
-                    limit: 10,
-                    data: {
-                        adType: 1,
-                        adTypeStyle: 1
-                    }
-                }).then(resp => {
-                    console.log(resp)
-                })
-
+                //获取素材
+                this.getLibList();
             }
 
+        },
+        currentChange(value) {
+            this.getLibList();
+        },
+        getLibList() {
+            R.Library.getLibrary({
+                page: this.pagination.page,
+                limit:this.pagination.size,
+                data: {
+                    adType: this.selectedAdType,
+                    adTypeStyle: this.selectedAdstyle
+                }
+            }).then(resp => {
+                if (resp.ok) {
+                    this.LibraryList=null;
+                    this.LibraryList = resp.data.list;
+                    this.pagination.total = resp.data.total;
+                    // this.$nextTick(() => {
+                    //     this.$waterfall.forceUpdate();
+                    // })
+
+                }
+
+            })
         },
         openModal() {
             this.opened = true;
         },
         stopUpload() {
+            //终止上传操作
             this.$refs.uploader.active = false;
             this.$refs.uploader.clear();
             this.files = [];
@@ -729,10 +698,8 @@ export default {
         // 当 add, update, remove File 这些事件的时候会触发
         inputFile(newFile, oldFile) {
             if (newFile && !oldFile) {
-
                 // 添加文件
             }
-
             // 上传完成
             if (newFile && oldFile && !newFile.active && oldFile.active) {
 
@@ -744,7 +711,7 @@ export default {
                     if (newFile.response.code == 0) {
                         this.$refs.uploader.remove(newFile);
                     }
-                    this.$emit('update:value', this.value);
+
                 }
             }
 
@@ -758,15 +725,13 @@ export default {
         // 文件过滤，可以通过 prevent 来阻止上传
         inputFilter(newFile, oldFile, prevent) {
             if (newFile && (!oldFile || newFile.file !== oldFile.file)) {
-                // 自动压缩
-
                 this.$refs.uploader.update(newFile, {
                     error: err.message || 'compress'
                 })
 
             }
         },
-        remove(index, isValue) {
+        removeUploadFile(index, isValue) {
             if (isValue) {
                 this.value.splice(index, 1)
                 this.$emit('update:value', this.value)
@@ -774,23 +739,93 @@ export default {
                 this.$refs.uploader.remove(this.files[index])
             }
         },
-        preview(index) {
-            console.log(index);
-        },
-        //图片预览
         openPreview(url) {
-
+            //图片预览
             this.$ImagePreview(url);
+        },
+        //删除素材库素材
+        deleteLib(id) {
+            this.$Confirm('确定删除？', '删除素材').then(() => {
+                R.Library.deleteLibrary({
+                    id: id
+                }).then((resp) => {
+                    if (resp.ok) {
+                        this.$Message.success(resp.msg);
+                        this.getLibList();
+                    }
+                })
+            })
+
+        },
+        addViewBox() {
+            this.addCurrentView = {
+                adType: this.selectedAdType,
+                adTypeStyle: this.selectedAdstyle,
+                ideaId: 1,
+                mediaUrl: [],
+            }
+
+        },
+        getView() {
+            R.Library.getView({
+                ...this.addCurrentView
+            }).then((resp) => {
+                if (resp.ok) {
+                    this.addCurrentView = {};
+                    this.$Message.success("添加成功")
+                }
+            })
+        },
+        //创意列表添加
+        addView() {
+            
+        },
+        removeView() {
+
         },
 
     },
     computed: {
-        // itemWidth() {
-        //     return (138 * 0.5 * (document.documentElement.clientWidth / 375))
-        // },
-        // gutterWidth() {
-        //     return (9 * 0.5 * (document.documentElement.clientWidth / 375))
-        // }
+        //上传参数
+        uploadData() {
+            let adType = this.selectedAdType;
+            let adTypeStyle = this.selectedAdstyle;
+            return {
+                token: Utils.getCookie('token'),
+                cmdType: JSON.parse(Utils.getCookie('userInfo')) && JSON.parse(Utils.getCookie('userInfo')).cmdType || 1,
+                adType: adType,
+                adTypeStyle: adTypeStyle
+            }
+        },
+        uploadFilter() {
+            //文件上传过滤
+            let accept = this.uploadFilterDict[this.selectMediaType + ''];
+            return {
+                accept: accept
+            }
+        }
+    },
+    watch: {
+        selectedAdType: {
+            handler: function (newVal, old) {
+                if (newVal !== old) {
+                    R.Library.getAdType({
+                        parentId: this.selectedAdType,
+                        appType: 1
+                    }).then(resp => {
+                        Utils.isArray(resp.data) && (this.adStyle = resp.data);
+                        this.selectedAdstyle = this.adStyle.length > 0 && this.adStyle[0].id;
+                        this.selectMediaType = this.adStyle.length > 0 && this.adStyle[0].mediaType;
+
+                    })
+                }
+            },
+            immediate: true
+        },
+        selectedAdstyle: () => {
+            //获取viewList
+        }
+
     },
 }
 </script>
