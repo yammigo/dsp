@@ -207,7 +207,7 @@
         </div>
     </div>
     <!-- 文本信息 -->
-    <router-view class="ad-moduler-wrap ad-con-right" @activeStep="activeStep"></router-view>
+    <router-view class="ad-moduler-wrap ad-con-right" id="scrollView" @activeStep="activeStep"></router-view>
     <!-- <div class="ad-moduler-wrap ad-con-right">
         <div class="moduler ad-group-moduler">
             <div class="ad-row-title moduler-title">
@@ -244,7 +244,7 @@ export default {
                 {
                     title:'广告计划',
                     sIcon:"",
-                    subs:["所属广告组","投放范围","投放目标","用户定向","预算与出价","计划名称"]
+                    subs:["所属广告组","投放选择","投放目标","用户定向","预算与出价","计划名称"]
                 },
                 {
                     title:'广告创意',

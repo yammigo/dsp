@@ -5,17 +5,18 @@ import Vue from 'vue';
 import App from 'components/App';
 import heyuiConfig from 'js/config/heyui-config';
 import routerConfig from 'js/config/router-config';
-// import "../src/js/lib/mmGridTable.js"
 import store from 'js/vuex/store';
 import 'js/vue/components';
 import 'js/vue/filters';
+import 'js/vue/directives';
 import './css/app.less';
 import waterfall from 'vue-waterfall2'
 Vue.use(waterfall);
 G.set('env', {
   // apiDomin:process.env.NODE_ENV == 'development' ? '//10.0.0.84' : '//103.22.43.12:8000'
-  apiDomin:process.env.NODE_ENV == 'development' ? '//10.0.0.111:8084' : '//103.22.43.12:8000'
+  apiDomin:process.env.NODE_ENV == 'development' ? '//111.204.100.218' : '//103.22.43.12:8000'
 });
+
 // require('./css/app.less');
 // 开发环境判断
 // process.env.NODE_ENV == 'development'

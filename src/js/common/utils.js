@@ -17,6 +17,46 @@ export default utils.extend({}, utils, {
     }
 
     return false;
+  },
+  throttle (fn, delay, atleast,args) {
+   
+    let timer = null
+    let previous = null
+    return function () {
+      let now = +new Date()
+      if (!previous) previous = now
+      if (atleast && now - previous > atleast) {
+          fn(args)
+        previous = now
+        clearTimeout(timer)
+      } else {
+        clearTimeout(timer)
+        timer = setTimeout(function () {
+          fn(args)
+          previous = null
+        }, delay)
+      }
+    }
+  },
+  getPosition(element) {
+
+    var rect = element.getBoundingClientRect();
+  
+    var top = document.documentElement.clientTop;
+  
+    var left = document.documentElement.clientLeft;
+    return {
+  
+        top: rect.top - top,
+  
+        bottom: rect.bottom - top,
+  
+        left: rect.left - left,
+  
+        right: rect.right - left
+  
+    }
   }
+ 
 });
 
