@@ -142,16 +142,16 @@
 </style>
 <template>
 <div class="jihua">
-    <div class="moduler ad-group-moduler">
+    <div class="moduler ad-group-moduler" v-listenTop:0="testall">
         <div class="ad-row-title moduler-title">
             所属广告组
         </div>
         <div class="ad-group ad-font-size">
             广告组名称：<strong data-no-translate="">1.20-头条-APP行为-儿童玩具（1656236015459380）</strong></div>
     </div>
-    <div class="moduler">
+    <div class="moduler" v-listenTop:1="testall">
         <div class="ad-row-title moduler-title">
-            投放范围
+            投放选择
             <!-- <span class="help-frame-link no-selec">了解详情</span> -->
         </div>
         <div class="ad-range">
@@ -160,7 +160,20 @@
 
                 </div>
                 <div class="label-item label-size-normal">
-                    <div class="text-item">投放范围</div>
+                    <div class="text-item">投放方式</div>
+                    <div class="required-item"></div>
+                </div>
+                <div class="input-item">
+                    <SwitchList v-model="value1" :datas="param1"></SwitchList>
+                </div>
+
+            </div>
+            <div class="row-item">
+                <div class="hint-item">
+
+                </div>
+                <div class="label-item label-size-normal">
+                    <div class="text-item">投放状态</div>
                     <div class="required-item"></div>
                 </div>
                 <div class="input-item">
@@ -171,7 +184,7 @@
 
         </div>
     </div>
-    <div class="moduler">
+    <div class="moduler" v-listenTop:2="testall">
         <div class="ad-row-title moduler-title">
             投放目标
             <!-- <span class="help-frame-link no-selec">了解详情</span> -->
@@ -233,7 +246,7 @@
 
         </div>
     </div>
-    <div class="moduler">
+    <div class="moduler" v-listenTop:3="testall">
         <div class="ad-row-title moduler-title">
             用户定向
             <!-- <span class="help-frame-link no-selec">了解详情</span> -->
@@ -268,19 +281,31 @@
                 </div>
 
             </div>
-         
 
         </div>
     </div>
 
     <!-- 匀速 快速 -->
     <!-- 预算与出价 -->
-    <div class="moduler">
+    <div class="moduler" v-listenTop:4="testall">
         <div class="ad-row-title moduler-title">
             预算与出价
             <!-- <span class="help-frame-link no-selec">了解详情</span> -->
         </div>
         <div class="ad-range">
+            <div class="row-item">
+                <div class="hint-item">
+
+                </div>
+                <div class="label-item label-size-normal">
+                    <div class="text-item">出价方式</div>
+                    <div class="required-item"></div>
+                </div>
+                <div class="input-item">
+                  <SwitchList v-model="value1" :datas="param1"></SwitchList>
+                </div>
+
+            </div>
             <div class="row-item">
                 <div class="hint-item">
 
@@ -295,7 +320,28 @@
                             <div style="padding-left:10px;padding-right:10px;">日预算</div>
                         </div>
                         <!-- <FormItem prop="money.minData" label="起始金额" :show-label="false"> -->
-                        <input  type="text" placeholder="预算金额" v-model="formData.money" />
+                        <input type="text" placeholder="请输入" v-model="formData.money" />
+                        <!-- </FormItem> -->
+                        <span class="h-input-addon">元</span>
+                    </div>
+                </div>
+
+            </div>
+              <div class="row-item">
+                <div class="hint-item">
+
+                </div>
+                <div class="label-item label-size-normal">
+                    <div class="text-item">出价</div>
+                    <div class="required-item"></div>
+                </div>
+                <div class="input-item">
+                    <div class="h-input-group" v-width="300">
+                        <div class="h-input-addon">
+                            <div style="padding-left:10px;padding-right:10px;">出价金额</div>
+                        </div>
+                        <!-- <FormItem prop="money.minData" label="起始金额" :show-label="false"> -->
+                        <input type="text" placeholder="请输入" v-model="formData.money" />
                         <!-- </FormItem> -->
                         <span class="h-input-addon">元</span>
                     </div>
@@ -336,9 +382,9 @@
             </div>
         </div>
     </div>
-     <div class="moduler">
+    <div class="moduler" v-listenTop:5="testall">
         <div class="ad-row-title moduler-title">
-           计划名称
+            计划名称
             <!-- <span class="help-frame-link no-selec">了解详情</span> -->
         </div>
         <div class="ad-range">
@@ -351,14 +397,18 @@
                     <div class="required-item"></div>
                 </div>
                 <div class="input-item">
-                      <input v-width="480" type="text" value="这里填写计划的名称" />
+                    <input v-width="480" type="text" value="这里填写计划的名称" />
                 </div>
 
             </div>
-        
-         
 
         </div>
+    </div>
+    <div class="panel_moduler" style="min-width: 1048px;padding-top: 24px; padding-bottom: 24px;text-align:right;">
+        <!-- <router-link :to="{name:'adPlan',params:{name:'fanjiantao'},query:{name:'aaa'}}">
+        <Button color="primary" size="l">下一步</Button>
+      </router-link> -->
+        <Button color="primary" size="l" >取消</Button><Button color="primary" size="l" >保存</Button><Button color="primary" size="l" >保存并新建创意</Button>
     </div>
 
 </div>
@@ -380,7 +430,17 @@ export default {
         return {
             formData: {
                 value1: [],
-                value2: []
+                value2: [],
+                planName:'',//计划名称
+                platformType:[],//投放平台
+                cityIds:[],//投放城市
+                hours:[],//投放时间
+                weeks:[],//投放时段
+                putType:[],//投放方式
+                putAmountDay:[],//投放预算
+                bidType:[],//出价格方式
+                bidAmount:[],//出价金额
+                
             },
             selectCity: [],
             weekTimeData: [
@@ -405,11 +465,23 @@ export default {
             } else {
                 this.formData.value1 = ["WIFI", "2G", "3G", "4G"];
             }
+        },
+        testall(val, step) {
+           
+            if (val.top <=130) {
+                this.$emit('activeStep', {
+                    key: '1',
+                    step: step,
+                });
+            }
         }
     },
 
     created() {
-
+        this.$emit('activeStep', {
+            key: '1',
+            step: '0'
+        });
     },
     computed: {
         //所有省份是否被选中
@@ -464,8 +536,7 @@ export default {
                         }
                     }
                 }
-                console.log(tempArr)
-                // return tempArr;
+
                 return true
 
             },
