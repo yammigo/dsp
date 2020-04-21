@@ -11,6 +11,9 @@
         }" class="fui-table-header">
             <table-head :columns="allColumns" :data="rebuildData" :column-rows="columnRows" :styles="tableStyles" :columns-width="columnsWidth" :header-height="isTableBodyDiv ? turbo.headerHeight : ''" />
         </div>
+        <div v-show="touchCeiling" ref="scrollBarConsm" :style="bodyWrapperStyles" style="overflow-x:scroll;width:100%;position:fixed;z-index:10;bottom:0px;" @scroll.passive="handScrollbar">
+            <div :style="tableStyles" style="height:20px;"></div>
+        </div>
         <div v-if="data && data.length" ref="bodyWrapper" :class="{
           'fui-table-overflow-x': scrollX,
           'fui-table-overflow-y': scrollY,
@@ -27,9 +30,7 @@
                     <tbody>
                         <tr>
                             <td :colspan="allColumns.length">
-                                <div :style="bodyWrapperStyles" class="fui-table-no-data-text">
-                                    {{ _noDataText }}
-                                </div>
+                                <div :style="bodyWrapperStyles" class="fui-table-no-data-text">{{ _noDataText }}</div>
                             </td>
                         </tr>
                     </tbody>
@@ -67,11 +68,7 @@
             </div>
         </div>
         <!-- 当右侧固定同时出现滚动条时表头与滚动条补齐 -->
-        <!-- <div
-        v-if="scrollY"
-        :style="fixedRightHeaderBarStyle"
-        class="fui-table-fixed-right-header"/> -->
-
+        <!-- <div v-if="scrollY" :style="fixedRightHeaderBarStyle" class="fui-table-fixed-right-header" /> -->
     </div>
     <div v-show="showResizeLine" ref="resizeLine" class="fui-table-resizeline" />
 </div>
@@ -90,13 +87,13 @@ import {
     setColumnsData,
     handleColumnsOrder,
     getFlattenColumns,
-    handleColumns2Rows,
+    handleColumns2Rows
 } from './util.js';
 import {
     on,
     off,
     getScrollBarWidth,
-    getStyle,
+    getStyle
 } from '../utils/dom.js';
 import throttle from 'lodash.throttle';
 export default {
@@ -112,31 +109,31 @@ export default {
             type: Array,
             default () {
                 return [];
-            },
+            }
         },
         columns: {
             type: Array,
             default () {
                 return [];
-            },
+            }
         },
         height: {
             type: [String, Number],
-            default: '',
+            default: ''
         },
         noDataText: {
             type: String,
-            default: '',
+            default: ''
         },
         ceilingOptions: {
             type: Object,
             default () {
                 return {
-                    enabled:true,
+                    enabled: true,
                     paddingTop: 0,
-                    boundariesElement: document,
+                    boundariesElement: document
                 };
-            },
+            }
         },
         turbo: {
             type: Object,
@@ -144,22 +141,22 @@ export default {
                 return {
                     mode: 'div',
                     rowHeight: 'auto',
-                    headerHeight: 'auto',
+                    headerHeight: 'auto'
                 };
-            },
+            }
         },
         //
         columnResizable: {
             type: Boolean,
-            default: true,
+            default: true
         },
         border: {
             type: [Boolean, String],
             default: true,
             validator(value) {
                 return typeof value === 'boolean' || isOneOf(value, ['cellspacing']);
-            },
-        },
+            }
+        }
     },
     data() {
         return {
@@ -199,17 +196,17 @@ export default {
             // 表格是否抵达视口顶端
             touchCeiling: false,
             headerStyles: {
-                'headerWrapper': {},
-                'leftHeaderWrapper': {},
-                'rightHeaderWrapper': {},
+                headerWrapper: {},
+                leftHeaderWrapper: {},
+                rightHeaderWrapper: {}
             },
             // 列宽拖拽线
-            showResizeLine: false,
+            showResizeLine: false
         };
     },
     computed: {
         _noDataText() {
-            return "暂无数据"
+            return '暂无数据';
         },
         baseClass() {
             const classArr = [`jiantao-table`];
@@ -221,14 +218,10 @@ export default {
             return classArr;
         },
         isLeftFixed() {
-            return this.columns.some(
-                (column) => column.fixed && column.fixed === 'left'
-            );
+            return this.columns.some(column => column.fixed && column.fixed === 'left');
         },
         isRightFixed() {
-            return this.columns.some(
-                (column) => column.fixed && column.fixed === 'right'
-            );
+            return this.columns.some(column => column.fixed && column.fixed === 'right');
         },
         tableStyles() {
             // table style
@@ -255,8 +248,7 @@ export default {
             const style = {};
             const key = this.bodyOffsetHeight < this.bodyHeight ? 'max-height' : 'height';
             if (this.bodyHeight) {
-                style[key] = `${this.bodyHeight -
-          (this.scrollX ? this.scrollBarWidth : 0)}px`;
+                style[key] = `${this.bodyHeight - (this.scrollX ? this.scrollBarWidth : 0)}px`;
             }
             return style;
         },
@@ -264,11 +256,9 @@ export default {
             // fixed left table style
             const style = {};
             let width = 0;
-            this.allColumns.forEach((column) => {
+            this.allColumns.forEach(column => {
                 if (column.fixed && column.fixed === 'left') {
-                    width += this.columnsWidth[column._id] ?
-                        this.columnsWidth[column._id].width :
-                        0;
+                    width += this.columnsWidth[column._id] ? this.columnsWidth[column._id].width : 0;
                 }
             });
             style._width = width;
@@ -283,11 +273,9 @@ export default {
             // fixed right table style
             const style = {};
             let width = 0;
-            this.allColumns.forEach((column) => {
+            this.allColumns.forEach(column => {
                 if (column.fixed && column.fixed === 'right') {
-                    width += this.columnsWidth[column._id] ?
-                        this.columnsWidth[column._id].width :
-                        0;
+                    width += this.columnsWidth[column._id] ? this.columnsWidth[column._id].width : 0;
                 }
             });
             style._width = width;
@@ -304,7 +292,7 @@ export default {
             // fixed right header bar, if scrollY === true
             return {
                 width: `${this.scrollBarWidth}px`,
-                height: `${this.headerHeight}px`,
+                height: `${this.headerHeight}px`
             };
         },
         isCeiling() {
@@ -312,10 +300,10 @@ export default {
         },
         isTableBodyDiv() {
             return this.turbo.mode === 'div';
-        },
+        }
     },
     watch: {
-        'data': {
+        data: {
             immediate: true,
             deep: true,
             handler() {
@@ -323,9 +311,9 @@ export default {
                 if (this.rebuildData.length) {
                     this.fixedHeader();
                 }
-            },
+            }
         },
-        'columns': {
+        columns: {
             immediate: true,
             deep: true,
             handler() {
@@ -363,7 +351,7 @@ export default {
                 this.rightFixedColumnRows = rightAllColumnsForHead;
                 // 重置列宽
                 this.handleResize();
-            },
+            }
         },
         scrollY() {
             this.handleResize();
@@ -374,11 +362,15 @@ export default {
         'ceilingOptions.boundariesElement': function (newBoundariesElement, oldBoundariesElement) {
             if (this.isCeiling) {
                 off(oldBoundariesElement, 'scroll', this.handleBoundariesElementScroll);
-                on(newBoundariesElement, 'scroll', throttle(() => {
-                    this.handleBoundariesElementScroll();
-                }, 50));
+                on(
+                    newBoundariesElement,
+                    'scroll',
+                    throttle(() => {
+                        this.handleBoundariesElementScroll();
+                    }, 50)
+                );
             }
-        },
+        }
     },
     mounted() {
         this.scrollBarWidth = getScrollBarWidth();
@@ -391,7 +383,7 @@ export default {
             });
         }
         on(window, 'resize', this.tableResize);
-        this.$on('on-visible-change', (value) => {
+        this.$on('on-visible-change', value => {
             if (value) {
                 this.tableResize();
             }
@@ -399,9 +391,13 @@ export default {
 
         // 监听外部滚动，调整表头position
         if (this.isCeiling) {
-            on(this.ceilingOptions.boundariesElement, 'scroll', throttle(() => {
-                this.handleBoundariesElementScroll();
-            }, 50));
+            on(
+                this.ceilingOptions.boundariesElement,
+                'scroll',
+                throttle(() => {
+                    this.handleBoundariesElementScroll();
+                }, 50)
+            );
         }
     },
     beforeDestroy() {
@@ -415,7 +411,7 @@ export default {
     methods: {
         getFixedAllColumns(columns, fixed) {
             const clmArr = [];
-            columns.some((column) => {
+            columns.some(column => {
                 if (column.fixed === fixed) {
                     clmArr.push(column);
                     return false;
@@ -477,10 +473,7 @@ export default {
             }
             const $bodyEl = this.$refs.body.$el;
             this.bodyOffsetHeight = $bodyEl.offsetHeight;
-            this.scrollY = this.bodyHeight ?
-                $bodyEl.offsetHeight + (this.scrollX ? this.scrollBarWidth : 0) >
-                this.bodyHeight :
-                false;
+            this.scrollY = this.bodyHeight ? $bodyEl.offsetHeight + (this.scrollX ? this.scrollBarWidth : 0) > this.bodyHeight : false;
         },
         tableResize() {
             // 提供业务方调用
@@ -507,20 +500,20 @@ export default {
             // 最小需要table宽度
             let tabelMinWidth = 0;
             // 需要调整宽度的列选项
-            const flexColumns = this.allColumns.filter((column) => {
+            const flexColumns = this.allColumns.filter(column => {
                 return typeof column.width !== 'number';
             });
             // Y轴滚动条宽度
             const scrollYWidth = this.scrollY ? this.scrollBarWidth : 0;
             // 根据column的width和minwidth属性获取table需要的最小宽度
-            this.allColumns.forEach((column) => {
+            this.allColumns.forEach(column => {
                 if (column.width) {
                     hasUsedWidth += parseInt(column.width);
                 } else {
                     flexMinWidth += parseInt(column.minWidth) || initColumnWidth;
                 }
                 columnsWidth[column._id] = {
-                    width: column.width || column.minWidth || initColumnWidth,
+                    width: column.width || column.minWidth || initColumnWidth
                 };
             });
             tabelMinWidth = hasUsedWidth + flexMinWidth + scrollYWidth;
@@ -537,21 +530,20 @@ export default {
                 // 设置无width属性的列的显示宽度
                 flexColumns.forEach((column, index) => {
                     if (index === 0) return;
-                    const width =
-                        (column.minWidth || initColumnWidth) +
-                        Math.floor((column.minWidth || initColumnWidth) * flexRatio);
+                    const width = (column.minWidth || initColumnWidth) + Math.floor((column.minWidth || initColumnWidth) * flexRatio);
                     columnsWidth[column._id] = {
-                        width: width,
+                        width: width
                     };
                     noFirstWidth += width;
                 });
                 columnsWidth[flexColumns[0]._id] = {
-                    width: flexMinWidth + usableFlexWidth - noFirstWidth,
+                    width: flexMinWidth + usableFlexWidth - noFirstWidth
                 };
             }
-            this.tableWidth = Object.keys(columnsWidth).reduce((acc, item) => {
-                return parseInt(columnsWidth[item].width) + acc;
-            }, 0) + scrollYWidth;
+            this.tableWidth =
+                Object.keys(columnsWidth).reduce((acc, item) => {
+                    return parseInt(columnsWidth[item].width) + acc;
+                }, 0) + scrollYWidth;
             this.columnsWidth = columnsWidth;
         },
         updateTableWidth(resizeColumn, columnWidth) {
@@ -564,9 +556,10 @@ export default {
             this.columnsWidth[resizeColumn._id].width = columnWidth;
             // cloneColumn 对应的列也作出调整，用于对外传出变量
             resizeColumn.width = columnWidth;
-            const curTableWidth = Object.keys(this.columnsWidth).reduce((acc, item) => {
-                return this.columnsWidth[item].width + acc;
-            }, 0) + scrollYWidth;
+            const curTableWidth =
+                Object.keys(this.columnsWidth).reduce((acc, item) => {
+                    return this.columnsWidth[item].width + acc;
+                }, 0) + scrollYWidth;
             this.scrollX = curTableWidth > tableWidth;
             if (this.scrollX) {
                 this.tableWidth = curTableWidth;
@@ -592,7 +585,7 @@ export default {
             const selection = this.getSelection();
             this.$emit('select-change', selection, {
                 checked: value,
-                row: row,
+                row: row
             });
         },
 
@@ -612,7 +605,7 @@ export default {
         // 获取选中项
         getSelection() {
             let selectArr = [];
-            this.rebuildData.forEach((row) => {
+            this.rebuildData.forEach(row => {
                 row.isChecked && selectArr.push(row);
             });
             selectArr = selectArr.slice();
@@ -675,23 +668,30 @@ export default {
             if (deltaY < 0 && currentScrollTop > 0) {
                 event.preventDefault();
             }
-            if (
-                deltaY > 0 &&
-                $bodyWrapper.scrollHeight -
-                $bodyWrapper.offsetHeight -
-                currentScrollTop >
-                0
-            ) {
+            if (deltaY > 0 && $bodyWrapper.scrollHeight - $bodyWrapper.offsetHeight - currentScrollTop > 0) {
                 event.preventDefault();
             }
             $bodyWrapper.scrollTop += deltaY;
         },
-
+        //虚拟滚动条
+        handScrollbar(event) {
+            let scrollLeft = event.target.scrollLeft;
+            this.$refs.headerWrapper.scrollLeft = scrollLeft;
+            this.$refs.bodyWrapper.scrollLeft = scrollLeft;
+            let scrollTop = this.$refs.bodyWrapper.scrollTop;
+            if (this.isLeftFixed) {
+                this.$refs.leftBodyWrapper.scrollTop = scrollTop;
+            }
+            if (this.isRightFixed) {
+                this.$refs.rightBodyWrapper.scrollTop = scrollTop;
+            }
+            this.getScrollPosition(scrollLeft);
+        },
         // body滚动
         handleBodyScroll(event) {
             const scrollLeft = event.target.scrollLeft;
             const scrollTop = event.target.scrollTop;
-
+            this.$refs.scrollBarConsm.scrollLeft = scrollLeft;
             this.$refs.headerWrapper.scrollLeft = scrollLeft;
             if (this.isLeftFixed) {
                 this.$refs.leftBodyWrapper.scrollTop = scrollTop;
@@ -702,10 +702,7 @@ export default {
             this.getScrollPosition(scrollLeft);
         },
         getScrollPosition(scrollLeft) {
-            const maxScroll =
-                this.tableStyles._width -
-                this.$refs.bodyWrapper.offsetWidth +
-                (this.scrollY ? this.scrollBarWidth : 0);
+            const maxScroll = this.tableStyles._width - this.$refs.bodyWrapper.offsetWidth + (this.scrollY ? this.scrollBarWidth : 0);
             if (scrollLeft >= maxScroll) {
                 this.scrollPosition = 'right';
             } else if (scrollLeft === 0) {
@@ -732,54 +729,54 @@ export default {
             // 获取表格容器相对视口距离
             const wrapperBounding = this.$el.getBoundingClientRect();
 
-            const elementsNeedChange = [
-                this.$refs.headerWrapper,
-                this.$refs.leftHeaderWrapper,
-                this.$refs.rightHeaderWrapper,
-            ];
+            const elementsNeedChange = [this.$refs.headerWrapper, this.$refs.leftHeaderWrapper, this.$refs.rightHeaderWrapper];
             const rightHeaderIndex = 2;
 
             const ceilingTop = this.ceilingOptions.paddingTop;
             const ceilingTopDistance = ceilingTop;
-            const ceilingBottomDistance = ceilingTop +
-                this.$refs.headerWrapper ? this.$refs.headerWrapper.getBoundingClientRect().height : 0;
+            const ceilingBottomDistance = ceilingTop + this.$refs.headerWrapper ? this.$refs.headerWrapper.getBoundingClientRect().height : 0;
 
             const headerStyles = [];
             // 如果被覆盖, 则调整表头的position为fixed
             if (wrapperBounding.top <= ceilingTopDistance && wrapperBounding.bottom >= ceilingBottomDistance) {
-                this.touchCeiling = true;
-
+                // this.touchCeiling = true;
+                //判断是否锁定滚动条
+                this.touchCeiling = this.$refs.bodyWrapper.getBoundingClientRect().bottom > window.innerHeight;
+                // if (!this.$refs.bodyWrapper.getBoundingClientRect().bottom > window.innerHeight) {
+                //     this.touchCeiling = false;
+                // }
                 elementsNeedChange.forEach((elem, index) => {
                     let headerStyle;
                     if (elem) {
                         const parentNode = elem.parentNode;
                         const bounding = parentNode.getBoundingClientRect();
+
                         const {
-                            left,
+                            left
                         } = bounding;
                         // 右固定列的表头不需要加 border-left, 其他两个需要加
                         if (index !== rightHeaderIndex) {
                             const leftBorderWidth = 1;
                             const width = `${parseFloat(getStyle(parentNode, 'width')) + leftBorderWidth}px`;
                             headerStyle = {
-                                'position': 'fixed',
-                                'left': `${left - leftBorderWidth}px`,
-                                'top': `${ceilingTop}px`,
-                                'width': width,
-                                'overflow': 'hidden',
+                                position: 'fixed',
+                                left: `${left - leftBorderWidth}px`,
+                                top: `${ceilingTop}px`,
+                                width: width,
+                                overflow: 'hidden',
                                 'z-index': index + 1,
                                 'border-top': '1px solid #DADFE3',
-                                'border-left': `${leftBorderWidth}px solid #DADFE3`,
+                                'border-left': `${leftBorderWidth}px solid #DADFE3`
                             };
                         } else {
                             headerStyle = {
-                                'position': 'fixed',
-                                'left': `${left}px`,
-                                'top': `${ceilingTop}px`,
-                                'width': getStyle(parentNode, 'width'),
-                                'overflow': 'hidden',
+                                position: 'fixed',
+                                left: `${left}px`,
+                                top: `${ceilingTop}px`,
+                                width: getStyle(parentNode, 'width'),
+                                overflow: 'hidden',
                                 'z-index': index + 1,
-                                'border-top': '1px solid #DADFE3',
+                                'border-top': '1px solid #DADFE3'
                             };
                         }
                     }
@@ -789,15 +786,15 @@ export default {
                 // 如果没有被覆盖，则调整表头的position为static
             } else {
                 this.touchCeiling = false;
-                elementsNeedChange.forEach((elem) => {
+                elementsNeedChange.forEach(elem => {
                     let headerStyle;
                     if (elem) {
                         const parentNode = elem.parentNode;
                         const width = getStyle(parentNode, 'width');
                         headerStyle = {
-                            'position': 'static',
-                            'border': 'none',
-                            'width': width,
+                            position: 'static',
+                            border: 'none',
+                            width: width
                         };
                     }
                     headerStyles.push(headerStyle);
@@ -805,15 +802,15 @@ export default {
             }
 
             this.headerStyles = {
-                'headerWrapper': headerStyles[0] || {},
-                'leftHeaderWrapper': headerStyles[1] || {},
-                'rightHeaderWrapper': headerStyles[2] || {},
+                headerWrapper: headerStyles[0] || {},
+                leftHeaderWrapper: headerStyles[1] || {},
+                rightHeaderWrapper: headerStyles[2] || {}
             };
-        },
-    },
+        }
+    }
 };
 </script>
 
 <style>
-@import "./table.css";
+@import './table.css';
 </style>

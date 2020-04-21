@@ -2,11 +2,13 @@
 </style>
 <template>
 <div style="background:#fff;">
-    <weekTime v-model="timeValue"></weekTime>
-    <selectCity v-model="selectCity"></selectCity>
+   
     <!-- <v-scrollbar class="vScrollbar1"> -->
-    <Ftable :data="data" :columns="columns" style="margin-top:10px;"></Ftable>
+    <Ftable :data="data" :columns="columns" style="margin-top:10px;">
+    </Ftable>
     <!-- </v-scrollbar> -->
+     <weekTime v-model="timeValue"></weekTime>
+    <selectCity v-model="selectCity"></selectCity>
     
 </div>
 </template>
@@ -45,7 +47,7 @@ export default {
                 {
                     title: "股票代码",
                     key: "SECUCODE",
-                    width: 100,
+                   
                     align: "center",
                     sortable:true,
                     sortType:true,
