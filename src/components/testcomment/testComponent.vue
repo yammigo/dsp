@@ -4,7 +4,9 @@
 <div style="background:#fff;">
     <weekTime v-model="timeValue"></weekTime>
     <selectCity v-model="selectCity"></selectCity>
-    <Ftable :data="data" :columns="columns" height="auto"></Ftable>
+    <!-- <v-scrollbar class="vScrollbar1"> -->
+    <Ftable :data="data" :columns="columns" style="margin-top:10px;"></Ftable>
+    <!-- </v-scrollbar> -->
     
 </div>
 </template>
@@ -12,11 +14,13 @@
 import weekTime from "../baseComponent/weekTime";
 import selectCity from "../baseComponent/selectCity";
 import Ftable from "../baseComponent/table/table";
+// import vScrollbar from 'vue-scrollbar-custom'
 export default {
     components:{
         weekTime,
         selectCity,
-        Ftable
+        Ftable,
+        // vScrollbar
     },
     data() {
         return {
@@ -30,18 +34,29 @@ export default {
                 []
             ],
             selectCity:["2002","2004"],
-            columns:[{
-                    title: "行情",
-                    key: "",
-                    width: 80,
-                    align: "center",
-                    fixed:'left',
-                },
+            columns:[
+                // {
+                //     title: "行情",
+                //     key: "",
+                //     width: 80,
+                //     align: "center",
+                //     fixed:'left',
+                // },
                 {
                     title: "股票代码",
                     key: "SECUCODE",
                     width: 100,
                     align: "center",
+                    sortable:true,
+                    sortType:true,
+                    render(h,p) {
+                        return h('div',{
+                            style:{
+                                color:"red"
+                            }
+                        },p.row.SECUCODE)
+                    },
+                   
                     fixed:'left'
                 },
                 {

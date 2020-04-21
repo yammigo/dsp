@@ -4,8 +4,6 @@ import SearchFilter from 'components/common/search-filter';
 import AItem from 'components/common-item/a-item';
 import BItem from 'components/common-item/b-item';
 import fileUpload from "vue-upload-component";
-// import vScrollbar from 'vue-scrollbar-custom'
-// Vue.component('v-scrollbar', vScrollbar);
 //扩展组件
 Vue.component('fileUpload',fileUpload);
 // Vue.component('VirtualCollection',VirtualCollection);

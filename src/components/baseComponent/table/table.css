@@ -9,8 +9,23 @@
 	border:1px solid #dadfe3;
 	border-right:none;
 	border-bottom:none;
+	
 }
-
+.custom-scroll-horizontal-bar {
+    border-top: 1px solid #dfdfdf;
+    border-bottom: 1px solid #dfdfdf;
+    padding: 3px 8px;
+}
+.custom-scroll-bar {
+    background: #f3f4f5;
+    box-sizing: border-box;
+    z-index: 20;
+}
+.custom-scroll-handle {
+    background: #c1c1c1;
+    box-sizing: border-box;
+    border-radius: 3px;
+}
 .jiantao-table:before
 {
 	left:0;
@@ -150,7 +165,6 @@
 	-webkit-box-sizing:border-box;
 	box-sizing:border-box;
 }
-
 .jiantao-table .fui-table-wrapper .fui-table-fixed-right,.jiantao-table .fui-table-wrapper .fui-table-fixed-right__ceiling .fui-table-fixed-header
 {
 	-webkit-box-shadow:-2px 0 6px -2px rgba(0,0,0,.2);
@@ -240,4 +254,16 @@
 .jiantao-table-cellspacing-border .fui-table-body table tr td:last-child,.jiantao-table-cellspacing-border .fui-table-body table tr th:last-child,.jiantao-table-cellspacing-border .fui-table-fixed-right .fui-table-fixed-body table tr td:last-child,.jiantao-table-cellspacing-border .fui-table-fixed-right .fui-table-fixed-body table tr th:last-child,.jiantao-table-cellspacing-border .fui-table-fixed-right .fui-table-fixed-header table tr td:last-child,.jiantao-table-cellspacing-border .fui-table-fixed-right .fui-table-fixed-header table tr th:last-child,.jiantao-table-cellspacing-border .fui-table-header table tr td:last-child,.jiantao-table-cellspacing-border .fui-table-header table tr th:last-child
 {
 	border-right:transparent;
+}
+.jiantao-table table tr td .fui-table-ceil-right, .jiantao-table table tr th .fui-table-ceil-right {
+    text-align: right;
+}
+.jiantao-table table tr td .fui-table-ceil-center, .jiantao-table table tr th .fui-table-ceil-center {
+    text-align: center;
+}
+.jiantao-table .fui-table-wrapper .fui-table-body .fui-table-column .fui-table-ceil-right, .jiantao-table .fui-table-wrapper .fui-table-fixed-body .fui-table-column .fui-table-ceil-right{
+    text-align: right;
+}
+.jiantao-table .fui-table-wrapper .fui-table-body .fui-table-column .fui-table-ceil-center, .jiantao-table .fui-table-wrapper .fui-table-fixed-body .fui-table-column .fui-table-ceil-center{
+    text-align: center;
 }

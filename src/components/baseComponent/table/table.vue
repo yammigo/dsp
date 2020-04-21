@@ -142,12 +142,13 @@ export default {
             type: Object,
             default () {
                 return {
-                    mode: '',
-                    rowHeight: '',
-                    headerHeight: '',
+                    mode: 'div',
+                    rowHeight: 'auto',
+                    headerHeight: 'auto',
                 };
             },
         },
+        //
         columnResizable: {
             type: Boolean,
             default: true,

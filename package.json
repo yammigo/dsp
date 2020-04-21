@@ -55,7 +55,8 @@
     "eslint-plugin-html": "^5.0.3",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-vue": "^5.2.2",
-    "mockjs": "^1.0.1-beta3"
+    "mockjs": "^1.0.1-beta3",
+    "vue-scrollbar-custom": "^1.0.9"
   },
   "readmeFilename": "README.md",
   "scripts": {
