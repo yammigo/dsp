@@ -1,6 +1,55 @@
 import Ajax from './ajax';
 
 const Request = {
+  Common:{
+    sityList(params){
+      return Ajax.post("/base/city/list.do",params)
+    }
+  },
+  adGroup: {
+    add(params) {
+      return Ajax.post('/ad/group/add.do', params)
+    },
+    get(params) {
+      return Ajax.post('/ad/group/list.do', params)
+    },
+    update(params) {
+      return Ajax.post('/ad/group/update.do', params)
+    },
+    updateStatus(params) {
+      return Ajax.post('/ad/group/update/status.do', params)
+    }
+
+  },
+  adPlan: {
+    add(params) {
+      return Ajax.post('/ad/plan/add.do', params)
+    },
+    get(params) {
+      return Ajax.post("/ad/plan/list.do", params)
+    },
+    update(params) {
+      return Ajax.post("/ad/plan/update.do", params)
+    },
+    updateStatus(params) {
+      return Ajax.post("/ad/plan/update/status.do", params)
+    }
+  },
+  adIdea:{
+    add(params){
+      return Ajax.post('/ad/idea/add.do',params)
+    },
+    get(params){
+      return Ajax.post('/ad/idea/list.do',params)
+    },
+    update(params){
+      return Ajax.post('/ad/idea/update.do',params)
+    },
+    updateSatus(params){
+      return Ajax.post('/ad/idea/update/status.do',params)
+    }
+
+  },
   User: {
     info() {
       return Ajax.get('/account/info');
@@ -47,12 +96,12 @@ const Request = {
     getLibrary(params) {
       return Ajax.post('/ad/library/list.do', params)
     },
-    deleteLibrary(params){ 
-      return Ajax.post('/ad/library/delete.do',params)
+    deleteLibrary(params) {
+      return Ajax.post('/ad/library/delete.do', params)
     },
     getAdType(params) {
       //       Integer parentId ： 父级ID（顶级传0）
-      
+
       // Integer appType ： 应用类型（1：app，2：web）
       return Ajax.post('/base/ad/type/list.do', params)
     },
@@ -62,34 +111,39 @@ const Request = {
      * adType 类型  adTypeStyle 样式
      * @param {object} params 
      */
-    addView(params){
-      return Ajax.post('/ad/idea/view/add.do',params)
+    addViews(params) {
+      return Ajax.post('/ad/idea/view/add.do', params)
     },
-     /** 
-      * 删除样式下的创意列表
-     * ideaId 创意Id
-     * adType 类型  adTypeStyle 样式
-     * @param {object} params 
-     */
-    removeView(params){
-      return Ajax.post('/ad/idea/view/delete.do',params)
+    /** 
+     * 删除样式下的创意列表
+    * ideaId 创意Id
+    * adType 类型  adTypeStyle 样式
+    * @param {object} params 
+    */
+    removeView(params) {
+      return Ajax.post('/ad/idea/view/delete.do', params)
     },
-     /**
-      * getView  获取样式下的创意列表
-     * ideaId	Integer	是	创意Id
-     * adType	Integer	是	类型
-     * adTypeStyle	Integer	是	类型 二级
-     * @param {object} params 
-     */
-    getView(params){
-      return Ajax.post('/ad/idea/view/list.do',params)
+    /**
+     * getView  获取样式下的创意列表
+    * ideaId	Integer	是	创意Id
+    * adType	Integer	是	类型
+    * adTypeStyle	Integer	是	类型 二级
+    * @param {object} params 
+    */
+    getView(params) {
+      return Ajax.post('/ad/idea/view/list.do', params)
     },
+
     /**
      * id:'' || int 计划ID
      * @param {object} param 
      */
-    getIdea(param){
-      return Ajax.post('/ad/idea/get.do',param);
+    getIdea(param) {
+      return Ajax.post('/ad/idea/get.do', param);
+    },
+
+    getViews(param) {
+      return Ajax.post('/ad/idea/style/views.do', param)
     }
 
   }

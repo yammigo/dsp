@@ -120,7 +120,6 @@
             &:not(:first-child) {
                 margin-left: -1px;
             }
-
         }
 
         .fui-select-panel-right {
@@ -135,344 +134,374 @@
             overflow-x: auto;
             vertical-align: top;
         }
-
     }
-
 }
 </style>
 <template>
 <div class="jihua">
-    <div class="moduler ad-group-moduler" v-listenTop:0="testall">
-        <div class="ad-row-title moduler-title">
-            所属广告组
+    <Form :model="formData" ref="form" :rules="rules" :validOnChange="true">
+        <div class="moduler ad-group-moduler" v-listenTop:0="testall">
+            <div class="ad-row-title moduler-title">所属广告组</div>
+            <div class="ad-group ad-font-size">
+                所属广告组：
+                <strong data-no-translate>{{groupName||formData.groupName}}</strong>
+            </div>
         </div>
-        <div class="ad-group ad-font-size">
-            广告组名称：<strong data-no-translate="">1.20-头条-APP行为-儿童玩具（1656236015459380）</strong></div>
-    </div>
-    <div class="moduler" v-listenTop:1="testall">
-        <div class="ad-row-title moduler-title">
-            投放选择
-            <!-- <span class="help-frame-link no-selec">了解详情</span> -->
-        </div>
-        <div class="ad-range">
-            <div class="row-item">
-                <div class="hint-item">
 
-                </div>
-                <div class="label-item label-size-normal">
-                    <div class="text-item">投放方式</div>
-                    <div class="required-item"></div>
-                </div>
-                <div class="input-item">
-                    <SwitchList v-model="value1" :datas="param1"></SwitchList>
-                </div>
-
+        <div class="moduler" v-listenTop:1="testall">
+            <div class="ad-row-title moduler-title">
+                投放选择
+                <!-- <span class="help-frame-link no-selec">了解详情</span> -->
             </div>
-            <div class="row-item">
-                <div class="hint-item">
-
-                </div>
-                <div class="label-item label-size-normal">
-                    <div class="text-item">投放状态</div>
-                    <div class="required-item"></div>
-                </div>
-                <div class="input-item">
-                    <SwitchList v-model="value1" :datas="param1"></SwitchList>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-    <div class="moduler" v-listenTop:2="testall">
-        <div class="ad-row-title moduler-title">
-            投放目标
-            <!-- <span class="help-frame-link no-selec">了解详情</span> -->
-        </div>
-        <div class="ad-range">
-            <div class="row-item">
-                <div class="hint-item">
-
-                </div>
-                <div class="label-item label-size-normal">
-                    <div class="text-item">投放范围</div>
-                    <div class="required-item"></div>
-                </div>
-                <div class="input-item">
-                    <SwitchList v-model="value1" :datas="param1"></SwitchList>
-                </div>
-
-            </div>
-            <div class="row-item">
-                <div class="hint-item">
-
-                </div>
-                <div class="label-item label-size-normal">
-                    <div class="text-item">下载方式</div>
-                    <div class="required-item"></div>
-                </div>
-                <div class="input-item">
-                    <SwitchList v-model="value1" :datas="param1"></SwitchList>
-                </div>
-
-            </div>
-            <div class="row-item">
-                <div class="hint-item">
-
-                </div>
-                <div class="label-item label-size-normal">
-                    <div class="text-item">下载链接</div>
-                    <div class="required-item"></div>
-                </div>
-                <div class="input-item">
-                    <input v-width="480" type="text" value="test" />
-                </div>
-
-            </div>
-            <div class="row-item">
-                <div class="hint-item">
-
-                </div>
-                <div class="label-item label-size-normal">
-                    <div class="text-item">应用包名</div>
-                    <div class="required-item"></div>
-                </div>
-                <div class="input-item">
-
-                    <input v-width="480" type="text" value="test" disabled />
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-    <div class="moduler" v-listenTop:3="testall">
-        <div class="ad-row-title moduler-title">
-            用户定向
-            <!-- <span class="help-frame-link no-selec">了解详情</span> -->
-        </div>
-        <div class="ad-range">
-            <div class="row-item">
-                <div class="hint-item">
-
-                </div>
-                <div class="label-item label-size-normal">
-                    <div class="text-item">平台</div>
-                    <div class="required-item"></div>
-                </div>
-                <div class="input-item">
-                    <p>
-                        <Checkbox :indeterminate="formData.value2.length>0&&formData.value2.length<4" :checked="formData.value2.length == 4" @click.native="checkAll" style="margin-right:40px;">全选</Checkbox>
-                        <Checkbox v-model="formData.value2" :datas="param3"></Checkbox>
-                    </p>
-                </div>
-
-            </div>
-            <div class="row-item">
-                <div class="hint-item">
-
-                </div>
-                <div class="label-item label-size-normal">
-                    <div class="text-item">地域</div>
-                    <div class="required-item"></div>
-                </div>
-                <div class="input-item">
-                    <selectCity v-model="selectCity"></selectCity>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-
-    <!-- 匀速 快速 -->
-    <!-- 预算与出价 -->
-    <div class="moduler" v-listenTop:4="testall">
-        <div class="ad-row-title moduler-title">
-            预算与出价
-            <!-- <span class="help-frame-link no-selec">了解详情</span> -->
-        </div>
-        <div class="ad-range">
-            <div class="row-item">
-                <div class="hint-item">
-
-                </div>
-                <div class="label-item label-size-normal">
-                    <div class="text-item">出价方式</div>
-                    <div class="required-item"></div>
-                </div>
-                <div class="input-item">
-                  <SwitchList v-model="value1" :datas="param1"></SwitchList>
-                </div>
-
-            </div>
-            <div class="row-item">
-                <div class="hint-item">
-
-                </div>
-                <div class="label-item label-size-normal">
-                    <div class="text-item">预算</div>
-                    <div class="required-item"></div>
-                </div>
-                <div class="input-item">
-                    <div class="h-input-group" v-width="300">
-                        <div class="h-input-addon">
-                            <div style="padding-left:10px;padding-right:10px;">日预算</div>
-                        </div>
-                        <!-- <FormItem prop="money.minData" label="起始金额" :show-label="false"> -->
-                        <input type="text" placeholder="请输入" v-model="formData.money" />
-                        <!-- </FormItem> -->
-                        <span class="h-input-addon">元</span>
+            <div class="ad-range">
+                <div class="row-item">
+                    <div class="hint-item"></div>
+                    <div class="label-item label-size-normal">
+                        <div class="text-item">投放方式</div>
+                        <div class="required-item"></div>
+                    </div>
+                    <div class="input-item">
+                        <FormItem prop="putType" label="必选项" :showLabel="false">
+                            <SwitchList v-model="formData.putType" :datas="putType"></SwitchList>
+                        </FormItem>
                     </div>
                 </div>
-
-            </div>
-              <div class="row-item">
-                <div class="hint-item">
-
-                </div>
-                <div class="label-item label-size-normal">
-                    <div class="text-item">出价</div>
-                    <div class="required-item"></div>
-                </div>
-                <div class="input-item">
-                    <div class="h-input-group" v-width="300">
-                        <div class="h-input-addon">
-                            <div style="padding-left:10px;padding-right:10px;">出价金额</div>
-                        </div>
-                        <!-- <FormItem prop="money.minData" label="起始金额" :show-label="false"> -->
-                        <input type="text" placeholder="请输入" v-model="formData.money" />
-                        <!-- </FormItem> -->
-                        <span class="h-input-addon">元</span>
+                <div class="row-item">
+                    <div class="hint-item"></div>
+                    <div class="label-item label-size-normal">
+                        <div class="text-item">投放状态</div>
+                        <div class="required-item"></div>
+                    </div>
+                    <div class="input-item">
+                        <FormItem prop="status" label="必选项" :showLabel="false">
+                            <SwitchList v-model="formData.status" :datas="putStatus"></SwitchList>
+                        </FormItem>
                     </div>
                 </div>
-
             </div>
-            <div class="row-item">
-                <div class="hint-item">
-
-                </div>
-                <div class="label-item label-size-normal">
-                    <div class="text-item">投放时间</div>
-                    <div class="required-item"></div>
-                </div>
-                <div class="input-item">
-                    <div>
-                        <DatePicker v-model="formData.startTime" aria-disabled="" placeholder="请选择开始日期" :option="{end:formData.endTime}"></DatePicker>
-                        -
-                        <DatePicker v-model="formData.endTime" placeholder="请选择结束日期" :option="{start:formData.startTime}"></DatePicker>
+        </div>
+        <div class="moduler" v-listenTop:3="testall">
+            <div class="ad-row-title moduler-title">
+                用户定向
+                <!-- <span class="help-frame-link no-selec">了解详情</span> -->
+            </div>
+            <div class="ad-range">
+                <div class="row-item">
+                    <div class="hint-item"></div>
+                    <div class="label-item label-size-normal">
+                        <div class="text-item">平台</div>
+                        <div class="required-item"></div>
+                    </div>
+                    <div class="input-item">
+                        <FormItem prop="platformType" label="必选项" :showLabel="false">
+                            <Checkbox v-model="formData.platformType" :datas="platformType"></Checkbox>
+                        </FormItem>
                     </div>
                 </div>
-
-            </div>
-            <div class="row-item">
-                <div class="hint-item">
-
+                <div class="row-item">
+                    <div class="hint-item"></div>
+                    <div class="label-item label-size-normal">
+                        <div class="text-item">地域</div>
+                        <div class="required-item"></div>
+                    </div>
+                    <div class="input-item">
+                        <FormItem prop="cityCodes" label="城市选项" :showLabel="false">
+                            <selectCity v-if="dictCity.length>0" v-model="formData.cityCodes" :dictCity="dictCity"></selectCity>
+                        </FormItem>
+                    </div>
                 </div>
-                <div class="label-item label-size-normal">
-                    <div class="text-item">投放时段</div>
-                    <div class="required-item"></div>
-                </div>
-                <div class="input-item">
-                    <!-- 下拉组件 -->
-                    <weekTime v-model="weekTimeData"></weekTime>
-                    <!-- end -->
-                </div>
-
             </div>
         </div>
-    </div>
-    <div class="moduler" v-listenTop:5="testall">
-        <div class="ad-row-title moduler-title">
-            计划名称
-            <!-- <span class="help-frame-link no-selec">了解详情</span> -->
-        </div>
-        <div class="ad-range">
-            <div class="row-item">
-                <div class="hint-item">
 
-                </div>
-                <div class="label-item label-size-normal">
-                    <div class="text-item">计划名称</div>
-                    <div class="required-item"></div>
-                </div>
-                <div class="input-item">
-                    <input v-width="480" type="text" value="这里填写计划的名称" />
-                </div>
-
+        <!-- 匀速 快速 -->
+        <!-- 预算与出价 -->
+        <div class="moduler" v-listenTop:4="testall">
+            <div class="ad-row-title moduler-title">
+                预算与出价
+                <!-- <span class="help-frame-link no-selec">了解详情</span> -->
             </div>
+            <div class="ad-range">
+                <div class="row-item">
+                    <div class="hint-item"></div>
+                    <div class="label-item label-size-normal">
+                        <div class="text-item">出价方式</div>
+                        <div class="required-item"></div>
+                    </div>
+                    <div class="input-item">
+                        <FormItem prop="bidType" label="必选项" :showLabel="false">
+                            <SwitchList v-model="formData.bidType" :datas="bidType"></SwitchList>
+                        </FormItem>
+                    </div>
+                </div>
+                <div class="row-item">
+                    <div class="hint-item"></div>
+                    <div class="label-item label-size-normal">
+                        <div class="text-item">预算</div>
+                        <div class="required-item"></div>
+                    </div>
+                    <div class="input-item">
+                        <FormItem prop="putAmountDay" label="必选项" :showLabel="false">
+                            <div class="h-input-group" v-width="300">
+                                <div class="h-input-addon">
+                                    <div style="padding-left:10px;padding-right:10px;">日预算</div>
+                                </div>
 
+                                <input type="text" placeholder="请输入" v-model="formData.putAmountDay" />
+
+                                <span class="h-input-addon">元</span>
+                            </div>
+                        </FormItem>
+                    </div>
+                </div>
+                <div class="row-item">
+                    <div class="hint-item"></div>
+                    <div class="label-item label-size-normal">
+                        <div class="text-item">出价</div>
+                        <div class="required-item"></div>
+                    </div>
+                    <div class="input-item">
+                        <FormItem prop="bidAmount" label="必选项" :showLabel="false">
+                            <div class="h-input-group" v-width="300">
+                                <div class="h-input-addon">
+                                    <div style="padding-left:10px;padding-right:10px;">出价金额</div>
+                                </div>
+                                <input type="text" placeholder="请输入" v-model="formData.bidAmount" />
+                                <span class="h-input-addon">元</span>
+                            </div>
+                        </FormItem>
+                    </div>
+                </div>
+                <div class="row-item">
+                    <div class="hint-item"></div>
+                    <div class="label-item label-size-normal">
+                        <div class="text-item">投放时间</div>
+                        <div class="required-item"></div>
+                    </div>
+                    <div class="input-item">
+                        <FormItem prop="putStartDate" label="开始时间" :showLabel="false" style="display:inline-block;width:200px;">
+                            <DatePicker v-model="formData.putStartDate" aria-disabled placeholder="请选择开始日期" :option="{end:formData.putEndDate}" v-width="200"></DatePicker>
+                        </FormItem>
+                        <span style="margin-lefy:10px;margin-tight:10px;">-</span>
+                        <FormItem prop="putEndDate" label="开始时间" :showLabel="false" style="display:inline-block;width:200px;">
+                            <DatePicker v-model="formData.putEndDate" placeholder="请选择结束日期" :option="{start:formData.putStartDate}" v-width="200"></DatePicker>
+                        </FormItem>
+                    </div>
+                </div>
+                <div class="row-item">
+                    <div class="hint-item"></div>
+                    <div class="label-item label-size-normal">
+                        <div class="text-item">投放时段</div>
+                        <div class="required-item"></div>
+                    </div>
+                    <div class="input-item">
+                        <FormItem prop="weekHours" label="必选项" :showLabel="false">
+                            <!-- 下拉组件 -->
+                            <weekTime v-model="formData.weekHours"></weekTime>
+                            <!-- end -->
+                        </FormItem>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="panel_moduler" style="min-width: 1048px;padding-top: 24px; padding-bottom: 24px;text-align:right;">
-        <!-- <router-link :to="{name:'adPlan',params:{name:'fanjiantao'},query:{name:'aaa'}}">
-        <Button color="primary" size="l">下一步</Button>
-      </router-link> -->
-        <Button color="primary" size="l" >取消</Button><Button color="primary" size="l" >保存</Button><Button color="primary" size="l" >保存并新建创意</Button>
-    </div>
-
+        <div class="moduler" v-listenTop:5="testall">
+            <div class="ad-row-title moduler-title">
+                计划名称
+                <!-- <span class="help-frame-link no-selec">了解详情</span> -->
+            </div>
+            <div class="ad-range">
+                <div class="row-item">
+                    <div class="hint-item"></div>
+                    <div class="label-item label-size-normal">
+                        <div class="text-item">计划名称</div>
+                        <div class="required-item"></div>
+                    </div>
+                    <div class="input-item">
+                        <FormItem prop="planName" label="必选项" :showLabel="false">
+                            <input v-width="480" type="text" v-model="formData.planName" />
+                        </FormItem>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel_moduler" style="min-width: 1048px;padding-top: 24px; padding-bottom: 24px;text-align:right;">
+            <Button color="primary" size="l">取消</Button>
+            <Button color="primary" size="l" @click="submit">保存并关闭</Button>
+            <Button color="primary" size="l" @click="submitNext">提交并编辑创意</Button>
+        </div>
+    </Form>
 </div>
 </template>
 
 <script>
-import selectCity from "../../baseComponent/selectCity"
-import weekTime from "../../baseComponent/weekTime"
+import selectCity from '../../baseComponent/selectCity';
+import weekTime from '../../baseComponent/weekTime';
 import {
     format
-} from 'url'
+} from 'url';
 export default {
     components: {
         selectCity,
         weekTime
     },
-    props: ["id", "name"],
+    props: ['groupId', 'groupName', 'planId'],
     data() {
         return {
             formData: {
-                value1: [],
-                value2: [],
-                planName:'',//计划名称
-                platformType:[],//投放平台
-                cityIds:[],//投放城市
-                hours:[],//投放时间
-                weeks:[],//投放时段
-                putType:[],//投放方式
-                putAmountDay:[],//投放预算
-                bidType:[],//出价格方式
-                bidAmount:[],//出价金额
-                
+                putStartDate: '',
+                putEndDate: '',
+                status: 1,
+                planName: '', //计划名称
+                platformType: [1], //投放平台
+                cityCodes: [], //投放城市
+                weekHours: [
+                    [],
+                    [],
+                    [],
+                    [],
+                    [],
+                    [],
+                    []
+                ], //投放时段
+                putType: 1, //投放方式
+                putAmountDay: '', //投放预算
+                bidType: 1, //出价格方式
+                bidAmount: '', //出价金额
+                planName: '', //计划名称
+                groupName: '',
+                groupId: this.groupId
             },
-            selectCity: [],
-            weekTimeData: [
-                [],
-                [],
-                [],
-                [],
-                [],
-                [],
-                []
+            dictCity: [],
+            platformType: [{
+                    key: 1,
+                    title: 'Android'
+                },
+                {
+                    key: 2,
+                    title: 'IOS'
+                }
             ],
-            value1: '选择1',
-            param1: ['选择1', '选择2'],
-            param2: ["WIFI", "2G", "3G", "4G"],
-            param3: ["IOS", "Android"]
-        }
+            putType: {
+                1: '匀速',
+                2: '快速'
+            },
+            bidType: {
+                1: 'cpc',
+                2: 'cpm'
+            },
+            putStatus: {
+                1: '启用',
+                0: '禁用'
+            },
+            rules: {
+                required: [
+                    'status',
+                    'planName',
+                    'platformType',
+                    'putStartDate',
+                    'putEndDate',
+                    'cityCodes',
+                    'putType',
+                    'putAmountDay',
+                    'bidType',
+                    'bidAmount',
+                    'weekHours',
+                    'groupId'
+                ]
+            }
+        };
     },
     methods: {
-        checkAll() {
-            if (this.formData.value1.length == 4) {
-                this.formData.value1.splice(0, 4);
-            } else {
-                this.formData.value1 = ["WIFI", "2G", "3G", "4G"];
-            }
-        },
         testall(val, step) {
-           
-            if (val.top <=130) {
+            if (val.top <= 130) {
                 this.$emit('activeStep', {
                     key: '1',
-                    step: step,
+                    step: step
                 });
+            }
+        },
+        submit() {
+            let validResult = this.$refs.form.valid();
+            if (validResult.result) {
+                if (this.planId) {
+                    R.adPlan
+                        .update({
+                            ...this.formData
+                        })
+                        .then(res => {
+                            if (res.ok) {
+                                this.$Message.success(res.msg);
+                                this.$router.go(-1);
+                            }
+                        });
+                } else {
+                    R.adPlan
+                        .add({
+                            ...this.formData
+                        })
+                        .then(res => {
+                            if (res.ok) {
+                                this.$Message.success(res.msg);
+                                this.$router.go(-1);
+                            }
+                        });
+                }
+            }
+        },
+        submitNext() {
+            if (this.planId) {
+                R.adPlan
+                    .update({
+                        ...this.formData
+                    })
+                    .then(res => {
+                        if (res.ok) {
+                            this.$Message.success(res.msg);
+                            this.$router.push({
+                                name: 'adOriginality',
+                                query: {
+                                    planId: res.data.id,
+                                    planName: res.data.planName
+                                }
+                            });
+                        }
+                    });
+            } else {
+                R.adPlan
+                    .add({
+                        ...this.formData
+                    })
+                    .then(res => {
+                        if (res.ok) {
+                            this.$Message.success(res.msg);
+                            this.$router.push({
+                                name: 'adOriginality',
+                                query: {
+                                    planId: res.data.id,
+                                    planName: res.data.planName
+                                }
+                            });
+                        }
+                    });
+            }
+        },
+        initData() {
+            if (this.planId) {
+                this.$Loading();
+                R.adPlan
+                    .get({
+                        data: {
+                            id: this.planId
+                        },
+                        page: 1,
+                        limit: 1
+                    })
+                    .then(res => {
+                        if (res.ok) {
+                            this.$Loading.close();
+                            this.formData = res.data.list[0];
+
+                        }
+                    });
             }
         }
     },
@@ -482,40 +511,43 @@ export default {
             key: '1',
             step: '0'
         });
+        //获取字典数据
+        R.Common.sityList({}).then(res => {
+            if (res.ok) {
+                this.dictCity = res.data;
+            }
+        });
+        this.initData();
     },
     computed: {
         //所有省份是否被选中
         isSelectedAll: {
             get() {
-
                 for (var i = 0; i < this.dataCity.length; i++) {
                     if (!this.isCityListSelect[i]) {
-
                         return false;
                     }
                 }
                 return true;
             },
             // 这里要加一个空的setter，因为用v-model绑定时会报错
-            set() {},
+            set() {}
         },
         //一级选项是否半选
         isIndeterminate: {
             get() {
-
                 //所有城市是否都被选中
                 for (var i = 0, len = this.dataCity.length; i < len; i++) {
                     for (var j = 0, jlen = this.dataCity[i].cityList.length; j < jlen; j++) {
                         if (this.dataCity[i].cityList[j].checked && i >= 0 && i < len) {
-                            return true
+                            return true;
                         }
                     }
                 }
-                return false
-
+                return false;
             },
 
-            set() {},
+            set() {}
         },
 
         //二级选项是否半选
@@ -528,21 +560,16 @@ export default {
                     tempArr[i] = false;
                     var cityList = this.dataCity[i].cityList;
                     for (var j = 0; j < cityList.length; j++) {
-
                         if (cityList[j].checked && i == cityList.length) {
-
                             tempArr[i] = false;
                             break;
                         }
                     }
                 }
 
-                return true
-
+                return true;
             },
-            set() {
-
-            }
+            set() {}
         },
         //每个省份下的所有城市是否被选中
         isCityListSelect() {
@@ -560,10 +587,7 @@ export default {
             }
             return tempArr;
         }
-
     },
-    watch: {
-
-    }
-}
+    watch: {}
+};
 </script>

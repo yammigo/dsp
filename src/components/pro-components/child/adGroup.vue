@@ -41,7 +41,7 @@
             <!-- 创建广告组 -->
             <Tabs :datas="param" class-name="h-tabs-custom" v-model="selected" @change="change"></Tabs>
             <div v-if="selected=='module2'" style="margin-top:30px;">
-                <Search v-model="searchText3" :height="34" :width="518" showSearchButton placeholder="请输入广告组ID或名称">
+                <Search v-model="searchGroupName" :height="34" :width="518" showSearchButton placeholder="请输入广告组ID或名称">
                     <i class="h-icon-search"></i>搜索
                 </Search>
                 <div class="campaign-have" style="margin-top:20px;">
@@ -50,14 +50,14 @@
                             <strong>列表</strong>
                         </div>
                         <ul>
-                            <li class="ad-d-flex ad-d-flex-between">
+                            <li v-for="(item,index) in groupList" :key="index" class="ad-d-flex ad-d-flex-between">
                                 <div class="ad-d-flex">
                                     <span data-no-translate class="max-name">
-                                        <span class="ad-color-text-link"></span>1.20-头条-APP行为-儿童玩具
+                                        <span class="ad-color-text-link"></span>{{item.groupName}}
                                     </span>
                                     <!---->
                                 </div>
-                                <span class="landing-type">信息流-应用推广</span>
+                                <!-- <span class="landing-type">信息流-应用推广</span> -->
                             </li>
                         </ul>
                     </div>
@@ -97,7 +97,6 @@
                                 <div class="text-item">广告组名称</div>
                                 <div class="required-item"></div>
                             </div>
-
                             <div id class="input-item">
                                 <FormItem label="广告组名称" prop="groupName" :showLabel='false'>
                                     <input type="text" v-width="500" v-model="formData.groupName" />
@@ -114,10 +113,10 @@
     </div>
 
     <div class="panel_moduler" style="min-width: 1048px;padding-top: 24px; padding-bottom: 24px;text-align:right;">
-        <!-- <router-link :to="{name:'adPlan',params:{name:'fanjiantao'},query:{name:'aaa'}}">
-        <Button color="primary" size="l">下一步</Button>
-      </router-link> -->
-        <Button color="primary" size="l" @click="submit">下一步</Button>
+
+        <Button color="primary" size="l" @click="submit" v-if="type=='edit'">保存退出</Button>
+        <Button color="primary" size="l" @click="submit" v-else>下一步</Button>
+
     </div>
 
 </div>
@@ -125,14 +124,16 @@
 
 <script>
 export default {
+    props: ["groupId", "type"],
     data() {
         return {
+            groupList: [],
             formData: {
                 groupTarget: '',
                 groupName: ''
             },
             rules: {
-                 required:['groupTarget','groupName']
+                required: ['groupTarget', 'groupName']
 
             },
             pagination: {
@@ -140,7 +141,7 @@ export default {
                 size: 10,
                 total: 20
             },
-            searchText3: '',
+            searchGroupName: '',
             cardTab: [{
                     key: '1',
                     title: '应用推广',
@@ -169,23 +170,83 @@ export default {
         };
     },
     methods: {
+        init() {
+            console.log("初始化配置")
+        },
         currentChange(value) {
-            console.log(value.cur, value.size);
+            this.getGroupList();
         },
         activeCard(val) {
             this.formData.groupTarget = val
 
         },
         change(data) {
-            this.$Message.info(`切换至${data.title}`, 1000);
+            //切换分组
+            if (this.selected == "module2") {
+                this.getGroupList();
+            }
+        },
+        getGroupList(reload = false) {
+            this.$Loading();
+            if (reload) {
+                this.pagination.page = 1;
+            }
+            R.adGroup.get({
+                page: this.pagination.page,
+                limit: this.pagination.size,
+                data: {
+                    groupName: this.searchGroupName
+                }
+            }).then(res => {
+                this.$Loading.close();
+                if (res.ok) {
+                    // console.log(res)
+                    this.groupList = res.data.list;
+                    this.pagination.total = res.data.total;
+                }
+            })
         },
         submit() {
             let validResult = this.$refs.form.valid();
             if (validResult.result) {
-                this.$Message('验证成功');
-                this.$router.push({name:'adPlan',params:{id:'aaa',groupName:this.formData.groupName}})
+                if (this.type == "edit") {
+                    R.adGroup.update({
+                        ...this.formData
+                    }).then(res => {
+                        if (res.ok) {
+                            this.$router.go(-1);
+                        }
+                    })
+
+                }else{
+                    this.$Loading("提交中...")
+                     R.adGroup.add({
+                        ...this.formData
+                    }).then(res => {
+                        this.$Loading.close();
+                        if (res.ok) {
+                             this.$router.push({name:'adPlan',query:{groupId:res.data.id,groupName:res.data.groupName}});
+                        }
+                    })
+                }
+
             }
-           
+
+        },
+        initData() {
+            if (this.groupId) {
+                this.$Loading();
+                R.adGroup.get({
+                    data: {
+                        id: this.groupId
+                    },
+                    page: 1,
+                    limit: 1
+                }).then(res => {
+                    this.$Loading.close();
+                    this.formData = res.data.list[0];
+                })
+            }
         }
     },
     created() {
@@ -194,6 +255,10 @@ export default {
             key: '0',
             step: '0'
         });
+        //  console.log(this.groupId);
+    },
+    mounted() {
+        this.initData();
     },
     computed: {},
 };

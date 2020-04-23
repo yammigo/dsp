@@ -1,5 +1,8 @@
 <template>
 <div :class="baseClass">
+    <div v-show="touchCeiling" ref="scrollBarConsm" :style="{...bodyWrapperStyles,width:bodyWidth+'px'}" style="overflow-x:scroll;width:100%;position:fixed;z-index:10;bottom:0px;" @scroll.passive="handScrollbar">
+        <div :style="tableStyles" style="height:20px;"></div>
+    </div>
     <div class="fui-table-wrapper">
         <div ref="headerWrapper" :style="headerStyles.headerWrapper" :class="{
           'fui-table-overflow-y': scrollY,
@@ -10,9 +13,6 @@
           'fui-table-overflow-y': scrollY,
         }" class="fui-table-header">
             <table-head :columns="allColumns" :data="rebuildData" :column-rows="columnRows" :styles="tableStyles" :columns-width="columnsWidth" :header-height="isTableBodyDiv ? turbo.headerHeight : ''" />
-        </div>
-        <div v-show="touchCeiling" ref="scrollBarConsm" :style="bodyWrapperStyles" style="overflow-x:scroll;width:100%;position:fixed;z-index:10;bottom:0px;" @scroll.passive="handScrollbar">
-            <div :style="tableStyles" style="height:20px;"></div>
         </div>
         <div v-if="data && data.length" ref="bodyWrapper" :class="{
           'fui-table-overflow-x': scrollX,
@@ -167,6 +167,8 @@ export default {
             rightColumns: [],
             leftFixedColumnRows: [],
             leftColumns: [],
+            //body可滚动的宽度
+            bodyWidth: 0,
             // 最后一列
             lastColumn: null,
             //
@@ -482,7 +484,11 @@ export default {
                 this.handleResize();
                 if (this.isCeiling) {
                     this.handleBoundariesElementScroll();
+                     this.bodyWidth = this.$refs.bodyWrapper.offsetWidth-1;
                 }
+
+               
+
             });
         },
         // 处理列的宽度
