@@ -50,7 +50,7 @@
                             <strong>列表</strong>
                         </div>
                         <ul>
-                            <li v-for="(item,index) in groupList" :key="index" class="ad-d-flex ad-d-flex-between">
+                            <li v-for="(item,index) in groupList" :key="index" class="ad-d-flex ad-d-flex-between" @click="linkPlan(item)">
                                 <div class="ad-d-flex">
                                     <span data-no-translate class="max-name">
                                         <span class="ad-color-text-link"></span>{{item.groupName}}
@@ -170,6 +170,10 @@ export default {
         };
     },
     methods: {
+        linkPlan(item){
+            // console.log(item,"跳转项目")
+            this.$router.push({name:'adPlan',query:{groupId:item.id,groupName:item.groupName}});
+        },
         init() {
             console.log("初始化配置")
         },

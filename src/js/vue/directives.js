@@ -21,7 +21,7 @@ Vue.directive('listenTop', {
 
   },
   unbind: function (el, binding, vnode) {
-    document.getElementById('scrollView').removeEventListener('scroll',vnode.scrollTop);
+    document.getElementById('scrollView')&&document.getElementById('scrollView').removeEventListener('scroll',vnode.scrollTop);
     delete vnode.scroll;
   }
 });

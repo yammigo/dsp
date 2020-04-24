@@ -1,138 +1,378 @@
-<style lang='less'>
+<style lang="less">
 .app-home-vue {
-  .home-part-body {
-    height: 350px;
-    .echarts-vue {
-      height: 350px;
-    }
-  }
+    width: 1200px;
+    margin: auto;
 
-  .home-part-body2 {
-    height: 420px;
-    .echarts-vue {
-      height: 420px;
+    .byted-card {
+        background: #fff;
+        border-radius: 4px;
     }
-  }
 
-  .progress-div {
-    >p {
-      padding: 8px 0;
+    [class^=byted-] {
+        box-sizing: border-box;
     }
-    .h-progress {
-      &-title {
-        color: @dark2-color;
-        font-size: 15px;
-      }
-      &-text {
-        width: 40px;
-      }
+
+    .plan-card {
+        display: flex;
+        justify-content: space-between;
+        height: 89px;
     }
-  }
+
+    .plan-card .plan-card-item {
+        cursor: pointer;
+        height: 57px;
+        width: 240px;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+    }
+
+    .plan-card .font24 {
+        font-size: 24px;
+        line-height: 32px;
+    }
+
+    .byted-icon {
+        display: inline-block;
+        vertical-align: middle;
+        width: 1em;
+        height: 1em;
+        position: relative;
+    }
+
+    .ad-color-text-link {
+        color: #2F88FF;
+    }
+
+    .plan-card .plan-card-item span:nth-child(1) {
+        height: 32px;
+        margin-bottom: 5px;
+    }
+
+    .ad-font-size-sm {
+        font-size: 12px;
+        line-height: 20px;
+    }
+    // 颜色
+    .ad-color-text-hint {
+        color: #999;
+    }
+
+    .ad-color-text-border-hint {
+        color: #F45858;
+    }
+
+    .bui-popper {
+        z-index: 999;
+    }
+
+    .user-overview .num-wrap .balance-popover .bui-icon-question-circle {
+        fill: #999;
+    }
+
+    .user-overview .num-wrap .balance-popover .byted-icon {
+        vertical-align: middle;
+        cursor: pointer;
+    }
+
+    .byted-popover {
+        position: relative;
+        z-index: 1051;
+    }
+
+    .byted-popover-wrapper {
+        display: inline-block;
+    }
+
+    .byted-avatar-md {
+        width: 48px;
+        height: 48px;
+        line-height: 48px;
+        font-size: 24px;
+    }
+
+    .user-overview .info .id {
+        color: #666;
+    }
+
+    .user-overview .num-wrap .num-detail {
+        margin-left: 16px;
+    }
+
+    .user-overview .num-wrap {
+        margin-left: 56px;
+        display: flex;
+    }
+
+    .ad-font-size-sm {
+        font-size: 12px;
+        line-height: 20px;
+    }
+
+    .byted-popover-wrapper {
+        display: inline-block;
+    }
+
+    .user-overview .info {
+        display: flex;
+        flex-flow: column;
+        margin-left: 16px;
+    }
+
+    .byted-icon {
+        display: inline-block;
+        vertical-align: middle;
+        width: 1em;
+        height: 1em;
+        position: relative;
+    }
+
+    .byted-avatar {
+        position: relative;
+        text-align: center;
+        background: #d6d6d6;
+        color: #fff;
+        overflow: hidden;
+    }
+
+    .byted-card-body {
+        padding: 16px 24px;
+    }
+
+    .user-overview {
+        height: 72px;
+        display: flex;
+        align-items: center;
+    }
+
+    .byted-avatar-circle {
+        border-radius: 50%;
+    }
+
+    .byted-avatar-icon {
+        line-height: 1.5;
+    }
+
+    .byted-card.byted-card-shadow {
+        -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, .05);
+        box-shadow: 0 1px 6px 0 rgba(0, 0, 0, .05);
+    }
+
+    .dashboard-content {
+        width: 1200px;
+        background: #F8F9FA;
+        margin: 0 auto;
+
+        .card:first-child {
+            margin-top: 16px;
+        }
+
+        .card {
+            margin-bottom: 16px;
+        }
+    }
+
+    .home-part-body {
+        height: 350px;
+
+        .echarts-vue {
+            height: 350px;
+        }
+    }
+
+    .home-part-body2 {
+        height: 420px;
+
+        .echarts-vue {
+            height: 420px;
+        }
+    }
+
+    .progress-div {
+        >p {
+            padding: 8px 0;
+        }
+
+        .h-progress {
+            &-title {
+                color: @dark2-color;
+                font-size: 15px;
+            }
+
+            &-text {
+                width: 40px;
+            }
+        }
+    }
 }
 </style>
 <template>
-  <div class="app-home-vue frame-page">
+<div class="app-home-vue frame-page">
+    <div class="dashboard-content">
+        <div class="card byted-card byted-card-shadow">
+            <!---->
+            <div class="byted-card-body">
+                <div class="user-overview">
+                    <div class="byted-avatar byted-avatar-md byted-avatar-circle byted-avatar-icon">
+                        <div class="byted-icon bui-icon-user" style="fill: rgb(255, 255, 255);"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" width="100%" height="100%">
+                                <defs>
+                                    <path id="user_svg__a" d="M19.52 23.535c-.863.003-5.23.003-5.656-.007h-.558l-.89.007H1.173a.47.47 0 0 1-.472-.47v-.566c-.008-.157-.023-1.021.53-1.97.346-.594.843-1.103 1.477-1.515.77-.499 1.743-.853 2.895-1.053.026-.004.913-.125 1.813-.362 1.56-.41 1.697-.773 1.698-.777a.471.471 0 0 1 .04-.103c.012-.067.044-.323-.017-1.008-.153-1.74-1.062-2.767-1.791-3.593-.23-.26-.448-.506-.615-.748-.722-1.04-.79-2.224-.792-2.274 0-.496.236-.713.444-.905.027-.058.01-.143 0-.201-.195-1.047-.207-2.562-.043-3.534.06-1.278 1.165-2.257 1.213-2.298.164-.14.325-.286.427-.449.02-.066.008-.09 0-.111-.062-.142-.155-.355-.102-.63.032-.166.153-.462.608-.583.183-.049.379-.059.522-.066C9.6.288 10.202.263 10.812.31c4.405.337 5.923 1.98 5.985 2.05.363.433.624.959.787 1.573.05.192.083.352.102.505.154.892.129 1.809.096 2.422-.019.344-.057.705-.121 1.136-.018.117.002.14.009.149.019.023.042.047.067.074.097.103.23.244.302.47.035.114.052.236.052.385-.003.073-.07 1.257-.792 2.297a8.605 8.605 0 0 1-.615.748c-.73.826-1.638 1.854-1.792 3.593-.06.685-.029.94-.016 1.009.017.032.03.067.04.103 0 .003.138.367 1.705.778.9.237 1.78.356 1.788.358 1.185.218 2.165.582 2.935 1.083.637.415 1.133.923 1.475 1.512.542.934.52 1.78.51 1.949v.561a.47.47 0 0 1-.472.47H19.52zm-4.764-6.962zm-5.38 0z"></path>
+                                </defs>
+                                <use fill-rule="evenodd" xlink:href="#user_svg__a"></use>
+                            </svg></div>
+                        <!---->
+                        <!---->
+                        <!---->
+                    </div>
+                    <div class="info">
+                        <div class="byted-popover-wrapper">
+                            <div class="bui-popper byted-popover byted-tooltip" style="width: 246px; display: none;">
+                                <div x-arrow="" class="bui-popover-arrow" style="left: 92px;"></div>
+                                <div class="bui-popover-panel">
+                                    <!---->
+                                    <div class="bui-popover-body">
+                                        北京福瑞德时光科技有限公司
+                                    </div>
+                                    <!---->
+                                </div>
+                            </div> <span data-no-translate="" class="bui-num ad-font-size name">北京福瑞德时光科技有限公司</span>
+                        </div> <span class="ad-font-size-sm id">ID：1653976111944717</span>
+                    </div>
+                    <div class="num-wrap"><img src="//s1.pstatp.com/bytecom/platform_web/static/image/balance.svg?7dc45da98d3acdbde20b3f2b4e6eb791">
+                        <div class="num-detail"><span class="ad-color-text-hint ad-font-size-sm">账户余额</span>
+                            <div class="balance-popover byted-popover-wrapper">
+                                <div class="bui-popper byted-popover" style="width: 240px; display: none;">
+                                    <div x-arrow="" class="bui-popover-arrow"></div>
+                                    <div class="bui-popover-panel">
+                                        <!---->
+                                        <div class="bui-popover-body">
+                                            <!---->
+                                        </div>
+                                        <!----> <span class="ad-font-size ad-color-text bui-num balance-popover-header">
+                                            账户余额构成说明
+                                            <a target="_black" href="/overture/cash/flow/?aadvid=1653976111944717" class="ad-link-text-btn">查看详情</a></span>
+                                        <div class="balance-explain">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="byted-icon bui-icon-question-circle" style="width: 14px; height: 14px;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 14 14" width="100%" height="100%">
+                                        <defs>
+                                            <path id="question-circle_svg__a" d="M0 0h14v14H0z"></path>
+                                        </defs>
+                                        <g fill-rule="evenodd">
+                                            <mask id="question-circle_svg__b" fill="#fff">
+                                                <use xlink:href="#question-circle_svg__a"></use>
+                                            </mask>
+                                            <path fill-rule="nonzero" d="M7 13.417a6.397 6.397 0 0 1-4.537-1.88A6.397 6.397 0 0 1 .583 7c0-1.724.685-3.342 1.88-4.537A6.397 6.397 0 0 1 7 .583c1.724 0 3.342.685 4.537 1.88A6.397 6.397 0 0 1 13.417 7a6.397 6.397 0 0 1-1.88 4.537A6.397 6.397 0 0 1 7 13.417zm0-1.167a5.23 5.23 0 0 0 3.712-1.538A5.23 5.23 0 0 0 12.25 7a5.23 5.23 0 0 0-1.538-3.712A5.23 5.23 0 0 0 7 1.75a5.23 5.23 0 0 0-3.712 1.538A5.23 5.23 0 0 0 1.75 7a5.23 5.23 0 0 0 1.538 3.712A5.23 5.23 0 0 0 7 12.25zm.583-4.74v.657a.583.583 0 0 1-1.166 0V7c0-.322.26-.583.583-.583A1.167 1.167 0 1 0 5.833 5.25a.583.583 0 0 1-1.166 0 2.333 2.333 0 1 1 2.916 2.26zM7 10.5a.583.583 0 1 0 0-1.167.583.583 0 0 0 0 1.167z"></path>
+                                        </g>
+                                    </svg></div>
+                            </div>
+                            <div class="ad-color-text number bui-num">0</div>
+                        </div>
+                    </div>
+                    <div class="num-wrap"><img src="//s1.pstatp.com/bytecom/platform_web/static/image/consume.svg?9bd7b70a409309e862b0174f252b7470">
+                        <div class="num-detail"><span class="ad-color-text-hint ad-font-size-sm">今日消耗</span>
+                            <div class="ad-color-text number bui-num">0.00</div>
+                        </div>
+                    </div>
+                    <div class="num-wrap"><img src="//s1.pstatp.com/bytecom/platform_web/static/image/budget.svg?f55db195e1bd18d103ec65eb329e5699">
+                        <div class="num-detail"><span class="ad-color-text-hint ad-font-size-sm">账户日预算</span>
+                            <div class="ad-color-text number bui-num"><span>1,000.00</span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!---->
+                </div>
+            </div>
+        </div>
+        <div class="plan-card card">
+            <div class="byted-card byted-card-shadow">
+                <!---->
+                <div class="byted-card-body">
+                    <div class="plan-card-item"><span class="font24 ad-color-text-link bui-num">0</span> <span class="ad-color-text ad-font-size-sm plan-type-name">
+                            <div class="byted-icon bui-icon-angle-right" style="width: 16px; height: 16px; visibility: hidden;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
+                                    <defs>
+                                        <path id="angle-right_svg__a" d="M0 0h48v48H0z"></path>
+                                    </defs>
+                                    <g fill-rule="evenodd" transform="rotate(-90 24 24)">
+                                        <mask id="angle-right_svg__b" fill="#fff">
+                                            <use xlink:href="#angle-right_svg__a"></use>
+                                        </mask>
+                                        <use opacity=".01" xlink:href="#angle-right_svg__a"></use>
+                                        <path fill-rule="nonzero" d="M16.586 35.324a2 2 0 0 0 2.828 2.828l12-12a2 2 0 0 0 0-2.828l-12-12a2 2 0 0 0-2.828 2.828l10.586 10.586-10.586 10.586z" transform="rotate(90 24 24.738)"></path>
+                                    </g>
+                                </svg></div>
+                            投放中计划
+                            <div class="byted-icon bui-icon-angle-right" style="width: 16px; height: 16px;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
+                                    <defs>
+                                        <path id="angle-right_svg__a" d="M0 0h48v48H0z"></path>
+                                    </defs>
+                                    <g fill-rule="evenodd" transform="rotate(-90 24 24)">
+                                        <mask id="angle-right_svg__b" fill="#fff">
+                                            <use xlink:href="#angle-right_svg__a"></use>
+                                        </mask>
+                                        <use opacity=".01" xlink:href="#angle-right_svg__a"></use>
+                                        <path fill-rule="nonzero" d="M16.586 35.324a2 2 0 0 0 2.828 2.828l12-12a2 2 0 0 0 0-2.828l-12-12a2 2 0 0 0-2.828 2.828l10.586 10.586-10.586 10.586z" transform="rotate(90 24 24.738)"></path>
+                                    </g>
+                                </svg></div>
+                        </span></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
     <Row :space="30">
-      <Cell :xs='24' :sm='24' :md='24' :lg='16' :xl='16'>
-        <div class="h-panel">
-          <div class="relative">
-            <Tabs class="common-panel-tabs" v-model="type" :datas="{type1: '数据走势', type2: '数据分布'}"></Tabs>
-            <div class="middle-right" style="right: 25px;"><span class="text-hover" @click="openMore">查看更多</span></div>
-          </div>
-          <div class="home-part-body">
-            <Chart :options="data1" v-if="type=='type1'" key="type1"></Chart>
-            <Chart :options="data3" v-if="type=='type2'" key="type2"></Chart>
-          </div>
-        </div>
-      </Cell>
-      <Cell :xs='24' :sm='24' :md='24' :lg='8' :xl='8'>
-        <div class="h-panel">
-          <div class="h-panel-bar">
-            <div class="h-panel-title">订单统计</div>
-            <div class="h-panel-right"><span class="gray-color">总共达成</span><i class="h-split"></i><span class="font20 primary-color">200</span><i class="h-split"></i><span class="gray-color">W</span></div>
-          </div>
-          <div class="h-panel-body progress-div home-part-body">
-            <p><Progress :percent="99" color="green"><span slot="title">订单状态</span><span slot="text">4个</span></Progress></p>
-            <p><Progress :percent="88" color="blue"><span slot="title">订单状态</span><span slot="text">0个</span></Progress></p>
-            <p><Progress :percent="55" color="red"><span slot="title">订单状态</span><span slot="text">0个</span></Progress></p>
-            <p><Progress :percent="77" color="blue"><span slot="title">订单状态</span><span slot="text">0个</span></Progress></p>
-            <p><Progress :percent="66" color="yellow"><span slot="title">订单状态</span><span slot="text">0个</span></Progress></p>
-          </div>
-        </div>
-      </Cell>
-
-      <Cell :xs='24' :sm='24' :md='24' :lg='16' :xl='16'>
-        <div class="h-panel">
-          <div class="h-panel-bar">
-            <div class="h-panel-title">数据比例</div>
-          </div>
-          <div class="home-part-body2">
-            <Chart :options="data2"></Chart>
-          </div>
-        </div>
-      </Cell>
-
-      <Cell :xs='24' :sm='24' :md='24' :lg='8' :xl='8'>
-        <div class="h-panel">
-          <div class="h-panel-bar">
-            <div class="h-panel-title">数据比例</div>
-          </div>
-          <div class="h-panel-body home-part-body2">
-            <Row :space="20">
-              <Cell :width="10" class="text-right">
-                <h-circle :percent="76" :stroke-width="10" :size="90">
-                  <p><span class="font28">{{parseInt(123*76/100)}}</span><span class="gray-color"> / 123</span></p>
-                </h-circle>
-              </Cell>
-              <Cell :width="14">
-                <p class="gray-color">目前达成比例</p>
-                <p class="dark-color font22">122,332,98</p>
-              </Cell>
-              <p class="clearfix"></p>
-              <Cell :width="10" class="text-right">
-                <h-circle :percent="99" :stroke-width="10" :size="90"  color="green">
-                  <p><span class="font28">{{parseInt(123*76/100)}}</span><span class="gray-color"> / 123</span></p>
-                </h-circle>
-              </Cell>
-              <Cell :width="14">
-                <p class="gray-color">目前达成比例</p>
-                <p class="dark-color font22">122,332,98</p>
-              </Cell>
-              <p class="clearfix"></p>
-              <Cell :width="10" class="text-right">
-                <h-circle :percent="22" :stroke-width="10" :size="90" color="red">
-                  <p><span class="font28">{{parseInt(123*76/100)}}</span><span class="gray-color"> / 123</span></p>
-                </h-circle>
-              </Cell>
-              <Cell :width="14">
-                <p class="gray-color">目前达成比例</p>
-                <p class="dark-color font22">122,332,98</p>
-              </Cell>
-            </Row>
-          </div>
-        </div>
-      </Cell>
+        <Cell :xs='24' :sm='24' :md='24' :lg='16' :xl='16'>
+            <div class="h-panel">
+                <div class="relative">
+                    <Tabs class="common-panel-tabs" v-model="type" :datas="{type1: '数据走势', type2: '数据分布'}"></Tabs>
+                    <div class="middle-right" style="right: 25px;"><span class="text-hover">查看更多</span></div>
+                </div>
+                <div class="home-part-body">
+                  
+                </div>
+            </div>
+        </Cell>
+        <Cell :xs='24' :sm='24' :md='24' :lg='8' :xl='8'>
+            <div class="h-panel">
+                <div class="h-panel-bar">
+                    <div class="h-panel-title">Top10展现量计划</div>
+                    <div class="h-panel-right"><span class="gray-color">总展现</span><i class="h-split"></i><span class="font20 primary-color">200</span><i class="h-split"></i><span class="gray-color">W</span></div>
+                </div>
+                <div class="h-panel-body progress-div home-part-body">
+                    <p><Progress :percent="99" color="green"><span slot="title">展现次数</span><span slot="text">4个</span></Progress></p>
+                    <p><Progress :percent="88" color="blue"><span slot="title">展现次数</span><span slot="text">0个</span></Progress></p>
+                    <p><Progress :percent="55" color="red"><span slot="title">展现次数</span><span slot="text">0个</span></Progress></p>
+                    <p><Progress :percent="77" color="blue"><span slot="title">展现次数</span><span slot="text">0个</span></Progress></p>
+                    <p><Progress :percent="66" color="yellow"><span slot="title">展现此时</span><span slot="text">0个</span></Progress></p>
+                </div>
+            </div>
+        </Cell>
     </Row>
-  </div>
+</div>
 </template>
+
 <script>
 import data1 from 'components/demo-components/components/datas/data1';
 import data2 from 'components/demo-components/components/datas/data2';
 import data3 from 'components/demo-components/components/datas/data4';
-
 export default {
-  data() {
-    return {
-      data1,
-      data2,
-      data3,
-      type: 'type1'
-    };
-  },
-  methods: {
-    openMore() {
-      this.$router.push({ name: 'Chart' });
+    data() {
+        return {
+            data1,
+            data2,
+            data3,
+            type: 'type1'
+        };
+    },
+    methods: {
+        openMore() {
+            this.$router.push({
+                name: 'Chart'
+            });
+        }
     }
-  }
 };
 </script>

@@ -1,12 +1,30 @@
 <style lang="less">
 .mediaTpl {
-    width:100%;
+    width: 100%;
     padding: 10px;
     overflow: hidden;
+
     .imgBoxList3 {
-        text-align: center;
+
         font-size: 0px;
         margin: auto;
+
+        div {
+            width:25%;
+            font-size: 0px;
+            margin-left: 10px;
+            margin-right: 10px;
+            overflow: hidden;
+            display: inline-block;
+            text-align: center;
+            border-radius:4px;
+            overflow: hidden;
+            img {
+                font-size: 0px;
+                border-radius: 4px;
+            }
+
+        }
 
         div:first-child {
             margin-right: 0px;
@@ -15,12 +33,17 @@
         div:last-child {
             margin-left: 0px;
         }
+    }
+    .imgBoxList2 {
+
+        font-size: 0px;
+        margin: auto;
 
         div {
-            width: 30%;
+
             font-size: 0px;
-            margin-left: 1.5%;
-            margin-right: 1.5%;
+            text-align: center;
+            width:50%;
             overflow: hidden;
             display: inline-block;
 
@@ -33,19 +56,64 @@
     }
 
     .imgBoxList1 {
-        width: 100%;
+       
+
         div {
             text-align: center;
+            border-radius:4px;
+            overflow: hidden;
+            img{
+                border-radius:4px;
+            }
+        }
+    }
+
+    .videoBox {
+        div:first-child {
+            margin-right: 0px;
+        }
+
+        div:last-child {
+            margin-left: 0px;
+        }
+
+        div {
+            font-size: 0px;
+            margin-left: 1.5%;
+            margin-right: 1.5%;
+            overflow: hidden;
+            display: inline-block;
+            width:45%;
+
+            video {
+                border-radius: 4px;
+            }
+
+            img {
+                font-size: 0px;
+                border-radius: 4px;
+            }
+
         }
     }
 }
 </style>
 <template>
 <div class="mediaTpl">
+
+    <!-- 视频 -->
+    <div v-if="fmUrl" class="videoBox" style="fongt-size:0px;">
+        <div>
+            <video controls :src="urlList[0]" height="100"></video>
+        </div>
+        <div>
+            <img :src="fmUrl" height="100" />
+        </div>
+    </div>
     <!-- 多图 单图-->
-    <div :class="{'imgBoxList1':urlList.length==1,'imgBoxList3':urlList.length>1}" style="fongt-size:0px;">
+    <div v-else :class="{'imgBoxList1':urlList.length==1,'imgBoxList2':urlList.length==2,'imgBoxList3':urlList.length>2}" style="fongt-size:0px;">
         <div v-for="(item,index) in urlList" :key="index">
-            <img :src="item" height="80" />
+            <img :src="item" height="100" />
         </div>
     </div>
 </div>
@@ -57,10 +125,16 @@ export default {
         urlList: {
             type: Array,
             default: () => {
-                return ["http://image.huashengerge.com/pic/2020/4/22/158753492433274145.png","http://image.huashengerge.com/pic/2020/4/22/158753492433274145.png"];
+                return [];
             }
         },
-        type: [String, Number]
+        fmUrl: {
+            type: String,
+            default: function () {
+                return ""
+            }
+        },
+        type: [String]
     },
     data() {
         return {

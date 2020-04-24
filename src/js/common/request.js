@@ -45,7 +45,7 @@ const Request = {
     update(params){
       return Ajax.post('/ad/idea/update.do',params)
     },
-    updateSatus(params){
+    updateStatus(params){
       return Ajax.post('/ad/idea/update/status.do',params)
     }
 

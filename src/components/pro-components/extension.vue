@@ -99,32 +99,17 @@
                                 </svg></Button>
                         </div>
             </FormItem>-->
-                    <FormItem label="投放终端" style="padding-bottom:0px;display:inline-block;width:250px;margin:10px 10px">
-                        <Select v-model="formSearch.select4" :datas="param3" placeholder="请选择"></Select>
+                    <FormItem label="状态" style="padding-bottom:0px;display:inline-block;width:250px;margin:10px 10px">
+                        <Select v-model="formSearch.status" :datas="searchStatus" placeholder="请选择" @change="chnageSearch"></Select>
                     </FormItem>
-                    <FormItem v-show="selected=='module1'" label="广告组状态" style="padding-bottom:0px;display:inline-block;width:250px;margin:10px 10px">
-                        <Select v-model="formSearch.status" :datas="param3" placeholder="请选择"></Select>
+                    <FormItem label="出价方式" style="padding-bottom:0px;display:inline-block;width:250px;margin:10px 10px">
+                        <Select v-model="formSearch.bidType" :datas="bidType" placeholder="请选择" @change="chnageSearch"></Select>
                     </FormItem>
-                    <FormItem v-show="selected=='module2'" label="计划状态" style="padding-bottom:0px;display:inline-block;width:250px;margin:10px 10px">
-                        <Select v-model="formSearch.status" :datas="param3" placeholder="请选择"></Select>
+                    <FormItem label="投放方式" style="padding-bottom:0px;display:inline-block;width:250px;margin:10px 10px">
+                        <Select v-model="formSearch.putType" :datas="putType" placeholder="请选择" @change="chnageSearch"></Select>
                     </FormItem>
-                    <FormItem v-show="selected=='module3'" label="创意状态" style="padding-bottom:0px;display:inline-block;width:250px;margin:10px 10px">
-                        <Select v-model="formSearch.status" :datas="param3" placeholder="请选择"></Select>
-                    </FormItem>
-                    <FormItem v-show="selected=='module2'" label="投放地域" style="padding-bottom:0px;display:inline-block;width:250px;margin:10px 10px">
-                        <Select v-model="formSearch.select4" :datas="param3" placeholder="请选择"></Select>
-                    </FormItem>
-                    <FormItem v-show="selected=='module3'" label="产品" style="padding-bottom:0px;display:inline-block;width:250px;margin:10px 10px">
-                        <Select v-model="formSearch.select4" :datas="param3" placeholder="请选择"></Select>
-                    </FormItem>
-                    <FormItem v-show="selected=='module2'" label="出价方式" style="padding-bottom:0px;display:inline-block;width:250px;margin:10px 10px">
-                        <Select v-model="formSearch.select4" :datas="param3" placeholder="请选择"></Select>
-                    </FormItem>
-                    <FormItem v-show="selected=='module3'" label="广告位类型" style="padding-bottom:0px;display:inline-block;width:250px;margin:10px 10px">
-                        <Select v-model="formSearch.select4" :datas="param3" placeholder="请选择"></Select>
-                    </FormItem>
-                    <FormItem v-show="selected=='module3'" label="跳转类型" style="padding-bottom:0px;display:inline-block;width:250px;margin:10px 10px">
-                        <Select v-model="formSearch.select4" :datas="param3" placeholder="请选择"></Select>
+                    <FormItem label="跳转类型" style="padding-bottom:0px;display:inline-block;width:250px;margin:10px 10px">
+                        <Select v-model="formSearch.clickType" :datas="clickType" placeholder="请选择" @change="chnageSearch"></Select>
                     </FormItem>
                 </div>
                 <div style="display:inline-block;">
@@ -153,7 +138,7 @@
                         </div>
                     </FormItem>
                     <FormItem :showLabel="false" style="padding-bottom:0px;display:inline-block;width:280px;margin:10px 10px;float:right;">
-                        <DateRangePicker v-model="formSearch.date" :option="dateParam"></DateRangePicker>
+                       <DateFullRangePicker v-model="PickerData" :layout="layout" clearable :startWeek="startWeek" @change="changeDate"></DateFullRangePicker>
                     </FormItem>
                 </div>
             </div>
@@ -238,23 +223,23 @@
                     <span class="h-tag-circle" :class="[styleColor[data.status]]"></span>{{dictStatus[data.status]}}
                 </template>
             </TableItem>
-            <TableItem :width="100" title="投放方式">
+            <TableItem :width="100" align="center" title="投放方式">
                 <template slot-scope="{data}">
                     {{putType[data.putType]}}
                 </template>
             </TableItem>
-            <TableItem :width="100" title="日预算" prop="putAmountDay"></TableItem>
-            <TableItem :width="100" title="出价金额" prop="bidAmount"></TableItem>
-            <TableItem :width="100" title="消费金额" prop="income"></TableItem>
-            <TableItem :width="100" title="展现数" prop="showCount "></TableItem>
-            <TableItem :width="100" title="点击数" prop="clickCount"></TableItem>
-            <TableItem :width="100" title="开始下载" prop="downStartCount"></TableItem>
-            <TableItem :width="100" title="完成下载" prop="downEndCount "></TableItem>
-            <TableItem :width="100" title="开始安装" prop="installStartCount "></TableItem>
-            <TableItem :width="100" title="安装完成" prop="installEndCount"></TableItem>
-            <TableItem :width="100" title="开始播放" prop="playStartCount"></TableItem>
-            <TableItem :width="100" title="完成播放" prop="playEndCount"></TableItem>
-            <TableItem :width="100" title="完成播放" prop="playEndCount"></TableItem>
+            <TableItem :width="100" align="right" title="日预算" prop="putAmountDay"></TableItem>
+            <TableItem :width="100" align="right" title="出价金额" prop="bidAmount"></TableItem>
+            <TableItem :width="100" align="right" title="消费金额" prop="income"></TableItem>
+            <TableItem :width="100" align="right" title="展现数" prop="showCount "></TableItem>
+            <TableItem :width="100" align="right" title="点击数" prop="clickCount"></TableItem>
+            <TableItem :width="100" align="right" title="开始下载" prop="downStartCount"></TableItem>
+            <TableItem :width="100" align="right" title="完成下载" prop="downEndCount "></TableItem>
+            <TableItem :width="100" align="right" title="开始安装" prop="installStartCount "></TableItem>
+            <TableItem :width="100" align="right" title="安装完成" prop="installEndCount"></TableItem>
+            <TableItem :width="100" align="right" title="开始播放" prop="playStartCount"></TableItem>
+            <TableItem :width="100" align="right" title="完成播放" prop="playEndCount"></TableItem>
+            <TableItem :width="100" align="right" title="完成播放" prop="playEndCount"></TableItem>
             <TableItem :width="100" title="操作" align="center" fixed="right">
                 <template slot-scope="{data}">
                     <span v-if="data.status!==-1&&data.status!==-2">
@@ -267,10 +252,32 @@
         </Table>
         <!-- 创意列表 -->
         <Table v-show="selected=='module3'" :datas="datas" :border="border" :checkbox="checkbox" :stripe="stripe" :loading="loading">
-            <TableItem title="广告组名称" prop="groupName"></TableItem>
-            <TableItem title="推广目的" prop="groupTarget"></TableItem>
-            <TableItem align="center" title="状态" prop="status"></TableItem>
-            <TableItem title="创建时间" prop="createTime"></TableItem>
+            <TableItem :width="200" title="所属组" prop="groupName"></TableItem>
+            <TableItem :width="200" title="所属计划" prop="planName"></TableItem>
+            <TableItem :width="200" title="创意名称" prop="ideaName"></TableItem>
+            <TableItem :width="100" align="center" title="状态">
+                <template slot-scope="{data}">
+                    <span class="h-tag-circle" :class="[styleColor[data.status]]"></span>{{dictStatus[data.status]}}
+                </template>
+            </TableItem>
+            <TableItem :width="100" title="产品名称" prop="productName"></TableItem>
+            <TableItem :width="100" title="跳转类型">
+                <template slot-scope="{data}">
+                    {{clickType[data.clickType]}}
+                </template>
+            </TableItem>
+            <TableItem :width="200" title="跳转链接" prop="clickUrl">
+
+            </TableItem>
+            <TableItem :width="150" title="创建时间" prop="createTime"></TableItem>
+            <TableItem :width="100" title="操作" align="center" fixed="right">
+                <template slot-scope="{data}">
+                    <span v-if="data.status!==-1&&data.status!==-2">
+                        <Poptip :content="'确认'+(data.status?'禁用':'启用')" @confirm="updataStatus('adIdea',{status:editStatus[data.status],id:data.id})"><a class="text-hover">{{data.status?"禁用":"启用"}}</a></Poptip>
+                    </span>
+                    <span><a class="text-hover" @click="editData('/adOriginality',{ideaid:data.id,type:'edit'})">编辑</a></span>
+                </template>
+            </TableItem>
             <div slot="empty">暂无创意数据</div>
         </Table>
         <p></p>
@@ -283,6 +290,13 @@
 export default {
     data() {
         return {
+            PickerData: {
+                start:new Date().getFullYear()+"-"+(new Date().getMonth()+1)+'-'+new Date().getDate(),
+                end: new Date().getFullYear()+"-"+(new Date().getMonth()+1)+'-'+new Date().getDate(),
+                type: 'customize'
+            },
+            startWeek: 1,
+            layout: ['date', 'customize'],
             editStatus: {
                 "0": "1",
                 "1": "0"
@@ -307,13 +321,20 @@ export default {
                 1: 'cpc',
                 2: 'cpm'
             },
+            clickType: {
+                1: "链接",
+                2: "下载"
+            },
             show: false,
             border: false,
             stripe: false,
             checkbox: false,
             serial: false,
             loading: false,
-            formSearch: {},
+            formSearch: {
+                queryStartTime:new Date().getFullYear()+"-"+(new Date().getMonth()+1)+'-'+new Date().getDate(),
+                queryEndTime:new Date().getFullYear()+"-"+(new Date().getMonth()+1)+'-'+new Date().getDate(),
+            },
             datas: [],
             //分页器
             pagination: {
@@ -325,7 +346,6 @@ export default {
             param: [{
                     key: 'module1',
                     title: '广告组',
-
                     count: 12,
                     icon: 'M9.942 2a2 2 0 0 1 1.433.605L13.708 5H17a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h6.942zm2.816 7.096l-3.849 3.97-1.667-1.72a.712.712 0 0 0-1.029 0 .767.767 0 0 0 0 1.06l2.182 2.25a.712.712 0 0 0 1.028 0l4.364-4.5a.767.767 0 0 0 0-1.06.712.712 0 0 0-1.029 0zM9.942 4H3l-.001 1H10.916l-.974-1z'
                 },
@@ -342,39 +362,38 @@ export default {
                     icon: 'M14 1.509a3 3 0 0 1 3 3v11a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-11a3 3 0 0 1 3-3h8zm1 9.882H5v3.62h10v-3.62zm-4.462.881a.941.941 0 0 1 0 1.882H9.421a.941.941 0 1 1 0-1.882h1.117zM14 3.51H6a1 1 0 0 0-1 1v5h10v-5a1 1 0 0 0-1-1z'
                 }
             ],
-            selected: 'module1',
+            selected: Utils.getCookie('pageSelect')||'module1',
             //
             soltPanel: false,
-            formSearch: {},
-            page: {},
             param0: {
                 0: '广告组',
                 1: '计划',
                 2: '创意'
             },
-            param3: {
-                0: '启用',
-                1: '停用',
-                2: '已达上限'
+            searchStatus: {
+                "-1": "待审核",
+                "0": '禁用',
+                "1": '启用',
+                "-2": "审核不通过"
             },
             param1: ['广告组', '计划', '创意'],
-            dateParam: {
-                shortcuts: [{
-                    title: '近三天',
-                    value() {
-                        return {
-                            start: manba().add(-3, manba.DAY),
-                            end: manba()
-                        };
-                    }
-                }]
-            }
+
         };
     },
     mounted() {
         this.init();
     },
     methods: {
+        //下拉搜索发生变化
+        chnageSearch(value) {
+            this.getData(true);
+        },
+        //下拉发生变化
+        changeDate(val){
+            this.formSearch.queryStartTime=val.start;
+            this.formSearch.queryEndTime=val.end;
+            this.getData(true);
+        },
         init() {
             this.getData();
         },
@@ -394,10 +413,9 @@ export default {
         //切换数据
         change(data) {
             //切换后重置分页信息
-            console.log(this.selected)
-            this.$Message.info(`切换至${data.title}`, 1000);
+           
+            Utils.saveCookie('pageSelect',data.key);
             this.getData(true);
-
         },
         updataStatus(api, data) {
 

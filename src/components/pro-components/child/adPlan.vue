@@ -180,7 +180,7 @@
                 </div>
             </div>
         </div>
-        <div class="moduler" v-listenTop:3="testall">
+        <div class="moduler" v-listenTop:2="testall">
             <div class="ad-row-title moduler-title">
                 用户定向
                 <!-- <span class="help-frame-link no-selec">了解详情</span> -->
@@ -215,7 +215,7 @@
 
         <!-- 匀速 快速 -->
         <!-- 预算与出价 -->
-        <div class="moduler" v-listenTop:4="testall">
+        <div class="moduler" v-listenTop:3="testall">
             <div class="ad-row-title moduler-title">
                 预算与出价
                 <!-- <span class="help-frame-link no-selec">了解详情</span> -->
@@ -303,7 +303,7 @@
                 </div>
             </div>
         </div>
-        <div class="moduler" v-listenTop:5="testall">
+        <div class="moduler" v-listenTop:4="testall">
             <div class="ad-row-title moduler-title">
                 计划名称
                 <!-- <span class="help-frame-link no-selec">了解详情</span> -->
@@ -456,11 +456,11 @@ export default {
                     .then(res => {
                         if (res.ok) {
                             this.$Message.success(res.msg);
-                            this.$router.push({
+                            this.$router.replace({
                                 name: 'adOriginality',
                                 query: {
-                                    planId: res.data.id,
-                                    planName: res.data.planName
+                                    planId: this.planId,
+                                    planName: this.formData.planName
                                 }
                             });
                         }
@@ -473,7 +473,7 @@ export default {
                     .then(res => {
                         if (res.ok) {
                             this.$Message.success(res.msg);
-                            this.$router.push({
+                            this.$router.replace({
                                 name: 'adOriginality',
                                 query: {
                                     planId: res.data.id,
@@ -505,12 +505,13 @@ export default {
             }
         }
     },
-
-    created() {
+    mounted() {
         this.$emit('activeStep', {
             key: '1',
             step: '0'
         });
+    },
+    created() {
         //获取字典数据
         R.Common.sityList({}).then(res => {
             if (res.ok) {
