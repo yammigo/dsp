@@ -147,6 +147,8 @@
             <div class="buttonDiv">
                 <Button :loading="loading" block color="primary" size="l" @click="submit">登录</Button>
             </div>
+            <a style="margin-top:10px;">没有账号？</a>
+            <a style="margin-top:10px;" href="#/register">去注册</a>
         </div>
         <p class="copyright"> Copyright © 2019 版权 - <a href="">dspUSer</a></p>
     </div>
@@ -188,7 +190,9 @@ export default {
             this.loading = true;
             R.Login.login(data).then(resp => {
                 if (resp.ok) {
-                    let userInfo={...resp.data};
+                    let userInfo = {
+                        ...resp.data
+                    };
                     Utils.saveCookie('token', resp.data.token);
                     resp.data.avatar = require('../../images/avatar.png');
                     Utils.saveCookie('userInfo', resp.data);
@@ -198,7 +202,7 @@ export default {
                     store.dispatch('updateAccount', {
                         ...resp.data
                     });
-                   this.$router.replace("/");
+                    this.$router.replace("/");
                 } else {
                     Utils.clearCookie();
                     this.login.verifyCode = "";

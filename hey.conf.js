@@ -9,8 +9,21 @@ module.exports = {
     publicPath: '/',
     output: {
       './index.html': {
-        entry: './src/app'
+        entry: './src/app.js',
+        commons: ['common']
       }
+    },
+    commonTrunk: {  //公共包定义，可以定义多个
+      common: [
+        'babel-polyfill',
+        'manba',
+        'js-model',
+        './src/js/common/utils',
+        './src/js/common/request',
+        'hey-global',
+        'hey-log',
+        'heyui',
+      ]
     },
     alias: {
       model: './src/js/model/',
@@ -27,7 +40,7 @@ module.exports = {
       log: 'hey-log',
       R: [path.resolve(__dirname, 'src/js/common/request'), 'default']
     },
-    devServer: { 
+    devServer: {
       proxy: {
         // '/api': {
         //   target: 'http://10.0.0.84'

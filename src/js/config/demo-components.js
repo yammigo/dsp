@@ -53,12 +53,7 @@ export default [{
   name: 'TableDetail',
   component: (resolve) => require(['components/demo-components/table/detail'], resolve),
   meta: { title: '表格详情' }
-}, {
-  path: '/account-basic',
-  name: 'AccountBasic',
-  component: (resolve) => require(['components/demo-components/account/account'], resolve),
-  meta: { title: '个人中心', icon: 'icon-head' }
-}, {
+},{
   path: '/account-setting/',
   name: 'AccountSetting',
   component: (resolve) => require(['components/demo-components/account/account-setting'], resolve),

@@ -332,8 +332,8 @@ export default {
             serial: false,
             loading: false,
             formSearch: {
-                queryStartTime:new Date().getFullYear()+"-"+(new Date().getMonth()+1)+'-'+new Date().getDate(),
-                queryEndTime:new Date().getFullYear()+"-"+(new Date().getMonth()+1)+'-'+new Date().getDate(),
+                // queryStartTime:new Date().getFullYear()+"-"+(new Date().getMonth()+1)+'-'+new Date().getDate(),
+                // queryEndTime:new Date().getFullYear()+"-"+(new Date().getMonth()+1)+'-'+new Date().getDate(),
             },
             datas: [],
             //分页器
@@ -390,8 +390,8 @@ export default {
         },
         //下拉发生变化
         changeDate(val){
-            this.formSearch.queryStartTime=val.start;
-            this.formSearch.queryEndTime=val.end;
+            // this.formSearch.queryStartTime=val.start;
+            // this.formSearch.queryEndTime=val.end;
             this.getData(true);
         },
         init() {

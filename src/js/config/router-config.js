@@ -16,6 +16,11 @@ const initRouter = () => {
           component: (resolve) => require(['components/login/index'], resolve)
         },
         {
+          path: '/register',
+          name: 'Register',
+          component: (resolve) => require(['components/register/index'], resolve)
+        },
+        {
           path: '/home',
           component: (resolve) => require(['components/app/app-frame'], resolve),
           children: [{
@@ -39,18 +44,20 @@ const initRouter = () => {
             name: 'NotfoundError',
             component: (resolve) => require(['components/error-pages/404'], resolve),
             meta: { title: '页面找不到' }
-          }, {
-            path: '/authorization',
-            name: 'Authorization',
-            component: (resolve) => require(['components/management/authorization'], resolve),
-            meta: { title: '权限管理' }
-          }, {
+          },
+          {
             path: '/users',
             name: 'Users',
             component: (resolve) => require(['components/management/users'], resolve),
             meta: { title: '用户管理' }
           },
           ...demoComponents,
+          {
+            path: '/account-basic',
+            name: 'AccountBasic',
+            component: (resolve) => require(['components/demo-components/account/account'], resolve),
+            meta: { title: '个人中心', icon: 'icon-head' }
+          },
           ...proComponents,
           {
             path: '*',
@@ -69,20 +76,21 @@ const initRouter = () => {
     //   next({ name: 'PermissionError' });
     //   return;
     // }
-    // let token = !!Utils.getCookie('token');
-    // if (!token && to.name != 'Login') { 
-    //   next({
-    //     name: 'Login'
-    //   });
-    //   return false
-    // }else{
-    //   if(token &&  to.name == 'Login'){
-    //     next({
-    //       name: from.name
-    //     });
-    //     return false;
-    //   }
-    // }
+    let eRouter = ["Login", "Register"]
+    let token = !!Utils.getCookie('token');
+    if (!token && eRouter.indexOf(to.name) < 0) {
+      next({
+        name: 'Login'
+      });
+      return false
+    } else {
+      if (token && eRouter.indexOf(to.name) > 0) {
+        next({
+          name: from.name
+        });
+        return false;
+      }
+    }
 
     HeyUI.$LoadingBar.start();
     if (to.meta && to.meta.title) {

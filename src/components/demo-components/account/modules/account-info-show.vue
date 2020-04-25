@@ -51,20 +51,20 @@
   <div class="h-panel account-info-show-vue">
     <div class="h-panel-body">
       <p class="account-image">
-        <Avatar :src="account.avatar" :width="100"></Avatar>
+        <Avatar :src="avatar" :width="100"></Avatar>
       </p>
-      <p class="account-name">{{account.name}}</p>
+      <p class="account-name">{{account.loginName}}</p>
       <p class="account-desc"><pre>{{account.desc}}</pre></p>
       <div class="account-detail-desc">
         <p><i class="icon-mail"></i><span>{{account.email}}</span></p>
-        <p><i class="icon-briefcase"></i><span>{{account.org}} · {{account.dept}} · {{account.title}}</span></p>
-        <p><i class="icon-location-2"></i><span>{{account.location}}</span></p>
+        <p><i class="icon-briefcase"></i><span>{{account.mobile}}</span></p>
+        <p><i class="icon-location-2"></i><span>{{account.address}}</span></p>
       </div>
       <div class="divider"></div>
       <div>
-        <p class="account-detail-tags-title">标签</p>
+        <p class="account-detail-tags-title">企业</p>
         <p>
-          <TagInput v-model="account.tags" style="width: 100%" :readonly="true"></TagInput>
+           {{account.userName}}
         </p>
       </div>
     </div>
@@ -77,7 +77,7 @@ export default {
   },
   data() {
     return {
-
+        avatar:require('Images/avatar.png')
     };
   },
   mounted() {

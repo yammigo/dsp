@@ -53,6 +53,7 @@
         font-size: 12px;
         line-height: 20px;
     }
+
     // 颜色
     .ad-color-text-hint {
         color: #999;
@@ -204,6 +205,41 @@
             }
         }
     }
+
+    //数据样式
+    .dataItem {
+        >div {
+            width: 20%;
+          
+            padding-top: 20%;
+            display: inline-block;
+            font-size:0px;
+            position: relative;
+            .item-data{
+                position: absolute;
+                width:100%;
+                height:100%;
+                // background:#eee;
+                top:0px;
+                font-size:16px;
+                padding:10px;
+                vertical-align: middle;
+                line-height:1.5;
+                .title{
+                    margin-top:30px;
+                    text-align: center;
+                   margin-bottom:10px;
+                }
+                .number{
+                    text-align:center;
+                    font-weight:bold;
+                    font-size:12px;
+                    
+                }
+                
+            }
+        }
+    }
 }
 </style>
 <template>
@@ -250,7 +286,7 @@
                                         </div>
                                         <!----> <span class="ad-font-size ad-color-text bui-num balance-popover-header">
                                             账户余额构成说明
-                                            <a target="_black" href="/overture/cash/flow/?aadvid=1653976111944717" class="ad-link-text-btn">查看详情</a></span>
+                                            <a target="_black" href="" class="ad-link-text-btn">查看详情</a></span>
                                         <div class="balance-explain">
 
                                         </div>
@@ -319,6 +355,73 @@
                                 </svg></div>
                         </span></div>
                 </div>
+
+            </div>
+            <div class="byted-card byted-card-shadow">
+                <!---->
+                <div class="byted-card-body">
+                    <div class="plan-card-item"><span class="font24 ad-color-text-link bui-num">0</span> <span class="ad-color-text ad-font-size-sm plan-type-name">
+                            <div class="byted-icon bui-icon-angle-right" style="width: 16px; height: 16px; visibility: hidden;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
+                                    <defs>
+                                        <path id="angle-right_svg__a" d="M0 0h48v48H0z"></path>
+                                    </defs>
+                                    <g fill-rule="evenodd" transform="rotate(-90 24 24)">
+                                        <mask id="angle-right_svg__b" fill="#fff">
+                                            <use xlink:href="#angle-right_svg__a"></use>
+                                        </mask>
+                                        <use opacity=".01" xlink:href="#angle-right_svg__a"></use>
+                                        <path fill-rule="nonzero" d="M16.586 35.324a2 2 0 0 0 2.828 2.828l12-12a2 2 0 0 0 0-2.828l-12-12a2 2 0 0 0-2.828 2.828l10.586 10.586-10.586 10.586z" transform="rotate(90 24 24.738)"></path>
+                                    </g>
+                                </svg></div>
+                            投放中计划
+                            <div class="byted-icon bui-icon-angle-right" style="width: 16px; height: 16px;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
+                                    <defs>
+                                        <path id="angle-right_svg__a" d="M0 0h48v48H0z"></path>
+                                    </defs>
+                                    <g fill-rule="evenodd" transform="rotate(-90 24 24)">
+                                        <mask id="angle-right_svg__b" fill="#fff">
+                                            <use xlink:href="#angle-right_svg__a"></use>
+                                        </mask>
+                                        <use opacity=".01" xlink:href="#angle-right_svg__a"></use>
+                                        <path fill-rule="nonzero" d="M16.586 35.324a2 2 0 0 0 2.828 2.828l12-12a2 2 0 0 0 0-2.828l-12-12a2 2 0 0 0-2.828 2.828l10.586 10.586-10.586 10.586z" transform="rotate(90 24 24.738)"></path>
+                                    </g>
+                                </svg></div>
+                        </span></div>
+                </div>
+
+            </div>
+            <div class="byted-card byted-card-shadow">
+                <!---->
+                <div class="byted-card-body">
+                    <div class="plan-card-item"><span class="font24 ad-color-text-link bui-num">0</span> <span class="ad-color-text ad-font-size-sm plan-type-name">
+                            <div class="byted-icon bui-icon-angle-right" style="width: 16px; height: 16px; visibility: hidden;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
+                                    <defs>
+                                        <path id="angle-right_svg__a" d="M0 0h48v48H0z"></path>
+                                    </defs>
+                                    <g fill-rule="evenodd" transform="rotate(-90 24 24)">
+                                        <mask id="angle-right_svg__b" fill="#fff">
+                                            <use xlink:href="#angle-right_svg__a"></use>
+                                        </mask>
+                                        <use opacity=".01" xlink:href="#angle-right_svg__a"></use>
+                                        <path fill-rule="nonzero" d="M16.586 35.324a2 2 0 0 0 2.828 2.828l12-12a2 2 0 0 0 0-2.828l-12-12a2 2 0 0 0-2.828 2.828l10.586 10.586-10.586 10.586z" transform="rotate(90 24 24.738)"></path>
+                                    </g>
+                                </svg></div>
+                            投放中计划
+                            <div class="byted-icon bui-icon-angle-right" style="width: 16px; height: 16px;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
+                                    <defs>
+                                        <path id="angle-right_svg__a" d="M0 0h48v48H0z"></path>
+                                    </defs>
+                                    <g fill-rule="evenodd" transform="rotate(-90 24 24)">
+                                        <mask id="angle-right_svg__b" fill="#fff">
+                                            <use xlink:href="#angle-right_svg__a"></use>
+                                        </mask>
+                                        <use opacity=".01" xlink:href="#angle-right_svg__a"></use>
+                                        <path fill-rule="nonzero" d="M16.586 35.324a2 2 0 0 0 2.828 2.828l12-12a2 2 0 0 0 0-2.828l-12-12a2 2 0 0 0-2.828 2.828l10.586 10.586-10.586 10.586z" transform="rotate(90 24 24.738)"></path>
+                                    </g>
+                                </svg></div>
+                        </span></div>
+                </div>
+
             </div>
 
         </div>
@@ -326,27 +429,33 @@
     <Row :space="30">
         <Cell :xs='24' :sm='24' :md='24' :lg='16' :xl='16'>
             <div class="h-panel">
-                <div class="relative">
-                    <Tabs class="common-panel-tabs" v-model="type" :datas="{type1: '数据走势', type2: '数据分布'}"></Tabs>
-                    <div class="middle-right" style="right: 25px;"><span class="text-hover">查看更多</span></div>
+                <div class="h-panel-bar">
+                    <div class="h-panel-title">数据概览</div>
+                    <div class="h-panel-right"></div>
                 </div>
                 <div class="home-part-body">
-                  
+                    <!-- 概览数据开始 -->
+                    <div class="dataItem">
+                        <div>
+                            <div class="item-data">
+                                <div class="title">展现量</div>
+                                <div class="number">1000</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 概览数据结束 -->
                 </div>
             </div>
         </Cell>
         <Cell :xs='24' :sm='24' :md='24' :lg='8' :xl='8'>
             <div class="h-panel">
                 <div class="h-panel-bar">
-                    <div class="h-panel-title">Top10展现量计划</div>
-                    <div class="h-panel-right"><span class="gray-color">总展现</span><i class="h-split"></i><span class="font20 primary-color">200</span><i class="h-split"></i><span class="gray-color">W</span></div>
+                    <div class="h-panel-title">公告</div>
+                    <div class="h-panel-right"></div>
                 </div>
                 <div class="h-panel-body progress-div home-part-body">
-                    <p><Progress :percent="99" color="green"><span slot="title">展现次数</span><span slot="text">4个</span></Progress></p>
-                    <p><Progress :percent="88" color="blue"><span slot="title">展现次数</span><span slot="text">0个</span></Progress></p>
-                    <p><Progress :percent="55" color="red"><span slot="title">展现次数</span><span slot="text">0个</span></Progress></p>
-                    <p><Progress :percent="77" color="blue"><span slot="title">展现次数</span><span slot="text">0个</span></Progress></p>
-                    <p><Progress :percent="66" color="yellow"><span slot="title">展现此时</span><span slot="text">0个</span></Progress></p>
+                    <img src="//s1.pstatp.com/bytecom/platform_web/static/image/list-blank.svg?977b96ae0d06fce991bc6414dda9711f">
+
                 </div>
             </div>
         </Cell>

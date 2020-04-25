@@ -51,8 +51,23 @@ const Request = {
 
   },
   User: {
-    info() {
-      return Ajax.get('/account/info');
+    info(param) {
+      return Ajax.post('/user/info.do',param);
+    },
+    //获取企业认证信息
+    getCompany(param){
+      return Ajax.post('/user/company/info.do',param)
+    },
+    //添加企业认证信息
+    addCompany(param){
+      return Ajax.post('/user/company/update.do',param)
+    },
+    //获取投放资质信息
+    getAdput(param){
+      return Ajax.post('/user/adput/info.do',param)
+    },
+    addAdput(param){
+      return Ajax.post('/user/adput/update.do',param)
     }
   },
   Dict: {
@@ -78,7 +93,18 @@ const Request = {
     },
     //登出
     logout(param) {
-      return Ajax.post('/logout', param);
+      return Ajax.post('/user/logout.do', param);
+    }
+  },
+  Register:{
+    getSMS(param){
+      return Ajax.post('/pub/send/verification/vode.do',param);
+    },
+    addUser(param){
+      return Ajax.post('/pub/register.do',param);
+    },
+    resetPassword(param){
+      return Ajax.post("/pub/rest/password.do",param)
     }
   },
   Management: {
