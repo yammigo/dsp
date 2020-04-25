@@ -291,8 +291,8 @@ export default {
     data() {
         return {
             PickerData: {
-                start:new Date().getFullYear()+"-"+(new Date().getMonth()+1)+'-'+new Date().getDate(),
-                end: new Date().getFullYear()+"-"+(new Date().getMonth()+1)+'-'+new Date().getDate(),
+                start:Manba().format('YYYY-MM-DD'),
+                end: Manba().format('YYYY-MM-DD'),
                 type: 'customize'
             },
             startWeek: 1,
