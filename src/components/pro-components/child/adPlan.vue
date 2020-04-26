@@ -166,7 +166,7 @@
                         </FormItem>
                     </div>
                 </div>
-                <div class="row-item">
+                <!-- <div class="row-item">
                     <div class="hint-item"></div>
                     <div class="label-item label-size-normal">
                         <div class="text-item">投放状态</div>
@@ -177,7 +177,7 @@
                             <SwitchList v-model="formData.status" :datas="putStatus"></SwitchList>
                         </FormItem>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="moduler" v-listenTop:2="testall">
@@ -278,8 +278,8 @@
                         <div class="required-item"></div>
                     </div>
                     <div class="input-item">
-                        <FormItem prop="putStartDate" label="开始时间" :showLabel="false" style="display:inline-block;width:200px;">
-                            <DatePicker v-model="formData.putStartDate" aria-disabled placeholder="请选择开始日期" :option="{end:formData.putEndDate}" v-width="200"></DatePicker>
+                        <FormItem prop="putStartDate" label="开始时间"  :showLabel="false" style="display:inline-block;width:200px;">
+                            <DatePicker v-model="formData.putStartDate"  aria-disabled placeholder="请选择开始日期" :option="{end:formData.putEndDate,start:dateParam.start}" v-width="200"></DatePicker>
                         </FormItem>
                         <span style="margin-lefy:10px;margin-tight:10px;">-</span>
                         <FormItem prop="putEndDate" label="开始时间" :showLabel="false" style="display:inline-block;width:200px;">
@@ -346,11 +346,14 @@ export default {
     props: ['groupId', 'groupName', 'planId'],
     data() {
         return {
+            dateParam: {
+
+                start: Manba().format('YYYY-MM-DD'),
+
+            },
             formData: {
                 putStartDate: '',
                 putEndDate: '',
-                status: 1,
-                planName: '', //计划名称
                 platformType: [1], //投放平台
                 cityCodes: [], //投放城市
                 weekHours: [
@@ -366,7 +369,7 @@ export default {
                 putAmountDay: '', //投放预算
                 bidType: 1, //出价格方式
                 bidAmount: '', //出价金额
-                planName: '', //计划名称
+                planName: !this.planId && this.groupName + "_", //计划名称
                 groupName: '',
                 groupId: this.groupId
             },
@@ -394,7 +397,7 @@ export default {
             },
             rules: {
                 required: [
-                    'status',
+
                     'planName',
                     'platformType',
                     'putStartDate',

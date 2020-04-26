@@ -25,7 +25,7 @@
         <FormItem label="身份证反面" prop="legalIdCardUrl2">
             <button class="h-btn h-btn-primary"><label for="fileUplaod" @click="uploadFiled='legalIdCardUrl2'"><img width="100" v-if="acc.legalIdCardUrl2" :src="acc.legalIdCardUrl2" /><span v-if="!acc.legalIdCardUrl2">上传反面</span></label></button>
         </FormItem>
-        <FormItem>
+        <FormItem v-if="acc.status==-2">
             <Button color="primary" @click="submit" :loading="saveloading">提交</Button>
         </FormItem>
     </Form>
@@ -70,7 +70,11 @@ export default {
             //获取企业认证信息
             R.User.getCompany({}).then(res => {
 
-                console.log(res);
+                if(res.ok){
+                    
+                    this.acc=res.data;
+                     
+                }
             })
         },
         submit() {
@@ -81,7 +85,8 @@ export default {
             }).then(res => {
                 this.saveloading = false;
                 if (res.ok) {
-
+                    this.$Message.success("提交成功");
+                    this.acc.status=-2;
                 }
             })
         },

@@ -16,7 +16,7 @@
         <FormItem label="其他资质图片" prop="otherUrl">
             <button class="h-btn h-btn-primary"><label for="fileUplaod" @click="uploadFiled='otherUrl'"><img width="100" v-if="acc.otherUrl" :src="acc.otherUrl" /><span v-if="!acc.otherUrl">上传</span></label></button>
         </FormItem>
-        <FormItem>
+        <FormItem v-if="acc.status==-1||acc.status==-2">
             <Button color="primary" @click="submit" :loading="saveloading">提交</Button>
         </FormItem>
     </Form>
@@ -59,8 +59,10 @@ export default {
     methods: {
         init() {
             //获取企业认证信息
-            R.User.getCompany({}).then(res => {
-                
+            R.User.getAdput({}).then(res => {
+                if(res.ok){
+                    this.acc=res.data;
+                }
             })
         },
         submit() {

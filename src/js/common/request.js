@@ -79,6 +79,9 @@ const Request = {
   Home: {
     getMessageList() {
       return Ajax.get(`/home/messages`);
+    },
+    userIndex(param){
+      return Ajax.post('/user/index.do',param);
     }
   },
   Account: {

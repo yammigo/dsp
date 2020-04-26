@@ -8,23 +8,29 @@
         <Ftable :data="data" :columns="columns" style="margin-top:10px;">
         </Ftable>
     </div> -->
-    <mediaTpl/>
+    <!-- <mediaTpl/> -->
     <!-- </v-scrollbar> -->
     <!-- <weekTime v-model="timeValue"></weekTime>
     <selectCity v-model="selectCity"></selectCity> -->
+    <Waterfall>
+        <div style="position:absolute;top:0px;">qweqew</div>
+    </Waterfall>
 
 </div>
 </template>
 
 <script>
-import mediaTpl from "components/pro-components/child/mediaTpl"
+import Waterfall from "../baseComponent/waterfall";
+// import WaterfallSlot from 'vue-waterfall/lib/waterfall-slot'
+// import mediaTpl from "components/pro-components/child/mediaTpl"
 // import weekTime from "../baseComponent/weekTime";
 // import selectCity from "../baseComponent/selectCity";
 // import Ftable from "../baseComponent/table/table";
 // import vScrollbar from 'vue-scrollbar-custom'
 export default {
     components: {
-         mediaTpl
+        Waterfall
+        //  mediaTpl
         // weekTime,
         // selectCity,
         // Ftable,

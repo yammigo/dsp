@@ -233,6 +233,8 @@
                     text-align: center;
                     margin-bottom: 10px;
                     letter-spacing: 2px;
+                    font-size:16px;
+                    color:#555
                 }
 
                 .number {
@@ -275,17 +277,8 @@
                     </div>
                     <div class="info">
                         <div class="byted-popover-wrapper">
-                            <div class="bui-popper byted-popover byted-tooltip" style="width: 246px; display: none;">
-                                <div x-arrow="" class="bui-popover-arrow" style="left: 92px;"></div>
-                                <div class="bui-popover-panel">
-                                    <!---->
-                                    <div class="bui-popover-body">
-                                        北京福瑞德时光科技有限公司
-                                    </div>
-                                    <!---->
-                                </div>
-                            </div> <span data-no-translate="" class="bui-num ad-font-size name">北京福瑞德时光科技有限公司</span>
-                        </div> <span class="ad-font-size-sm id">ID：1653976111944717</span>
+                            <span data-no-translate="" class="bui-num ad-font-size name">{{data.loginName}}</span>
+                        </div> <a href="#/account-basic" class="ad-font-size-sm id" style="font-size:12px;">个人中心</a>
                     </div>
                     <div class="num-wrap"><img src="//s1.pstatp.com/bytecom/platform_web/static/image/balance.svg?7dc45da98d3acdbde20b3f2b4e6eb791">
                         <div class="num-detail"><span class="ad-color-text-hint ad-font-size-sm">账户余额</span>
@@ -317,17 +310,17 @@
                                         </g>
                                     </svg></div>
                             </div>
-                            <div class="ad-color-text number bui-num">0</div>
+                            <div class="ad-color-text number bui-num">{{data.amount||0.00}}</div>
                         </div>
                     </div>
                     <div class="num-wrap"><img src="//s1.pstatp.com/bytecom/platform_web/static/image/consume.svg?9bd7b70a409309e862b0174f252b7470">
                         <div class="num-detail"><span class="ad-color-text-hint ad-font-size-sm">今日消耗</span>
-                            <div class="ad-color-text number bui-num">0.00</div>
+                            <div class="ad-color-text number bui-num">{{data.useAmountDay||0.00}}</div>
                         </div>
                     </div>
                     <div class="num-wrap"><img src="//s1.pstatp.com/bytecom/platform_web/static/image/budget.svg?f55db195e1bd18d103ec65eb329e5699">
                         <div class="num-detail"><span class="ad-color-text-hint ad-font-size-sm">账户日预算</span>
-                            <div class="ad-color-text number bui-num"><span>1,000.00</span>
+                            <div class="ad-color-text number bui-num"><span>{{data.putAmountDay||0.00}}</span>
 
                             </div>
                         </div>
@@ -485,21 +478,21 @@
                     </div>
                 </div>
                 <div class="home-part-body">
-                     <Loading text="加载中..." :loading="true"></Loading>
+                     <Loading text="加载中..." :loading="loadingData"></Loading>
                     <!-- 概览数据开始 -->
                     <div class="dataItem">
                         <div>
                             <div class="item-data">
                                 <div class="title">展现量</div>
-                                <div class="number bui-num">1000</div>
+                                <div class="number bui-num">{{data.showCount||0}}</div>
                             </div>
                         </div>
                     </div>
                     <div class="dataItem">
                         <div>
                             <div class="item-data">
-                                <div class="title">展现量</div>
-                                <div class="number bui-num">1000</div>
+                                <div class="title">点击量</div>
+                                <div class="number bui-num">{{data.clickCount||0}}</div>
 
                             </div>
                         </div>
@@ -507,32 +500,32 @@
                     <div class="dataItem">
                         <div>
                             <div class="item-data">
-                                <div class="title">展现量</div>
-                                <div class="number bui-num">1000</div>
+                                <div class="title">开始下载</div>
+                                <div class="number bui-num">{{data.downStartCount||0}}</div>
                             </div>
                         </div>
                     </div>
                     <div class="dataItem">
                         <div>
                             <div class="item-data">
-                                <div class="title">展现量</div>
-                                <div class="number bui-num">1000</div>
+                                <div class="title">完成下载</div>
+                                <div class="number bui-num">{{data.downEndCount||0}}</div>
                             </div>
                         </div>
                     </div>
                     <div class="dataItem">
                         <div>
                             <div class="item-data">
-                                <div class="title">展现量</div>
-                                <div class="number bui-num">1000</div>
+                                <div class="title">开始安装</div>
+                                <div class="number bui-num">{{data.installStartCount||0}}</div>
                             </div>
                         </div>
                     </div>
                     <div class="dataItem">
                         <div>
                             <div class="item-data">
-                                <div class="title">展现量</div>
-                                <div class="number bui-num">1000</div>
+                                <div class="title">完成安装</div>
+                                <div class="number bui-num">{{data.installEndCount||0}}</div>
                             </div>
                         </div>
                     </div>
@@ -557,24 +550,26 @@
 </template>
 
 <script>
-import data1 from 'components/demo-components/components/datas/data1';
-import data2 from 'components/demo-components/components/datas/data2';
-import data3 from 'components/demo-components/components/datas/data4';
 export default {
     data() {
         return {
-            data1,
-            data2,
-            data3,
-            type: 'type1'
+            loadingData:false,
+            data:{}
         };
     },
+    mounted() {
+        this.init();
+    },
     methods: {
-        openMore() {
-            this.$router.push({
-                name: 'Chart'
-            });
-        }
+       init(){
+           this.loadingData=true;
+           R.Home.userIndex({}).then(res=>{
+               if(res.ok){
+                   this.data=res.data;
+                   this.loadingData=false;
+               }
+           })
+       }
     }
 };
 </script>

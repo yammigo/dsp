@@ -116,10 +116,10 @@
                     <FormItem :showLabel="false" style="padding-bottom:0px;display:inline-block;width:280px;margin:10px 10px;float:right;">
                         <div class="h-input-group">
                             <div class="h-input-addon">
-                                <Select v-model="formSearch.select1Data" :datas="param0" :no-border="true" :null-option="false"></Select>
+                                <Select v-model="selected" :datas="param" :no-border="true" :null-option="false" @change="searchName"></Select>
                             </div>
-                            <input type="text" placeholder="请输入名称或ID搜索" />
-                            <Button :no-border="true" class="h-btn h-btn-gray" style="background:#eee;">
+                            <input type="text" v-model="searchText" placeholder="请输入名称或ID搜索" />
+                            <Button :no-border="true" class="h-btn h-btn-gray" style="background:#eee;" @click="searchName">
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 49 49" width="12" height="12">
                                     <defs>
                                         <path id="search_svg__a" d="M0 0h48v48H0z" />
@@ -138,7 +138,7 @@
                         </div>
                     </FormItem>
                     <FormItem :showLabel="false" style="padding-bottom:0px;display:inline-block;width:280px;margin:10px 10px;float:right;">
-                       <DateFullRangePicker v-model="PickerData" :layout="layout" clearable :startWeek="startWeek" @change="changeDate"></DateFullRangePicker>
+                        <DateFullRangePicker v-model="PickerData" :layout="layout" clearable :startWeek="startWeek" @change="changeDate"></DateFullRangePicker>
                     </FormItem>
                 </div>
             </div>
@@ -171,21 +171,21 @@
                     </template>
                 </Tabs>
             </div>
-            <div style="padding:20px;" v-if="selected=='module1'">
+            <div style="padding:20px;" v-if="selected=='groupName'">
                 <router-link :to="{path:'/adGroup'}">
                     <Button color="primary">
                         <i class="h-icon-plus" style="margin-right:10px;"></i>新建组
                     </Button>
                 </router-link>
             </div>
-            <div style="padding:20px;" v-if="selected=='module2'">
+            <div style="padding:20px;" v-if="selected=='planName'">
                 <router-link :to="{path:'/adGroup'}">
                     <Button color="primary">
                         <i class="h-icon-plus" style="margin-right:10px;"></i>新建计划
                     </Button>
                 </router-link>
             </div>
-            <div style="padding:20px;" v-if="selected=='module3'">
+            <div style="padding:20px;" v-if="selected=='ideaName'">
                 <router-link :to="{path:'/adGroup'}">
                     <Button color="primary">
                         <i class="h-icon-plus" style="margin-right:10px;"></i>新建创意
@@ -195,9 +195,19 @@
 
         </div>
         <!-- 组列表 -->
-        <Table v-show="selected=='module1'" :datas="datas" :border="border" :checkbox="checkbox" :stripe="stripe" :loading="loading">
-            <TableItem :width="200" title="广告组名称" prop="groupName"></TableItem>
-            <TableItem :width="200" title="推广目的" prop="groupTarget"></TableItem>
+        <Table v-if="selected=='groupName'" :datas="datas" :border="border" :stripe="stripe" :loading="loading">
+            <TableItem :width="40" title="ID" prop="id">
+            </TableItem>
+            <TableItem :width="200" title="广告组名称">
+                <template slot-scope="{data}">
+                    <a @click="toSearchData('groupId',data.id)">{{data.groupName}}</a>
+                </template>
+            </TableItem>
+            <TableItem :width="200" title="推广目的">
+                <template slot-scope="{data}">
+                    <span></span>{{Extension[data.groupTarget]}}
+                </template>
+            </TableItem>
             <TableItem :width="100" align="center" title="状态">
                 <template slot-scope="{data}">
                     <span class="h-tag-circle" :class="[styleColor[data.status]]"></span>{{dictStatus[data.status]}}
@@ -210,15 +220,23 @@
                         <Poptip :content="'确认'+(data.status?'禁用':'启用')" @confirm="updataStatus('adGroup',{status:editStatus[data.status],id:data.id})"><a class="text-hover">{{data.status?"禁用":"启用"}}</a></Poptip>
                     </span>
                     <span><a class="text-hover" @click="editData('/adGroup',{groupId:data.id,type:'edit'})">编辑</a></span>
+                    <span><a class="text-hover" @click="addRouter('adPlan',{groupId:data.id,groupName:data.groupName})">添加计划</a></span>
+                    <!-- http://localhost:9012/#/adPlan?groupId=67&groupName=123123 -->
                 </template>
             </TableItem>
             <div slot="empty">暂无广告组数据</div>
         </Table>
         <!-- 计划列表 -->
-        <Table v-show="selected=='module2'" :datas="datas" :border="border" :checkbox="checkbox" :stripe="stripe" :loading="loading">
+        <Table v-if="selected=='planName'" :datas="datas" :border="border" :stripe="stripe" :loading="loading">
+            <TableItem :width="40" title="ID" prop="id">
+            </TableItem>
+            <TableItem :width="200" title="计划名称">
+                <template slot-scope="{data}">
+                    <a @click="toSearchData('planId',data.id)">{{data.planName}}</a>
+                </template>
+            </TableItem>
             <TableItem :width="200" title="所属广告组" prop="groupName"></TableItem>
-            <TableItem :width="200" title="计划名称" prop="planName"></TableItem>
-            <TableItem :width="100" align="center" title="状态">
+            <TableItem :width="100" align="left" title="状态">
                 <template slot-scope="{data}">
                     <span class="h-tag-circle" :class="[styleColor[data.status]]"></span>{{dictStatus[data.status]}}
                 </template>
@@ -240,22 +258,25 @@
             <TableItem :width="100" align="right" title="开始播放" prop="playStartCount"></TableItem>
             <TableItem :width="100" align="right" title="完成播放" prop="playEndCount"></TableItem>
             <TableItem :width="100" align="right" title="完成播放" prop="playEndCount"></TableItem>
-            <TableItem :width="100" title="操作" align="center" fixed="right">
+            <TableItem :width="200" title="操作" align="center" fixed="right">
                 <template slot-scope="{data}">
                     <span v-if="data.status!==-1&&data.status!==-2">
                         <Poptip :content="'确认'+(data.status?'禁用':'启用')" @confirm="updataStatus('adPlan',{status:editStatus[data.status],id:data.id})"><a class="text-hover">{{data.status?"禁用":"启用"}}</a></Poptip>
                     </span>
                     <span><a class="text-hover" @click="editData('/adPlan',{planId:data.id,type:'edit'})">编辑</a></span>
+                    <span><a class="text-hover" @click="addRouter('adOriginality',{planId:data.id,planName:data.planName})">添加创意</a></span>
                 </template>
             </TableItem>
             <div slot="empty">暂无计划数据</div>
         </Table>
         <!-- 创意列表 -->
-        <Table v-show="selected=='module3'" :datas="datas" :border="border" :checkbox="checkbox" :stripe="stripe" :loading="loading">
+        <Table v-if="selected=='ideaName'" :datas="datas" :border="border" :stripe="stripe" :loading="loading">
+            <TableItem :width="40" title="ID" prop="id">
+            </TableItem>
             <TableItem :width="200" title="所属组" prop="groupName"></TableItem>
             <TableItem :width="200" title="所属计划" prop="planName"></TableItem>
             <TableItem :width="200" title="创意名称" prop="ideaName"></TableItem>
-            <TableItem :width="100" align="center" title="状态">
+            <TableItem :width="100" align="left" title="状态">
                 <template slot-scope="{data}">
                     <span class="h-tag-circle" :class="[styleColor[data.status]]"></span>{{dictStatus[data.status]}}
                 </template>
@@ -287,11 +308,17 @@
 </template>
 
 <script>
+import {
+    mapGetters,
+    mapMutations
+} from 'vuex'
 export default {
     data() {
         return {
+            searchFiled: "", //当前查询的字段
+            searchText: "", //当前搜索框内容
             PickerData: {
-                start:Manba().format('YYYY-MM-DD'),
+                start: Manba().format('YYYY-MM-DD'),
                 end: Manba().format('YYYY-MM-DD'),
                 type: 'customize'
             },
@@ -332,8 +359,8 @@ export default {
             serial: false,
             loading: false,
             formSearch: {
-                // queryStartTime:new Date().getFullYear()+"-"+(new Date().getMonth()+1)+'-'+new Date().getDate(),
-                // queryEndTime:new Date().getFullYear()+"-"+(new Date().getMonth()+1)+'-'+new Date().getDate(),
+                queryStartTime: Manba().format('YYYY-MM-DD'),
+                queryEndTime: Manba().format('YYYY-MM-DD')
             },
             datas: [],
             //分页器
@@ -342,27 +369,28 @@ export default {
                 size: 10,
                 total: 0
             },
+
             //选项卡
             param: [{
-                    key: 'module1',
+                    key: 'groupName',
                     title: '广告组',
                     count: 12,
                     icon: 'M9.942 2a2 2 0 0 1 1.433.605L13.708 5H17a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h6.942zm2.816 7.096l-3.849 3.97-1.667-1.72a.712.712 0 0 0-1.029 0 .767.767 0 0 0 0 1.06l2.182 2.25a.712.712 0 0 0 1.028 0l4.364-4.5a.767.767 0 0 0 0-1.06.712.712 0 0 0-1.029 0zM9.942 4H3l-.001 1H10.916l-.974-1z'
                 },
                 {
-                    key: 'module2',
+                    key: 'planName',
                     title: '计划',
                     count: 14,
                     icon: 'M13.4 1.432a1 1 0 0 1 1 1V3H16a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3H4a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3h1.487v-.568a1 1 0 1 1 2 0V3H12.4v-.568a1 1 0 0 1 1-1zM5.488 5H4a1 1 0 0 0-1 1v8.509h14V6a1 1 0 0 0-1-1h-1.6v.03a1 1 0 0 1-2 0V5H7.487v.03a1 1 0 1 1-2 0V5zm1.973 5.845v2h-2v-2h2zm3.478 0v2h-2v-2h2zm3.463 0v2h-2v-2h2zM7.46 7.538v2h-2v-2h2zm3.478 0v2h-2v-2h2zm3.463 0v2h-2v-2h2z'
                 },
                 {
-                    key: 'module3',
+                    key: 'ideaName',
                     title: '创意',
                     count: 2,
                     icon: 'M14 1.509a3 3 0 0 1 3 3v11a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-11a3 3 0 0 1 3-3h8zm1 9.882H5v3.62h10v-3.62zm-4.462.881a.941.941 0 0 1 0 1.882H9.421a.941.941 0 1 1 0-1.882h1.117zM14 3.51H6a1 1 0 0 0-1 1v5h10v-5a1 1 0 0 0-1-1z'
                 }
             ],
-            selected: Utils.getCookie('pageSelect')||'module1',
+            selected: Utils.getCookie('pageSelect') || 'groupName',
             //
             soltPanel: false,
             param0: {
@@ -377,21 +405,42 @@ export default {
                 "-2": "审核不通过"
             },
             param1: ['广告组', '计划', '创意'],
+            Extension: {
+                "1": "应用推广",
+                "2": "线索搜集",
+                "3": "信息推广"
+            }
 
         };
     },
     mounted() {
+        this.getSearch.data && (this.formSearch = {
+            ...this.getSearch.data
+        });
+        this.getSearch.pageData && (this.pagination = {
+            ...this.getSearch.pageData
+        });
         this.init();
     },
     methods: {
+        ...mapMutations(['setSearch']),
+        //查询搜索Name
+        searchName() {
+            // this.formSearch[selected];
+            this.formSearch.palnName = "";
+            this.formSearch.groupName = "";
+            this.formSearch.ideaName = "";
+            this.formSearch[this.selected] = this.searchText;
+            this.getData(true);
+        },
         //下拉搜索发生变化
         chnageSearch(value) {
             this.getData(true);
         },
         //下拉发生变化
-        changeDate(val){
-            // this.formSearch.queryStartTime=val.start;
-            // this.formSearch.queryEndTime=val.end;
+        changeDate(val) {
+            this.formSearch.queryStartTime = val.start;
+            this.formSearch.queryEndTime = val.end;
             this.getData(true);
         },
         init() {
@@ -399,6 +448,12 @@ export default {
         },
         //编辑
         editData(path, query) {
+            //编辑时保存当前查询条件
+            this.setSearch({
+                data: this.formSearch,
+                pageData: this.pagination
+            });
+
             this.$router.push({
                 path: path,
                 query: {
@@ -410,11 +465,27 @@ export default {
         changePage() {
             this.getData();
         },
+        toSearchData(filed, id) {
+
+            this.searchFiled = filed;
+            this.formSearch[filed] = id;
+            switch (filed) {
+                case "groupId":
+                    this.selected = "planName";
+                    this.getData(true);
+                    break;
+                case "planId":
+                    this.selected = "ideaName";
+                    this.getData(true);
+                    break;
+            }
+            // Utils.saveCookie('pageSelect',this.selected);
+
+        },
         //切换数据
         change(data) {
             //切换后重置分页信息
-           
-            Utils.saveCookie('pageSelect',data.key);
+            Utils.saveCookie('pageSelect', data.key);
             this.getData(true);
         },
         updataStatus(api, data) {
@@ -425,6 +496,8 @@ export default {
                 if (res.ok) {
                     this.$Message.success(res.msg);
                     this.getData();
+                    //查询成功之后请求该请求字段
+                    this.searchFiled && (this.formSearch[this.searchFiled] = "");
                 }
             })
         },
@@ -434,7 +507,7 @@ export default {
             }
             this.loading = true;
             switch (this.selected) {
-                case "module1":
+                case "groupName":
                     R.adGroup.get({
                         page: this.pagination.page,
                         limit: this.pagination.size,
@@ -446,10 +519,12 @@ export default {
                         if (res.ok) {
                             this.datas = res.data.list;
                             this.pagination.total = res.data.total;
+                            //查询成功之后请求该请求字段
+                            this.searchFiled && (this.formSearch[this.searchFiled] = "");
                         }
                     })
                     break;
-                case "module2":
+                case "planName":
                     R.adPlan.get({
                         page: this.pagination.page,
                         limit: this.pagination.size,
@@ -461,10 +536,12 @@ export default {
                         if (res.ok) {
                             this.datas = res.data.list;
                             this.pagination.total = res.data.total;
+                            //查询成功之后请求该请求字段
+                            this.searchFiled && (this.formSearch[this.searchFiled] = "");
                         }
                     })
                     break;
-                case "module3":
+                case "ideaName":
                     R.adIdea.get({
                         page: this.pagination.page,
                         limit: this.pagination.size,
@@ -482,9 +559,15 @@ export default {
 
             }
 
-        }
+        },
+        addRouter(name,query){
+            this.$router.push({name:name,query:{...query}});
+        },
 
     },
-    computed: {}
+    computed: {
+        ...mapGetters(['getSearch'])
+    },
+
 };
 </script>

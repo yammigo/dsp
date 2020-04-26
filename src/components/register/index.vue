@@ -227,12 +227,12 @@ export default {
             }, 1000);
         },
         submit() {
-            let data = {...this.register.passWord};
+            let data = {...this.register};
             data.passWord&&(data.passWord=md5(data.passWord));
             R.Register.addUser(data).then(res => {
                 if (res.ok) {
                     this.$Confirm('您的账号正在审核中....', '注册成功').then(() => {
-                        
+                         this.$router.push({name:'Login'});
                     })
                 }
             })

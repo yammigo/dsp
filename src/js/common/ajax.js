@@ -132,8 +132,14 @@ let ajax = {
           }
         }
         if(data.code==-2){
+            
             Utils.clearCookie();
-            window.location.href('/');
+
+            // setTimeout(()=>{
+              window.location.href=window.location.href;
+            // },1000)
+          
+            
         }
         data.ok = data.code == 0;
         if(!data.ok){

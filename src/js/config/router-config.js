@@ -76,21 +76,21 @@ const initRouter = () => {
     //   next({ name: 'PermissionError' });
     //   return;
     // }
-    // let eRouter = ["Login", "Register"]
-    // let token = !!Utils.getCookie('token');
-    // if (!token && eRouter.indexOf(to.name) < 0) {
-    //   next({
-    //     name: 'Login'
-    //   });
-    //   return false
-    // } else {
-    //   if (token && eRouter.indexOf(to.name) > 0) {
-    //     next({
-    //       name: from.name
-    //     });
-    //     return false;
-    //   }
-    // }
+    let eRouter = ["Login", "Register"]
+    let token = !!Utils.getCookie('token');
+    if (!token && eRouter.indexOf(to.name) < 0) {
+      next({
+        name: 'Login'
+      });
+      return false
+    } else {
+      if (token && eRouter.indexOf(to.name) > 0) {
+        next({
+          name: from.name
+        });
+        return false;
+      }
+    }
 
     HeyUI.$LoadingBar.start();
     if (to.meta && to.meta.title) {

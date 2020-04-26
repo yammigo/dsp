@@ -407,7 +407,9 @@
                         <!-- <div class="required-item"></div> -->
                     </div>
                     <div class="input-item">
-                        <SwitchList keyName="id" titleName="name" v-model="selectedAdType" :datas="videwList" @change="changeAdType"></SwitchList>
+                        <SwitchList keyName="id" titleName="name" v-model="selectedAdType" :datas="videwList" @change="changeAdType">
+                           
+                        </SwitchList>
                     </div>
                 </div>
                 <div class="row-item">
@@ -543,20 +545,6 @@
 
                     </div>
                     <div class="label-item label-size-normal">
-                        <div class="text-item">创意名称</div>
-                        <div class="required-item"></div>
-                    </div>
-                    <div class="input-item">
-                        <FormItem prop="ideaName" label="创意名称" :showLabel="false">
-                            <input v-width="480" type="text" v-model="formData.ideaName" />
-                        </FormItem>
-                    </div>
-                </div>
-                <div class="row-item">
-                    <div class="hint-item">
-
-                    </div>
-                    <div class="label-item label-size-normal">
                         <div class="text-item">创意标题</div>
                         <div class="required-item"></div>
                     </div>
@@ -617,18 +605,6 @@
                 </div>
                 <div class="row-item">
                     <div class="hint-item">
-
-                    </div>
-                    <div class="label-item label-size-normal">
-                        <div class="text-item">是否启用</div>
-                        <div class="required-item"></div>
-                    </div>
-                    <div class="input-item">
-                        <SwitchList v-model="formData.status"  :datas="putStatus"></SwitchList>
-                    </div>
-                </div>
-                <div class="row-item">
-                    <div class="hint-item">
                     </div>
                     <div class="label-item label-size-normal">
                         <div class="text-item">链接</div>
@@ -636,11 +612,11 @@
                     </div>
                     <div class="input-item">
                         <FormItem prop="clickUrl" label="链接" :showLabel="false">
-                            <input v-width="480" type="text" v-model="formData.clickUrl" />
+                            <input v-width="480"  type="text" v-model="formData.clickUrl" />
                         </FormItem>
                     </div>
                 </div>
-                <div class="row-item">
+                <div class="row-item" v-if="formData.clickType==2">
                     <div class="hint-item">
                     </div>
                     <div class="label-item label-size-normal">
@@ -654,6 +630,30 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+           <div class="moduler" style="min-height:200px;">
+            <Loading text="模块加载中"></Loading>
+            <div class="ad-row-title moduler-title">
+                创意名称
+                <!-- <span class="help-frame-link no-selec">了解详情</span> -->
+            </div>
+            <div class="ad-range">
+                <div class="row-item">
+                    <div class="hint-item">
+
+                    </div>
+                    <div class="label-item label-size-normal">
+                        <div class="text-item">创意名称</div>
+                        <div class="required-item"></div>
+                    </div>
+                    <div class="input-item">
+                        <FormItem prop="ideaName" label="创意名称" :showLabel="false">
+                            <input v-width="480" type="text" v-model="formData.ideaName" />
+                        </FormItem>
+                    </div>
+                </div>
+            
             </div>
         </div>
         <!-- 素材上传区域 -->
@@ -697,9 +697,9 @@
                 <div v-if="styleFm==0&&this.selectedAdType==5">
                     <div class="videoBoxItem" v-for="(item,index) in LibraryList" :key="index" style="border-radius:4px;overflow:hidden;">
                         <video controls :src="item.libraryUrl" width="100%" height="100%"></video>
-                        <div class="uploadIconClose" @click="deleteLib(item.id)"><i class="h-icon-error"></i></div>
+                        <div class="uploadIconClose" @click="deleteLib(item.id)" v-show="(selectImg.length==0||selectImg.indexOf(item.libraryUrl)<0)"><i class="h-icon-error"></i></div>
                         <div class="uploadCheckbox">
-                            <Checkbox v-model="selectImg" :value="item.libraryUrl"></Checkbox>
+                            <Checkbox v-model="selectImg" :value="item.libraryUrl" v-show="(selectImg.length==0||selectImg.indexOf(item.libraryUrl)>-1)||selectImg.length<selectMediaSize"></Checkbox>
                         </div>
                     </div>
 
@@ -708,8 +708,8 @@
                 <waterfall v-else-if="styleFm==1&&this.selectedAdType==5" :col='4' :data="LibraryList" :width="210" ref="waterfall">
                     <template>
                         <div v-for="(item,index) in LibraryList" :key="index" style="width:100%;position:relative;">
-                            <div class="uploadIconClose" @click="deleteLib(item.id)"><i class="h-icon-error"></i></div>
-                            <div class="uploadCheckbox">
+                            <div class="uploadIconClose" @click="deleteLib(item.id)"  v-show="(selectVideoImg.length==0||selectVideoImg.indexOf(item.libraryUrl)<0)"><i class="h-icon-error"></i></div>
+                            <div class="uploadCheckbox" v-show="(selectVideoImg.length==0||selectVideoImg.indexOf(item.libraryUrl)>-1)||selectVideoImg.length<selectMediaSize">
                                 <Checkbox v-model="selectVideoImg" :value="item.libraryUrl"></Checkbox>
                             </div>
                             <img v-if="item.libraryUrl" :src="item.libraryUrl" width="100%" alt="load error" style="border-radius:5px;overflow:hidden;" @click="openPreview(item.libraryUrl)" />
@@ -720,8 +720,8 @@
                 <waterfall v-else :col='4' :data="LibraryList" :width="210" ref="waterfall">
                     <template>
                         <div v-for="(item,index) in LibraryList" :key="index" style="width:100%;position:relative;margin-top:10px;">
-                            <div class="uploadIconClose" @click="deleteLib(item.id)"><i class="h-icon-error"></i></div>
-                            <div class="uploadCheckbox">
+                            <div class="uploadIconClose" @click="deleteLib(item.id)" v-show="(selectImg.length==0||selectImg.indexOf(item.libraryUrl)<0)"><i class="h-icon-error"></i></div>
+                            <div class="uploadCheckbox"  v-show="(selectImg.length==0||selectImg.indexOf(item.libraryUrl)>-1)||selectImg.length<selectMediaSize">
                                 <Checkbox v-model="selectImg" :value="item.libraryUrl"></Checkbox>
                             </div>
                             <img v-if="item.libraryUrl" :src="item.libraryUrl" width="100%" alt="load error" style="border-radius:5px;overflow:hidden;" @click="openPreview(item.libraryUrl)" />
@@ -780,9 +780,9 @@ export default {
         return {
             formData: {
                 clickType: 1,
-                status: 1,
                 planId: this.planId,
-                id: this.ideaid //默认取生成的如果拉取的数据有则此Id 会被拉取的id 替换 //默认取传入id
+                id: this.ideaid, //默认取生成的如果拉取的数据有则此Id 会被拉取的id 替换 //默认取传入id
+                ideaName:!this.ideaid&&this.planName+"_"
             },
             styleFm: 0, //视频封面的标识
             videwList: [],
@@ -791,7 +791,7 @@ export default {
                 size: 20,
                 total: 20
             },
-            ideaId: "",
+            ideaId:this.ideaid || "",
             LibraryLoading: false,
             addViewLoading: false,
             videoUpload: false,
@@ -898,7 +898,6 @@ export default {
                 if (res.ok) {
                     this.videwList = res.data;
                     // this.$set('','videwlist',res.data);
-
                     this.adStyle = res.data[0].styleList;
                     this.selectMediaType = this.adStyle.mediaType;
                     this.selectMediaSize = this.adStyle.mediaSize;
@@ -1093,7 +1092,7 @@ export default {
                     }
                 })
             } else {
-                R.adIdea.add({
+                R.adIdea.update({
                     ...this.formData
                 }).then(res => {
                     if (res.ok) {
@@ -1111,22 +1110,22 @@ export default {
             //检测是否是修改还是添加 路由有ideaid 为修改  没有为提添加
 
             if (this.ideaid) {
-                this.$Loading();
-                R.adIdea
-                    .get({
-                        data: {
-                            id: this.ideaid
-                        },
-                        page: 1,
-                        limit: 1
-                    })
-                    .then(res => {
-                        if (res.ok) {
-                            this.$Loading.close();
-                            this.formData = res.data.list[0];
+            this.$Loading();
+            R.adIdea
+                .get({
+                    data: {
+                        id: this.ideaid
+                    },
+                    page: 1,
+                    limit: 1
+                })
+                .then(res => {
+                    if (res.ok) {
+                        this.$Loading.close();
+                        this.formData = res.data.list[0];
 
-                        }
-                    });
+                    }
+                });
             }
 
         }

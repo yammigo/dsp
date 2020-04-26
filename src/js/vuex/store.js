@@ -9,6 +9,9 @@ export default new Vuex.Store({
     msgCount: {
       messages: 2
     },
+    searchCriteria: {
+     
+    },
     siderCollapsed: true
   },
   mutations: {
@@ -23,6 +26,9 @@ export default new Vuex.Store({
     },
     updateMsgCount(state, data) {
       state.msgCount = data;
+    },
+    setSearch(state, data) {
+      state.searchCriteria = { ...data };
     }
   },
   actions: {
@@ -45,6 +51,9 @@ export default new Vuex.Store({
     },
     msgCount: state => {
       return state.msgCount;
+    },
+    getSearch: state => {
+      return state.searchCriteria;
     }
   }
 });

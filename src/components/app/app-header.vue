@@ -142,7 +142,7 @@
     <div style="margin-left:30px;float:left">
         <router-link to="/home" class="app-header-navItem">首页</router-link>
         <router-link to="/extension" class="app-header-navItem">推广</router-link>
-        <router-link to="/table-basic" class="app-header-navItem">报表</router-link>
+        <!-- <router-link to="/table-basic" class="app-header-navItem">报表</router-link> -->
     </div>
     <!-- <div style="width:50px;float:left;"><Button :icon="siderCollapsed ? 'icon-align-right':'icon-align-left'" size="l" noBorder class="font20" @click="siderCollapsed=!siderCollapsed"></Button></div> -->
     <div class="float-right app-header-info">
