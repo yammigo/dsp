@@ -130,7 +130,7 @@
 <div class="login-vue">
     <div class="login-container">
         <div class="login-content">
-            <div class="login-title">花生DSP</div>
+            <div class="login-title">广源引擎广告投放</div>
             <div class="login-name login-input">
                 <input type="text" name="loginName" v-model="login.loginName" autocomplete="off" />
                 <span class="placeholder" :class="{fixed: login.loginName != '' && login.loginName != null}">用户名</span>
@@ -150,7 +150,7 @@
             <a style="margin-top:10px;">没有账号？</a>
             <a style="margin-top:10px;" href="#/register">去注册</a>
         </div>
-        <p class="copyright"> Copyright © 2019 版权 - <a href="">dspUSer</a></p>
+        <p class="copyright"> Copyright © 2019 广源引擎 - <a href="">广告投放系统</a></p>
     </div>
 </div>
 </template>

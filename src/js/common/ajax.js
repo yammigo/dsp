@@ -132,14 +132,9 @@ let ajax = {
           }
         }
         if(data.code==-2){
-            
             Utils.clearCookie();
-
-            // setTimeout(()=>{
-              window.location.href=window.location.href;
-            // },1000)
-          
-            
+            Utils.removeCookie('token');
+            window.location.reload();
         }
         data.ok = data.code == 0;
         if(!data.ok){

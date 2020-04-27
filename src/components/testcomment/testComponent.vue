@@ -12,10 +12,11 @@
     <!-- </v-scrollbar> -->
     <!-- <weekTime v-model="timeValue"></weekTime>
     <selectCity v-model="selectCity"></selectCity> -->
-    <Waterfall>
-        <div style="position:absolute;top:0px;">qweqew</div>
+    <Waterfall :datas="propdata">
+        <template v-slot:default="slotProps">
+             <img :src="slotProps.item.libraryUrl" />
+        </template>
     </Waterfall>
-
 </div>
 </template>
 
@@ -38,6 +39,40 @@ export default {
     },
     data() {
         return {
+            propdata: [{
+                "adType": 1,
+                "adTypeName": "横幅",
+                "adTypeStyle": 101,
+                "adTypeStyleName": "横幅-大图",
+                "createTime": "2020-04-22 13:55:23",
+                "id": 122,
+                "libraryUrl": "http://image.huashengerge.com/pic/2020/4/22/158753492311670082.jpg",
+                "styleFm": 0,
+                "userId": 3,
+                "userName": "guodong"
+            }, {
+                "adType": 1,
+                "adTypeName": "横幅",
+                "adTypeStyle": 101,
+                "adTypeStyleName": "横幅-大图",
+                "createTime": "2020-04-22 13:55:23",
+                "id": 121,
+                "libraryUrl": "http://image.huashengerge.com/pic/2020/4/22/158753492304144591.jpg",
+                "styleFm": 0,
+                "userId": 3,
+                "userName": "guodong"
+            }, {
+                "adType": 1,
+                "adTypeName": "横幅",
+                "adTypeStyle": 101,
+                "adTypeStyleName": "横幅-大图",
+                "createTime": "2020-04-22 13:55:23",
+                "id": 117,
+                "libraryUrl": "http://image.huashengerge.com/pic/2020/4/22/158753492251443924.JPG",
+                "styleFm": 0,
+                "userId": 3,
+                "userName": "guodong"
+            }],
             timeValue: [
                 [],
                 [],

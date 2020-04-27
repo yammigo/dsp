@@ -1,5 +1,10 @@
 <style lang="less">
 .originality {
+    position: fixed;
+    top:65px;
+    bottom:0px;
+    right:0px;
+    left:0px;
     .nav-left {
         position: absolute;
         overflow: auto;
@@ -9,6 +14,7 @@
 
         .nav-left-content {
             min-height: calc(100vh - 65px);
+            height: 100%;
             background: #fff;
             overflow-y: auto;
             overflow-x: hidden;
@@ -58,7 +64,7 @@
 
             .step-block.forbidden .sub-title-dashed {
                 background-repeat: repeat-y;
-                background-image: radial-gradient(#ccc 15%, transparent 0),radial-gradient(#ccc 15%, transparent 0);
+                background-image: radial-gradient(#ccc 15%, transparent 0), radial-gradient(#ccc 15%, transparent 0);
                 background-size: 14px 14px;
             }
 
@@ -108,6 +114,8 @@
         padding: 12px;
         position: absolute;
         height: calc(100vh - 65px);
+        top: 0px;
+        bottom: 0px;
         overflow: auto;
         width: calc(100% - 56px);
         z-index: 666;
@@ -120,6 +128,7 @@
         height: calc(100vh - 65px);
         overflow: auto;
         width: calc(100% - 200px);
+      
     }
 
     .moduler {
@@ -179,15 +188,15 @@
                 <div class="main-title">
                     <!---->
                     <div class="nav-icon">
-                        <img v-if="index==0&&stepData.key==index" src="../../images/proimg/b1.svg"/>
-                        <img v-if="index==1&&stepData.key==index" src="../../images/proimg/b2.svg"/>
-                        <img v-if="index==2&&stepData.key==index" src="../../images/proimg/b3.svg"/>
-                        <img v-if="index==0&&stepData.key<index" src="../../images/proimg/g1.svg"/>
-                        <img v-if="index==1&&stepData.key<index" src="../../images/proimg/g2.svg"/>
-                        <img v-if="index==2&&stepData.key<index" src="../../images/proimg/g3.svg"/>
+                        <img v-if="index==0&&stepData.key==index" src="../../images/proimg/b1.svg" />
+                        <img v-if="index==1&&stepData.key==index" src="../../images/proimg/b2.svg" />
+                        <img v-if="index==2&&stepData.key==index" src="../../images/proimg/b3.svg" />
+                        <img v-if="index==0&&stepData.key<index" src="../../images/proimg/g1.svg" />
+                        <img v-if="index==1&&stepData.key<index" src="../../images/proimg/g2.svg" />
+                        <img v-if="index==2&&stepData.key<index" src="../../images/proimg/g3.svg" />
                         <!-- <img  src="../../images/proimg/b2.svg"/>
                         <img  src="../../images/proimg/b3.svg"/> -->
-                        <img  v-if="stepData.key>index" src="../../images/proimg/check.svg"/>
+                        <img v-if="stepData.key>index" src="../../images/proimg/check.svg" />
                         <!-- <img  src="../../images/proimg/g1.svg"  />
                         <img  src="../../images/proimg/g2.svg" />
                         <img  src="../../images/proimg/g3.svg" /> -->
@@ -235,38 +244,37 @@ export default {
     data() {
         return {
             //步骤条 calss "complete" 完成  "active" 正在填写项 "forbidden" 未填写
-            stepParms:[
-                {
-                    title:'广告组',
-                    sIcon:"",
-                    subs:["推广目的"]
+            stepParms: [{
+                    title: '广告组',
+                    sIcon: "",
+                    subs: ["推广目的"]
                 },
                 {
-                    title:'广告计划',
-                    sIcon:"",
-                    subs:["所属广告组","投放选择","用户定向","预算与出价","计划名称"]
+                    title: '广告计划',
+                    sIcon: "",
+                    subs: ["所属广告组", "投放选择", "用户定向", "预算与出价", "计划名称"]
                 },
                 {
-                    title:'广告创意',
-                    sIcon:"",
-                    subs:["所属计划","制作创意","创意内容","创意配置"]
+                    title: '广告创意',
+                    sIcon: "",
+                    subs: ["所属计划", "制作创意", "创意内容", "创意配置"]
                 }
-                
+
             ],
-            stepData:{
-                
+            stepData: {
+
             }
         };
     },
     mounted() {
-       
+
     },
     methods: {
-        activeStep(val){
+        activeStep(val) {
             // console.log(val,"接收的参数")
-            this.stepData=val;
+            this.stepData = val;
         },
-        
+
     },
     computed: {}
 };

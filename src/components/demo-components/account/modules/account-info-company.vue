@@ -46,7 +46,7 @@ export default {
             },
             uplodUrl: G.get("env").apiDomin + "/pub/upload/img.do",
             files: [],
-            acc:{},
+            acc: {},
             rules: {
                 required: ['companyName', 'licenseUrl', 'legalName', 'legalIdCardNumber', 'legalIdCardUrl1', 'legalIdCardUrl2']
             },
@@ -70,10 +70,10 @@ export default {
             //获取企业认证信息
             R.User.getCompany({}).then(res => {
 
-                if(res.ok){
-                    
-                    this.acc=res.data;
-                     
+                if (res.ok) {
+
+                    this.acc = res.data;
+
                 }
             })
         },
@@ -86,7 +86,8 @@ export default {
                 this.saveloading = false;
                 if (res.ok) {
                     this.$Message.success("提交成功");
-                    this.acc.status=-2;
+                    this.$emit('updateInfo');
+
                 }
             })
         },

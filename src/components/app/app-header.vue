@@ -138,7 +138,7 @@
 
 <template>
 <div class="app-header">
-    <div style="margin-left:30px;float:left;color:#eee">DSP广告投放平台</div>
+    <div style="margin-left:30px;float:left;color:#eee">广源引擎-广告投放平台</div>
     <div style="margin-left:30px;float:left">
         <router-link to="/home" class="app-header-navItem">首页</router-link>
         <router-link to="/extension" class="app-header-navItem">推广</router-link>

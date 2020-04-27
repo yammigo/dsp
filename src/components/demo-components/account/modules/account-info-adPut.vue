@@ -16,7 +16,7 @@
         <FormItem label="其他资质图片" prop="otherUrl">
             <button class="h-btn h-btn-primary"><label for="fileUplaod" @click="uploadFiled='otherUrl'"><img width="100" v-if="acc.otherUrl" :src="acc.otherUrl" /><span v-if="!acc.otherUrl">上传</span></label></button>
         </FormItem>
-        <FormItem v-if="acc.status==-1||acc.status==-2">
+        <FormItem v-if="acc.status==-2">
             <Button color="primary" @click="submit" :loading="saveloading">提交</Button>
         </FormItem>
     </Form>
@@ -62,6 +62,7 @@ export default {
             R.User.getAdput({}).then(res => {
                 if(res.ok){
                     this.acc=res.data;
+                    
                 }
             })
         },
@@ -73,7 +74,8 @@ export default {
             }).then(res => {
                 this.saveloading = false;
                 if (res.ok) {
-
+                    this.$Message.success(res.msg);
+                    this.$emit('updateInfo');
                 }
             })
         },

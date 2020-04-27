@@ -213,8 +213,33 @@
                     <span class="h-tag-circle" :class="[styleColor[data.status]]"></span>{{dictStatus[data.status]}}
                 </template>
             </TableItem>
+             <TableItem :width="100" align="right" title="日预算">
+                <template slot-scope="{data}">
+                    <span class="bui-num">{{data.putAmountDay|NumFormat}}</span>
+                </template>
+
+            </TableItem>
+            <TableItem :width="100" align="right" title="出价金额">
+                <template slot-scope="{data}">
+                    <span class="bui-num">{{data.bidAmount|NumFormat}}</span>
+                </template>
+            </TableItem>
+            <TableItem :width="100" align="right" title="消费金额">
+                <template slot-scope="{data}">
+                    <span class="bui-num">{{data.income|NumFormat}}</span>
+                </template>
+            </TableItem>
+            <TableItem :width="100" align="right" title="展现数" prop="showCount"></TableItem>
+            <TableItem :width="100" align="right" title="点击数" prop="clickCount"></TableItem>
+            <TableItem :width="100" align="right" title="开始下载" prop="downStartCount"></TableItem>
+            <TableItem :width="100" align="right" title="完成下载" prop="downEndCount"></TableItem>
+            <TableItem :width="100" align="right" title="开始安装" prop="installStartCount"></TableItem>
+            <TableItem :width="100" align="right" title="安装完成" prop="installEndCount"></TableItem>
+            <TableItem :width="100" align="right" title="开始播放" prop="playStartCount"></TableItem>
+            <TableItem :width="100" align="right" title="完成播放" prop="playEndCount"></TableItem>
+            <TableItem :width="100" align="right" title="完成播放" prop="playEndCount"></TableItem>
             <TableItem :width="200" title="创建时间" prop="createTime"></TableItem>
-            <TableItem :width="200" title="操作" align="center">
+            <TableItem :width="200" title="操作" align="center" fixed="right">
                 <template slot-scope="{data}">
                     <span v-if="data.status!==-1&&data.status!==-2">
                         <Poptip :content="'确认'+(data.status?'禁用':'启用')" @confirm="updataStatus('adGroup',{status:editStatus[data.status],id:data.id})"><a class="text-hover">{{data.status?"禁用":"启用"}}</a></Poptip>
@@ -246,14 +271,27 @@
                     {{putType[data.putType]}}
                 </template>
             </TableItem>
-            <TableItem :width="100" align="right" title="日预算" prop="putAmountDay"></TableItem>
-            <TableItem :width="100" align="right" title="出价金额" prop="bidAmount"></TableItem>
-            <TableItem :width="100" align="right" title="消费金额" prop="income"></TableItem>
-            <TableItem :width="100" align="right" title="展现数" prop="showCount "></TableItem>
+            <TableItem :width="100" align="right" title="日预算">
+                <template slot-scope="{data}">
+                    <span class="bui-num">{{data.putAmountDay|NumFormat}}</span>
+                </template>
+
+            </TableItem>
+            <TableItem :width="100" align="right" title="出价金额">
+                <template slot-scope="{data}">
+                    <span class="bui-num">{{data.bidAmount|NumFormat}}</span>
+                </template>
+            </TableItem>
+            <TableItem :width="100" align="right" title="消费金额">
+                <template slot-scope="{data}">
+                    <span class="bui-num">{{data.income|NumFormat}}</span>
+                </template>
+            </TableItem>
+            <TableItem :width="100" align="right" title="展现数" prop="showCount"></TableItem>
             <TableItem :width="100" align="right" title="点击数" prop="clickCount"></TableItem>
             <TableItem :width="100" align="right" title="开始下载" prop="downStartCount"></TableItem>
-            <TableItem :width="100" align="right" title="完成下载" prop="downEndCount "></TableItem>
-            <TableItem :width="100" align="right" title="开始安装" prop="installStartCount "></TableItem>
+            <TableItem :width="100" align="right" title="完成下载" prop="downEndCount"></TableItem>
+            <TableItem :width="100" align="right" title="开始安装" prop="installStartCount"></TableItem>
             <TableItem :width="100" align="right" title="安装完成" prop="installEndCount"></TableItem>
             <TableItem :width="100" align="right" title="开始播放" prop="playStartCount"></TableItem>
             <TableItem :width="100" align="right" title="完成播放" prop="playEndCount"></TableItem>
@@ -287,9 +325,32 @@
                     {{clickType[data.clickType]}}
                 </template>
             </TableItem>
-            <TableItem :width="200" title="跳转链接" prop="clickUrl">
+            <TableItem :width="200" title="跳转链接" prop="clickUrl"></TableItem>
+            <TableItem :width="100" align="right" title="日预算">
+                <template slot-scope="{data}">
+                    <span class="bui-num">{{data.putAmountDay|NumFormat}}</span>
+                </template>
 
             </TableItem>
+            <TableItem :width="100" align="right" title="出价金额">
+                <template slot-scope="{data}">
+                    <span class="bui-num">{{data.bidAmount|NumFormat}}</span>
+                </template>
+            </TableItem>
+            <TableItem :width="100" align="right" title="消费金额">
+                <template slot-scope="{data}">
+                    <span class="bui-num">{{data.income|NumFormat}}</span>
+                </template>
+            </TableItem>
+            <TableItem :width="100" align="right" title="展现数" prop="showCount"></TableItem>
+            <TableItem :width="100" align="right" title="点击数" prop="clickCount"></TableItem>
+            <TableItem :width="100" align="right" title="开始下载" prop="downStartCount"></TableItem>
+            <TableItem :width="100" align="right" title="完成下载" prop="downEndCount"></TableItem>
+            <TableItem :width="100" align="right" title="开始安装" prop="installStartCount"></TableItem>
+            <TableItem :width="100" align="right" title="安装完成" prop="installEndCount"></TableItem>
+            <TableItem :width="100" align="right" title="开始播放" prop="playStartCount"></TableItem>
+            <TableItem :width="100" align="right" title="完成播放" prop="playEndCount"></TableItem>
+            <TableItem :width="100" align="right" title="完成播放" prop="playEndCount"></TableItem>
             <TableItem :width="150" title="创建时间" prop="createTime"></TableItem>
             <TableItem :width="100" title="操作" align="center" fixed="right">
                 <template slot-scope="{data}">
@@ -560,8 +621,13 @@ export default {
             }
 
         },
-        addRouter(name,query){
-            this.$router.push({name:name,query:{...query}});
+        addRouter(name, query) {
+            this.$router.push({
+                name: name,
+                query: {
+                    ...query
+                }
+            });
         },
 
     },

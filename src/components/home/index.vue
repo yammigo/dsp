@@ -233,8 +233,8 @@
                     text-align: center;
                     margin-bottom: 10px;
                     letter-spacing: 2px;
-                    font-size:16px;
-                    color:#555
+                    font-size: 16px;
+                    color: #555
                 }
 
                 .number {
@@ -310,17 +310,17 @@
                                         </g>
                                     </svg></div>
                             </div>
-                            <div class="ad-color-text number bui-num">{{data.amount||0.00}}</div>
+                            <div class="ad-color-text number bui-num">{{data.amount|NumFormat}}</div>
                         </div>
                     </div>
                     <div class="num-wrap"><img src="//s1.pstatp.com/bytecom/platform_web/static/image/consume.svg?9bd7b70a409309e862b0174f252b7470">
                         <div class="num-detail"><span class="ad-color-text-hint ad-font-size-sm">今日消耗</span>
-                            <div class="ad-color-text number bui-num">{{data.useAmountDay||0.00}}</div>
+                            <div class="ad-color-text number bui-num">{{data.useAmountDay|NumFormat}}</div>
                         </div>
                     </div>
                     <div class="num-wrap"><img src="//s1.pstatp.com/bytecom/platform_web/static/image/budget.svg?f55db195e1bd18d103ec65eb329e5699">
                         <div class="num-detail"><span class="ad-color-text-hint ad-font-size-sm">账户日预算</span>
-                            <div class="ad-color-text number bui-num"><span>{{data.putAmountDay||0.00}}</span>
+                            <div class="ad-color-text number bui-num"><span>{{data.putAmountDay|NumFormat}}</span>
 
                             </div>
                         </div>
@@ -333,7 +333,7 @@
             <div class="byted-card byted-card-shadow">
                 <!---->
                 <div class="byted-card-body">
-                    <div class="plan-card-item"><span class="font24 ad-color-text-link bui-num">0</span> <span class="ad-color-text ad-font-size-sm plan-type-name">
+                    <div class="plan-card-item"><span class="font24 ad-color-text-link bui-num">{{data.putPlanCount}}</span> <span class="ad-color-text ad-font-size-sm plan-type-name">
                             <div class="byted-icon bui-icon-angle-right" style="width: 16px; height: 16px; visibility: hidden;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
                                     <defs>
                                         <path id="angle-right_svg__a" d="M0 0h48v48H0z"></path>
@@ -347,7 +347,8 @@
                                     </g>
                                 </svg></div>
                             投放中计划
-                            <div class="byted-icon bui-icon-angle-right" style="width: 16px; height: 16px;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
+                            <div class="byted-icon bui-icon-angle-right" style="width: 16px; height: 16px;">
+                                <!-- <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
                                     <defs>
                                         <path id="angle-right_svg__a" d="M0 0h48v48H0z"></path>
                                     </defs>
@@ -358,15 +359,16 @@
                                         <use opacity=".01" xlink:href="#angle-right_svg__a"></use>
                                         <path fill-rule="nonzero" d="M16.586 35.324a2 2 0 0 0 2.828 2.828l12-12a2 2 0 0 0 0-2.828l-12-12a2 2 0 0 0-2.828 2.828l10.586 10.586-10.586 10.586z" transform="rotate(90 24 24.738)"></path>
                                     </g>
-                                </svg></div>
+                                </svg> -->
+                                </div>
                         </span></div>
                 </div>
 
             </div>
-            <div class="byted-card byted-card-shadow">
-                <!---->
+            <!-- <div class="byted-card byted-card-shadow">
+               
                 <div class="byted-card-body">
-                    <div class="plan-card-item"><span class="font24  bui-num" style="color:#ecae22">0</span> <span class="ad-color-text ad-font-size-sm plan-type-name">
+                    <div class="plan-card-item"><span class="font24  bui-num">{{data.noAmountPlanCount}}</span> <span class="ad-color-text ad-font-size-sm plan-type-name">
                             <div class="byted-icon bui-icon-angle-right" style="width: 16px; height: 16px; visibility: hidden;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
                                     <defs>
                                         <path id="angle-right_svg__a" d="M0 0h48v48H0z"></path>
@@ -379,7 +381,7 @@
                                         <path fill-rule="nonzero" d="M16.586 35.324a2 2 0 0 0 2.828 2.828l12-12a2 2 0 0 0 0-2.828l-12-12a2 2 0 0 0-2.828 2.828l10.586 10.586-10.586 10.586z" transform="rotate(90 24 24.738)"></path>
                                     </g>
                                 </svg></div>
-                            待审核计划
+                            未投放计划
                             <div class="byted-icon bui-icon-angle-right" style="width: 16px; height: 16px;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
                                     <defs>
                                         <path id="angle-right_svg__a" d="M0 0h48v48H0z"></path>
@@ -395,73 +397,7 @@
                         </span></div>
                 </div>
 
-            </div>
-            <div class="byted-card byted-card-shadow">
-                <!---->
-                <div class="byted-card-body">
-                    <div class="plan-card-item"><span class="font24 ad-color-text-link bui-num" style="color:#F45858">0</span> <span class="ad-color-text ad-font-size-sm plan-type-name">
-                            <div class="byted-icon bui-icon-angle-right" style="width: 16px; height: 16px; visibility: hidden;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
-                                    <defs>
-                                        <path id="angle-right_svg__a" d="M0 0h48v48H0z"></path>
-                                    </defs>
-                                    <g fill-rule="evenodd" transform="rotate(-90 24 24)">
-                                        <mask id="angle-right_svg__b" fill="#fff">
-                                            <use xlink:href="#angle-right_svg__a"></use>
-                                        </mask>
-                                        <use opacity=".01" xlink:href="#angle-right_svg__a"></use>
-                                        <path fill-rule="nonzero" d="M16.586 35.324a2 2 0 0 0 2.828 2.828l12-12a2 2 0 0 0 0-2.828l-12-12a2 2 0 0 0-2.828 2.828l10.586 10.586-10.586 10.586z" transform="rotate(90 24 24.738)"></path>
-                                    </g>
-                                </svg></div>
-                            审核不通过计划
-                            <div class="byted-icon bui-icon-angle-right" style="width: 16px; height: 16px;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
-                                    <defs>
-                                        <path id="angle-right_svg__a" d="M0 0h48v48H0z"></path>
-                                    </defs>
-                                    <g fill-rule="evenodd" transform="rotate(-90 24 24)">
-                                        <mask id="angle-right_svg__b" fill="#fff">
-                                            <use xlink:href="#angle-right_svg__a"></use>
-                                        </mask>
-                                        <use opacity=".01" xlink:href="#angle-right_svg__a"></use>
-                                        <path fill-rule="nonzero" d="M16.586 35.324a2 2 0 0 0 2.828 2.828l12-12a2 2 0 0 0 0-2.828l-12-12a2 2 0 0 0-2.828 2.828l10.586 10.586-10.586 10.586z" transform="rotate(90 24 24.738)"></path>
-                                    </g>
-                                </svg></div>
-                        </span></div>
-                </div>
-
-            </div>
-            <div class="byted-card byted-card-shadow">
-                <!---->
-                <div class="byted-card-body">
-                    <div class="plan-card-item"><span class="font24  bui-num">0</span> <span class="ad-color-text ad-font-size-sm plan-type-name">
-                            <div class="byted-icon bui-icon-angle-right" style="width: 16px; height: 16px; visibility: hidden;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
-                                    <defs>
-                                        <path id="angle-right_svg__a" d="M0 0h48v48H0z"></path>
-                                    </defs>
-                                    <g fill-rule="evenodd" transform="rotate(-90 24 24)">
-                                        <mask id="angle-right_svg__b" fill="#fff">
-                                            <use xlink:href="#angle-right_svg__a"></use>
-                                        </mask>
-                                        <use opacity=".01" xlink:href="#angle-right_svg__a"></use>
-                                        <path fill-rule="nonzero" d="M16.586 35.324a2 2 0 0 0 2.828 2.828l12-12a2 2 0 0 0 0-2.828l-12-12a2 2 0 0 0-2.828 2.828l10.586 10.586-10.586 10.586z" transform="rotate(90 24 24.738)"></path>
-                                    </g>
-                                </svg></div>
-                            预算不足计划
-                            <div class="byted-icon bui-icon-angle-right" style="width: 16px; height: 16px;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
-                                    <defs>
-                                        <path id="angle-right_svg__a" d="M0 0h48v48H0z"></path>
-                                    </defs>
-                                    <g fill-rule="evenodd" transform="rotate(-90 24 24)">
-                                        <mask id="angle-right_svg__b" fill="#fff">
-                                            <use xlink:href="#angle-right_svg__a"></use>
-                                        </mask>
-                                        <use opacity=".01" xlink:href="#angle-right_svg__a"></use>
-                                        <path fill-rule="nonzero" d="M16.586 35.324a2 2 0 0 0 2.828 2.828l12-12a2 2 0 0 0 0-2.828l-12-12a2 2 0 0 0-2.828 2.828l10.586 10.586-10.586 10.586z" transform="rotate(90 24 24.738)"></path>
-                                    </g>
-                                </svg></div>
-                        </span></div>
-                </div>
-
-            </div>
+            </div> -->
 
         </div>
     </div>
@@ -478,8 +414,16 @@
                     </div>
                 </div>
                 <div class="home-part-body">
-                     <Loading text="加载中..." :loading="loadingData"></Loading>
+                    <Loading text="加载中..." :loading="loadingData"></Loading>
                     <!-- 概览数据开始 -->
+                    <div class="dataItem">
+                        <div>
+                            <div class="item-data">
+                                <div class="title">广告请求</div>
+                                <div class="number bui-num">{{data.sendCount||0}}</div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="dataItem">
                         <div>
                             <div class="item-data">
@@ -529,6 +473,22 @@
                             </div>
                         </div>
                     </div>
+                    <div class="dataItem">
+                        <div>
+                            <div class="item-data">
+                                <div class="title">播放开始</div>
+                                <div class="number bui-num">{{data.layStartCount||0}}</div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="dataItem">
+                        <div>
+                            <div class="item-data">
+                                <div class="title">播放结束</div>
+                                <div class="number bui-num">{{data.playEndCount||0}}</div>
+                            </div>
+                        </div>
+                    </div>
                     <!-- 概览数据结束 -->
                 </div>
             </div>
@@ -553,23 +513,23 @@
 export default {
     data() {
         return {
-            loadingData:false,
-            data:{}
+            loadingData: false,
+            data: {}
         };
     },
     mounted() {
         this.init();
     },
     methods: {
-       init(){
-           this.loadingData=true;
-           R.Home.userIndex({}).then(res=>{
-               if(res.ok){
-                   this.data=res.data;
-                   this.loadingData=false;
-               }
-           })
-       }
+        init() {
+            this.loadingData = true;
+            R.Home.userIndex({}).then(res => {
+                if (res.ok) {
+                    this.data = res.data;
+                    this.loadingData = false;
+                }
+            })
+        }
     }
 };
 </script>

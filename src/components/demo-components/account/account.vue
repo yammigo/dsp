@@ -12,8 +12,8 @@
                 <div class="h-panel-tabs-bar">
                     <Tabs v-model="tab" :datas="tabs"></Tabs>
                 </div>
-                <AccountInfoCompany v-if="tab == 'comparny'" :account="account"></AccountInfoCompany>
-                <AccountInfoAdPut v-if="tab == 'adPut'" :account="account"></AccountInfoAdPut>
+                <AccountInfoCompany v-if="tab == 'comparny'" :account="account" @updateInfo="updataInfo"></AccountInfoCompany>
+                <AccountInfoAdPut v-if="tab == 'adPut'" :account="account"  @updateInfo="updataInfo"></AccountInfoAdPut>
             </div>
         </Cell>
     </Row>
@@ -33,7 +33,6 @@ export default {
     },
     data() {
         return {
-            
             account:{},
             tabs: {
                 comparny: '企业认证',
@@ -52,6 +51,9 @@ export default {
                     this.account=res.data
                 }
            })
+        },
+        updataInfo(){
+            this.init();
         }
     }
 };

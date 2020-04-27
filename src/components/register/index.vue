@@ -166,7 +166,7 @@
             <a style="margin-top:10px;">已有账号？</a>
             <a style="margin-top:10px;" href="#/login">去登录</a>
         </div>
-        <p class="copyright"> Copyright © 2019 版权 - <a href="">dspUSer</a></p>
+       <p class="copyright"> Copyright © 2019 广源引擎 - <a href="">广告投放系统</a></p>
     </div>
 </div>
 </template>

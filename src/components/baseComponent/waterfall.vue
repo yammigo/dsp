@@ -1,11 +1,8 @@
 <template>
 <div class="waterfull">
-    <h2>瀑布流布局</h2>
-    <div class="v-waterfall-content" id="v-waterfall">
-        <div v-for="(img, index) in waterfallList" :key="index" class="v-waterfall-item" :style="{top:img.top+'px',left:img.left+'px',width:waterfallImgWidth+'px',height:img.height}">
-                <img :src="img.src" alt="">
-            <slot>
-            </slot>
+    <div class="v-waterfall-content" ref="Waterfall">
+        <div v-for="(item, index) in waterfallList" :key="index" class="v-waterfall-item" :style="{top:item.top+'px',left:item.left+'px',width:waterfallImgWidth+'px',height:item.height+'px'}">
+            <slot :item="item"></slot>
         </div>
     </div>
 </div>
@@ -13,76 +10,52 @@
 
 <script>
 export default {
-    props:{
-      datas:{
-        adType:Array,
-        default:function(){
-          return []  
+    props: {
+        dataArr: {
+            type: Array,
+            default: function () {
+                return []
+            }
         }
-      }
     },
-    name: "v-waterfall",
+    name: "Waterfall",
     data() {
         return {
             waterfallList: [],
-            propdata: [{
-                "adType": 1,
-                "adTypeName": "横幅",
-                "adTypeStyle": 101,
-                "adTypeStyleName": "横幅-大图",
-                "createTime": "2020-04-22 13:55:23",
-                "id": 122,
-                "libraryUrl": "http://image.huashengerge.com/pic/2020/4/22/158753492311670082.jpg",
-                "styleFm": 0,
-                "userId": 3,
-                "userName": "guodong"
-            }, {
-                "adType": 1,
-                "adTypeName": "横幅",
-                "adTypeStyle": 101,
-                "adTypeStyleName": "横幅-大图",
-                "createTime": "2020-04-22 13:55:23",
-                "id": 121,
-                "libraryUrl": "http://image.huashengerge.com/pic/2020/4/22/158753492304144591.jpg",
-                "styleFm": 0,
-                "userId": 3,
-                "userName": "guodong"
-            }, {
-                "adType": 1,
-                "adTypeName": "横幅",
-                "adTypeStyle": 101,
-                "adTypeStyleName": "横幅-大图",
-                "createTime": "2020-04-22 13:55:23",
-                "id": 117,
-                "libraryUrl": "http://image.huashengerge.com/pic/2020/4/22/158753492251443924.JPG",
-                "styleFm": 0,
-                "userId": 3,
-                "userName": "guodong"
-            }],
-            // waterfallImgWidth: 100,
-            waterfallImgWidth: 200, // 每个盒子的宽度
-            // waterfallImgCol: 5,// 瀑布流的列数
-            waterfallImgCol: 3, // 瀑布流的列数
-            waterfallImgRight:2, // 每个盒子的右padding
-            waterfallImgBottom:2, // 每个盒子的下padding
+            waterfallImgWidth: 210, // 每个盒子的宽度
+            waterfallImgCol: 4, // 瀑布流的列数
+            waterfallImgRight: 10, // 每个盒子的右padding
+            waterfallImgBottom: 10, // 每个盒子的下padding
             waterfallDeviationHeight: [],
-            imgList: []
+
         }
     },
     created() {
+
         // 触发入口
-        for (let i = 0; i < this.propdata.length; i++) {
-            // this.imgList.push(this.imgArr[Math.round(Math.random() * 8)]);// 图片随机显示
-            this.imgList.push(this.propdata[i].libraryUrl);
-        }
+        // for (let i = 0; i < this.datas.length; i++) {
+        //     // this.imgList.push(this.imgArr[Math.round(Math.random() * 8)]);// 图片随机显示
+        //     this.imgList.push(this.datas[i].libraryUrl);
+        // }
     },
     mounted() {
-        this.calculationWidth();
+        // this.calculationWidth();
+    },
+    watch: {
+        "dataArr": {
+            handler: function (newVal, old) {
+                setTimeout(() => {
+                    this.$refs.Waterfall && this.calculationWidth();
+                },20)
+
+            },
+            immediate: true
+        }
     },
     methods: {
         //计算每个图片的宽度或者是列数
         calculationWidth() {
-            let domWidth = document.getElementById("v-waterfall").offsetWidth;
+            let domWidth = this.$refs.Waterfall.offsetWidth;
             if (!this.waterfallImgWidth && this.waterfallImgCol) {
                 this.waterfallImgWidth = (domWidth - this.waterfallImgRight * this.waterfallImgCol) / this.waterfallImgCol;
             } else if (this.waterfallImgWidth && !this.waterfallImgCol) {
@@ -97,13 +70,13 @@ export default {
         },
         //图片预加载
         imgPreloading() {
-            for (let i = 0; i < this.imgList.length; i++) {
+             this.waterfallList=[];
+            for (let i = 0; i < this.dataArr.length; i++) {
                 let aImg = new Image();
-                aImg.src = this.imgList[i];
+                aImg.src = this.dataArr[i].libraryUrl;
                 aImg.onload = aImg.onerror = (e) => {
-                    let imgData = {};
+                    let imgData = this.dataArr[i];
                     imgData.height = this.waterfallImgWidth / aImg.width * aImg.height;
-                    imgData.src = this.imgList[i];
                     this.waterfallList.push(imgData);
                     this.rankImg(imgData);
                 }
@@ -132,7 +105,7 @@ export default {
             const min = Math.min.apply(null, this.waterfallDeviationHeight);
             return this.waterfallDeviationHeight.indexOf(min);
         }
-    }
+    },
 }
 </script>
 
@@ -159,7 +132,7 @@ export default {
 .v-waterfall-item img {
     /* 主要 */
     /* width: auto;height: auto; */
-    width: 90%;
+    width: 100%;
     height: auto;
     /* 次要 */
     border-radius: 6px;

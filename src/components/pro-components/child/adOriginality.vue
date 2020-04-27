@@ -408,7 +408,7 @@
                     </div>
                     <div class="input-item">
                         <SwitchList keyName="id" titleName="name" v-model="selectedAdType" :datas="videwList" @change="changeAdType">
-                           
+
                         </SwitchList>
                     </div>
                 </div>
@@ -612,7 +612,7 @@
                     </div>
                     <div class="input-item">
                         <FormItem prop="clickUrl" label="链接" :showLabel="false">
-                            <input v-width="480"  type="text" v-model="formData.clickUrl" />
+                            <input v-width="480" type="text" v-model="formData.clickUrl" />
                         </FormItem>
                     </div>
                 </div>
@@ -632,7 +632,7 @@
 
             </div>
         </div>
-           <div class="moduler" style="min-height:200px;">
+        <div class="moduler" style="min-height:200px;">
             <Loading text="模块加载中"></Loading>
             <div class="ad-row-title moduler-title">
                 创意名称
@@ -653,7 +653,7 @@
                         </FormItem>
                     </div>
                 </div>
-            
+
             </div>
         </div>
         <!-- 素材上传区域 -->
@@ -705,19 +705,40 @@
 
                 </div>
                 <!-- 封面专属 -->
-                <waterfall v-else-if="styleFm==1&&this.selectedAdType==5" :col='4' :data="LibraryList" :width="210" ref="waterfall">
+                <Waterfall v-else-if="styleFm==1&&this.selectedAdType==5" :dataArr="LibraryList">
+                    <template v-slot:default="slotProps">
+
+                        <div class="uploadIconClose" @click="deleteLib(slotProps.item.id)" v-show="(selectVideoImg.length==0||selectVideoImg.indexOf(slotProps.item.libraryUrl)<0)"><i class="h-icon-error"></i></div>
+                        <div class="uploadCheckbox" v-show="(selectVideoImg.length==0||selectVideoImg.indexOf(slotProps.item.libraryUrl)>-1)||selectVideoImg.length<selectMediaSize">
+                            <Checkbox v-model="selectVideoImg" :value="slotProps.item.libraryUrl"></Checkbox>
+                        </div>
+                        <img v-if="slotProps.item.libraryUrl" :src="slotProps.item.libraryUrl" width="100%" alt="load error" style="border-radius:5px;overflow:hidden;" @click="openPreview(slotProps.item.libraryUrl)" />
+
+                    </template>
+                </Waterfall>
+                <!-- <waterfall v-else-if="styleFm==1&&this.selectedAdType==5" :col='4' :data="LibraryList" :width="210" ref="waterfall">
                     <template>
                         <div v-for="(item,index) in LibraryList" :key="index" style="width:100%;position:relative;">
-                            <div class="uploadIconClose" @click="deleteLib(item.id)"  v-show="(selectVideoImg.length==0||selectVideoImg.indexOf(item.libraryUrl)<0)"><i class="h-icon-error"></i></div>
+                            <div class="uploadIconClose" @click="deleteLib(item.id)" v-show="(selectVideoImg.length==0||selectVideoImg.indexOf(item.libraryUrl)<0)"><i class="h-icon-error"></i></div>
                             <div class="uploadCheckbox" v-show="(selectVideoImg.length==0||selectVideoImg.indexOf(item.libraryUrl)>-1)||selectVideoImg.length<selectMediaSize">
                                 <Checkbox v-model="selectVideoImg" :value="item.libraryUrl"></Checkbox>
                             </div>
                             <img v-if="item.libraryUrl" :src="item.libraryUrl" width="100%" alt="load error" style="border-radius:5px;overflow:hidden;" @click="openPreview(item.libraryUrl)" />
                         </div>
                     </template>
-                </waterfall>
+                </waterfall> -->
                 <!-- 图片 -->
-                <waterfall v-else :col='4' :data="LibraryList" :width="210" ref="waterfall">
+                <Waterfall v-else :dataArr="LibraryList">
+                    <template v-slot:default="slotProps">
+
+                        <div class="uploadIconClose" @click="deleteLib(slotProps.item.id)" v-show="(selectImg.length==0||selectImg.indexOf(slotProps.item.libraryUrl)<0)"><i class="h-icon-error"></i></div>
+                        <div class="uploadCheckbox" v-show="(selectImg.length==0||selectImg.indexOf(slotProps.item.libraryUrl)>-1)||selectImg.length<selectMediaSize">
+                            <Checkbox v-model="selectImg" :value="slotProps.item.libraryUrl"></Checkbox>
+                        </div>
+                        <img v-if="slotProps.item.libraryUrl" :src="slotProps.item.libraryUrl" width="100%" alt="load error" style="border-radius:5px;overflow:hidden;" @click="openPreview(slotProps.item.libraryUrl)" />
+                    </template>
+                </Waterfall>
+                <!-- <waterfall v-else :col='4' :data="LibraryList" :width="210" ref="waterfall">
                     <template>
                         <div v-for="(item,index) in LibraryList" :key="index" style="width:100%;position:relative;margin-top:10px;">
                             <div class="uploadIconClose" @click="deleteLib(item.id)" v-show="(selectImg.length==0||selectImg.indexOf(item.libraryUrl)<0)"><i class="h-icon-error"></i></div>
@@ -727,7 +748,7 @@
                             <img v-if="item.libraryUrl" :src="item.libraryUrl" width="100%" alt="load error" style="border-radius:5px;overflow:hidden;" @click="openPreview(item.libraryUrl)" />
                         </div>
                     </template>
-                </waterfall>
+                </waterfall> -->
             </div>
             <!-- 素材库 end-->
             <fileUpload :data="uploadData" :multiple="true" :drop="true" input-id="fileUplaod" ref="uploader" :thread="5" v-model="files" :accept="styleFm==1?'image/*':uploadFilter.accept" extensions="jpg,gif,png,webp,mp4" :post-action="uplodUrl" @input-file="inputFile">
@@ -735,7 +756,7 @@
             <div slot="footer">
                 <Pagination v-if="selected=='module2'" v-model="pagination" @change="currentChange" layout="pager" small></Pagination>
                 <Button v-if="selectedAdType=='5'" color="primary" @click="opened=false,saveVideo()">确定</Button>
-                <Button v-if="selectedAdType!='5'" :loading="addViewLoading" color="primary" @click="addViews">提交</Button>
+                <Button v-if="selectedAdType!='5'&&selected=='module2'" :loading="addViewLoading" color="primary" @click="addViews">提交</Button>
                 <Button :loading="files.length>0" color="primary" @click="opened=false,selectImg=[],selectVideoImg=[]">关闭</Button>
                 <Poptip style="margin-left:20px;" v-if="files.length>0" :content="'你确定要取消当前正在进行的'+files.length+'个上传任务吗？'" @confirm="stopUpload"><button class="h-btn">取消上传</button></Poptip>
             </div>
@@ -769,12 +790,14 @@
 </template>
 
 <script>
+import Waterfall from "components/baseComponent/waterfall"
 import mediaTpl from "components/pro-components/child/mediaTpl"
 export default {
     name: "adOriginality",
     props: ["planId", "planName", 'ideaid'],
     components: {
-        mediaTpl
+        mediaTpl,
+        Waterfall
     },
     data() {
         return {
@@ -782,7 +805,7 @@ export default {
                 clickType: 1,
                 planId: this.planId,
                 id: this.ideaid, //默认取生成的如果拉取的数据有则此Id 会被拉取的id 替换 //默认取传入id
-                ideaName:!this.ideaid&&this.planName+"_"
+                ideaName: !this.ideaid && this.planName + "_"
             },
             styleFm: 0, //视频封面的标识
             videwList: [],
@@ -791,7 +814,7 @@ export default {
                 size: 20,
                 total: 20
             },
-            ideaId:this.ideaid || "",
+            ideaId: this.ideaid || "",
             LibraryLoading: false,
             addViewLoading: false,
             videoUpload: false,
@@ -906,6 +929,16 @@ export default {
             })
         },
         addViews() {
+            if (this.selectImg.length < this.selectMediaSize) {
+                this.$Confirm("该类型广告需要选择" + this.selectMediaSize + "个素材").then(() => {
+                     
+                }).catch(() => {
+                  
+                });;
+                return;
+
+            }
+
             this.addViewLoading = true;
             R.Library.addViews({
                 ideaId: this.ideaId,
@@ -1110,22 +1143,22 @@ export default {
             //检测是否是修改还是添加 路由有ideaid 为修改  没有为提添加
 
             if (this.ideaid) {
-            this.$Loading();
-            R.adIdea
-                .get({
-                    data: {
-                        id: this.ideaid
-                    },
-                    page: 1,
-                    limit: 1
-                })
-                .then(res => {
-                    if (res.ok) {
-                        this.$Loading.close();
-                        this.formData = res.data.list[0];
+                this.$Loading();
+                R.adIdea
+                    .get({
+                        data: {
+                            id: this.ideaid
+                        },
+                        page: 1,
+                        limit: 1
+                    })
+                    .then(res => {
+                        if (res.ok) {
+                            this.$Loading.close();
+                            this.formData = res.data.list[0];
 
-                    }
-                });
+                        }
+                    });
             }
 
         }

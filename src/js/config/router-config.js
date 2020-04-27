@@ -77,14 +77,14 @@ const initRouter = () => {
     //   return;
     // }
     let eRouter = ["Login", "Register"]
-    let token = !!Utils.getCookie('token');
-    if (!token && eRouter.indexOf(to.name) < 0) {
+    let token =Utils.getCookie('token');
+    if (!token && eRouter.indexOf(to.name)==-1) {
       next({
         name: 'Login'
       });
       return false
     } else {
-      if (token && eRouter.indexOf(to.name) > 0) {
+      if (token && eRouter.indexOf(to.name)>0) {
         next({
           name: from.name
         });
@@ -96,7 +96,7 @@ const initRouter = () => {
     if (to.meta && to.meta.title) {
       document.title = to.meta.title + ' - 管理';
     } else {
-      document.title = '管理系统';
+      document.title = '广源引擎广告投放系统';
     }
     // isFirstRouter = false;
     next();
