@@ -62,10 +62,88 @@
         flex-direction: row;
         justify-content: space-between;
     }
+
+    .promotion-header {
+        font-size: 14px;
+        height: 48px;
+        padding: 0 24px;
+        background: #fff;
+
+    }
+
+    .ad-d-flex-between {
+        justify-content: space-between !important;
+    }
+
+    .ad-d-flex-start {
+        justify-content: flex-start !important;
+    }
+
+    .ad-m-r-lg {
+        margin-right: 32px;
+    }
+
+    .promotion-header-title {
+        font-family: PingFangSC-Medium;
+        font-size: 12px;
+        font-weight: 500;
+        color: #666;
+        height: 16px;
+        margin-right: 8px;
+    }
+
+    .promotion-header-money {
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+        line-height: 22px;
+        height: 22px;
+    }
+
+    .ad-d-flex,
+    .ad-btn {
+        display: flex;
+        align-items: center;
+    }
+
+    .ad-d-flex,
+    .ad-btn {
+        display: flex;
+        align-items: center;
+    }
 }
 </style>
 <template>
 <div class="extension">
+    <div class="h-panel panel" style="position:relateive;border:1px solid #eee">
+        <div class="promotion-header ad-d-flex ad-d-flex-between">
+            <div class="ad-d-flex ad-d-flex-between">
+                <div class="ad-d-flex ad-d-flex-start" style="">
+                    <div class="ad-d-flex ad-m-r-lg"><span class="promotion-header-title">今日消耗</span> <span class="promotion-header-money bui-num">{{userAmountData.useAmountDay|NumFormat}}</span></div>
+                    <div class="ad-spliter" style="width:10px"></div>
+                    <div class="ad-d-flex"><span class="promotion-header-title">账户日预算</span> <span class="promotion-header-money ad-m-r-xs bui-num">
+                            {{userAmountData.putAmountDay|NumFormat}}
+                        </span>
+
+                    </div>
+                    <div class="ad-spliter" style="width:1px;height:20px;background:#eee;margin-left:10px;margin-right:10px;"></div>
+                    <div class="ad-d-flex">
+                        <div class="balance-popover byted-popover-wrapper">
+                        </div> <span class="promotion-header-title">账户余额</span> <span class="promotion-header-money bui-num"> {{userAmountData.amount|NumFormat}}</span>
+                    </div>
+                    <!---->
+                    <div class="ad-spliter" style="width:10px"></div>
+                    <div class="progress-wrapper ad-d-flex ad-d-flex-start">
+                        <div class="promotion-header-title">日消耗进度</div>
+                        <div class="byted-popover-wrapper" style="width:120px;margin-right:10px;">
+                            <Progress :percent="(userAmountData.useAmountDay/userAmountData.putAmountDay)*100" :stroke-width="5" />
+                        </div>
+                        <div class="promotion-header-money bui-num ad-m-l" style="font-size:14px;">{{(userAmountData.useAmountDay/userAmountData.putAmountDay)*100|NumFormat}}%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- 搜索头部模块 -->
     <div class="h-panel panel" style="padding:5px 10px;position:relateive;">
         <!-- 查询模块 -->
@@ -138,7 +216,8 @@
                         </div>
                     </FormItem>
                     <FormItem :showLabel="false" style="padding-bottom:0px;display:inline-block;width:280px;margin:10px 10px;float:right;">
-                        <DateFullRangePicker v-model="PickerData" :layout="layout" clearable :startWeek="startWeek" @change="changeDate"></DateFullRangePicker>
+                        <!-- <DateRangePicker v-model="PickerData" :option="shortcuts" @change="changeDate"></DateRangePicker> -->
+                        <DateFullRangePicker v-model="PickerData" :layout="layout" clearable @change="changeDate"></DateFullRangePicker>
                     </FormItem>
                 </div>
             </div>
@@ -200,7 +279,7 @@
             </TableItem>
             <TableItem :width="200" title="广告组名称">
                 <template slot-scope="{data}">
-                    <a @click="toSearchData('groupId',data.id)">{{data.groupName}}</a>
+                    <a v-tooltip placement="right" content="查看该组下的所有计划" @click="toSearchData('groupId',data.id)">{{data.groupName}}</a>
                 </template>
             </TableItem>
             <TableItem :width="200" title="推广目的">
@@ -213,7 +292,7 @@
                     <span class="h-tag-circle" :class="[styleColor[data.status]]"></span>{{dictStatus[data.status]}}
                 </template>
             </TableItem>
-             <TableItem :width="100" align="right" title="日预算">
+            <TableItem :width="100" align="right" title="日预算">
                 <template slot-scope="{data}">
                     <span class="bui-num">{{data.putAmountDay|NumFormat}}</span>
                 </template>
@@ -229,8 +308,23 @@
                     <span class="bui-num">{{data.income|NumFormat}}</span>
                 </template>
             </TableItem>
+            <TableItem :width="100" align="right" title="ecpm">
+                <template slot-scope="{data}">
+                    <span class="bui-num">{{data.income/data.showCount*1000|NumFormat}}</span>
+                </template>
+            </TableItem>
+            <TableItem :width="100" align="right" title="cpc">
+                <template slot-scope="{data}">
+                    <span class="bui-num">{{(data.income/data.clickCount)|NumFormat}}</span>
+                </template>
+            </TableItem>
             <TableItem :width="100" align="right" title="展现数" prop="showCount"></TableItem>
             <TableItem :width="100" align="right" title="点击数" prop="clickCount"></TableItem>
+            <TableItem :width="100" align="right" title="点击率">
+                <template slot-scope="{data}">
+                    <span class="bui-num" style="font-size:10px;">{{(data.clickCount/data.showCount*100)|NumFormat}}%</span>
+                </template>
+            </TableItem>
             <TableItem :width="100" align="right" title="开始下载" prop="downStartCount"></TableItem>
             <TableItem :width="100" align="right" title="完成下载" prop="downEndCount"></TableItem>
             <TableItem :width="100" align="right" title="开始安装" prop="installStartCount"></TableItem>
@@ -257,7 +351,7 @@
             </TableItem>
             <TableItem :width="200" title="计划名称">
                 <template slot-scope="{data}">
-                    <a @click="toSearchData('planId',data.id)">{{data.planName}}</a>
+                    <a v-tooltip placement="right" content="查看该计划的所有创意" @click="toSearchData('planId',data.id)">{{data.planName}}</a>
                 </template>
             </TableItem>
             <TableItem :width="200" title="所属广告组" prop="groupName"></TableItem>
@@ -271,11 +365,15 @@
                     {{putType[data.putType]}}
                 </template>
             </TableItem>
+            <TableItem :width="100" align="center" title="出价方式">
+                <template slot-scope="{data}">
+                    <span class="bui-num">{{bidType[data.bidType]}}</span>
+                </template>
+            </TableItem>
             <TableItem :width="100" align="right" title="日预算">
                 <template slot-scope="{data}">
                     <span class="bui-num">{{data.putAmountDay|NumFormat}}</span>
                 </template>
-
             </TableItem>
             <TableItem :width="100" align="right" title="出价金额">
                 <template slot-scope="{data}">
@@ -287,8 +385,23 @@
                     <span class="bui-num">{{data.income|NumFormat}}</span>
                 </template>
             </TableItem>
+            <TableItem :width="100" align="right" title="ecpm">
+                <template slot-scope="{data}">
+                    <span class="bui-num">{{data.income/data.showCount*1000|NumFormat}}</span>
+                </template>
+            </TableItem>
+            <TableItem :width="100" align="right" title="cpc">
+                <template slot-scope="{data}">
+                    <span class="bui-num">{{(data.income/data.clickCount)|NumFormat}}</span>
+                </template>
+            </TableItem>
             <TableItem :width="100" align="right" title="展现数" prop="showCount"></TableItem>
             <TableItem :width="100" align="right" title="点击数" prop="clickCount"></TableItem>
+            <TableItem :width="100" align="right" title="点击率">
+                <template slot-scope="{data}">
+                    <span class="bui-num" style="font-size:10px;">{{(data.clickCount/data.showCount*100)|NumFormat}}%</span>
+                </template>
+            </TableItem>
             <TableItem :width="100" align="right" title="开始下载" prop="downStartCount"></TableItem>
             <TableItem :width="100" align="right" title="完成下载" prop="downEndCount"></TableItem>
             <TableItem :width="100" align="right" title="开始安装" prop="installStartCount"></TableItem>
@@ -342,8 +455,23 @@
                     <span class="bui-num">{{data.income|NumFormat}}</span>
                 </template>
             </TableItem>
+            <TableItem :width="100" align="right" title="ecpm">
+                <template slot-scope="{data}">
+                    <span class="bui-num">{{data.income/data.showCount*1000|NumFormat}}</span>
+                </template>
+            </TableItem>
+            <TableItem :width="100" align="right" title="cpc">
+                <template slot-scope="{data}">
+                    <span class="bui-num">{{(data.income/data.clickCount)|NumFormat}}</span>
+                </template>
+            </TableItem>
             <TableItem :width="100" align="right" title="展现数" prop="showCount"></TableItem>
             <TableItem :width="100" align="right" title="点击数" prop="clickCount"></TableItem>
+            <TableItem :width="100" align="right" title="点击率">
+                <template slot-scope="{data}">
+                    <span class="bui-num" style="font-size:10px;">{{(data.clickCount/data.showCount*100)|NumFormat}}%</span>
+                </template>
+            </TableItem>
             <TableItem :width="100" align="right" title="开始下载" prop="downStartCount"></TableItem>
             <TableItem :width="100" align="right" title="完成下载" prop="downEndCount"></TableItem>
             <TableItem :width="100" align="right" title="开始安装" prop="installStartCount"></TableItem>
@@ -376,12 +504,35 @@ import {
 export default {
     data() {
         return {
+            userAmountData:{},
             searchFiled: "", //当前查询的字段
             searchText: "", //当前搜索框内容
             PickerData: {
-                start: Manba().format('YYYY-MM-DD'),
-                end: Manba().format('YYYY-MM-DD'),
+                start: Manba().format(),
+                end: Manba().add(+1).format(),
                 type: 'customize'
+            },
+            shortcuts: {
+                shortcuts: [{
+                        title: '今天',
+                        value() {
+                            return {
+                                start: Manba(),
+                                end: Manba()
+                            };
+                        }
+                    },
+                    {
+                        title: '昨天',
+                        value() {
+                            return {
+                                start: Manba().add(-1, Manba().DAY),
+                                end: Manba()
+                            };
+                        }
+                    }
+
+                ]
             },
             startWeek: 1,
             layout: ['date', 'customize'],
@@ -402,8 +553,8 @@ export default {
                 "1": "h-tag-bg-blue",
             },
             putType: {
-                1: '匀速',
-                2: '快速'
+                1: '均衡投放',
+                2: '优先跑量'
             },
             bidType: {
                 1: 'cpc',
@@ -420,8 +571,8 @@ export default {
             serial: false,
             loading: false,
             formSearch: {
-                queryStartTime: Manba().format('YYYY-MM-DD'),
-                queryEndTime: Manba().format('YYYY-MM-DD')
+                queryStartTime: Manba().format(),
+                queryEndTime: Manba().format()
             },
             datas: [],
             //分页器
@@ -481,6 +632,12 @@ export default {
         this.getSearch.pageData && (this.pagination = {
             ...this.getSearch.pageData
         });
+        R.Home.userIndex({}).then(res => {
+            if (res.ok) {
+                this.userAmountData = res.data;
+            
+            }
+        })
         this.init();
     },
     methods: {
@@ -500,9 +657,12 @@ export default {
         },
         //下拉发生变化
         changeDate(val) {
-            this.formSearch.queryStartTime = val.start;
-            this.formSearch.queryEndTime = val.end;
-            this.getData(true);
+            if (val.start && val.end) {
+                this.formSearch.queryStartTime = val.start;
+                this.formSearch.queryEndTime = Manba(val.end).add(-1).format();
+                this.getData(true);
+            }
+
         },
         init() {
             this.getData();

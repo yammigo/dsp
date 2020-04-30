@@ -383,7 +383,7 @@
 </style>
 <template>
 <div class="adOrigin">
-    <Form :model="formData" ref="form" :rules="rules" :validOnChange="true">
+    <Form :model="formData" ref="form" :rules="rules" :showErrorTip="true">
         <div class="moduler ad-group-moduler" v-listenTop:0="testall">
             <div class="ad-row-title moduler-title">
                 所属计划
@@ -408,7 +408,6 @@
                     </div>
                     <div class="input-item">
                         <SwitchList keyName="id" titleName="name" v-model="selectedAdType" :datas="videwList" @change="changeAdType">
-
                         </SwitchList>
                     </div>
                 </div>
@@ -859,7 +858,6 @@ export default {
             currentViews: [],
             rules: {
                 required: [
-
                     "ideaName",
                     "productName",
                     "ideaTitle",
@@ -1113,6 +1111,8 @@ export default {
             })
         },
         submit() {
+            let validResult = this.$refs.form.valid();
+            if (!validResult.result) return;
             if (this.ideaid) {
                 R.adIdea.update({
                     ...this.formData

@@ -9,8 +9,8 @@ Vue.filter('format', (value, format) => {
 });
 //数字过滤计数
 Vue.filter('NumFormat', function(value) {
-  if(!value) return '0.00';
-  
+  if(!value||typeof value!=="number") return '0.00';
+  value = value.toFixed(2);
   /*原来用的是Number(value).toFixed(0)，这样取整时有问题，例如0.51取整之后为1，感谢Nils指正*/
   /*后来改成了 Number(value)|0,但是输入超过十一位就为负数了，具体见评论 */
   var intPart = Number(value) - Number(value)%1; //获取整数部分（这里是windy93的方法）

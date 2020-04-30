@@ -127,10 +127,10 @@
 </style>
 
 <template>
-<div class="login-vue">
+<div class="login-vue" :style="Bg">
     <div class="login-container">
         <div class="login-content">
-            <div class="login-title">广源引擎广告投放</div>
+            <div class="login-title"><img src="../../images/logoBlue.png" style="display:inline-block;vertical-align: middle;margin-right:20px;" width="60">广源引擎</div>
             <div class="login-name login-input">
                 <input type="text" name="loginName" v-model="login.loginName" autocomplete="off" />
                 <span class="placeholder" :class="{fixed: login.loginName != '' && login.loginName != null}">用户名</span>
@@ -150,7 +150,7 @@
             <a style="margin-top:10px;">没有账号？</a>
             <a style="margin-top:10px;" href="#/register">去注册</a>
         </div>
-        <p class="copyright"> Copyright © 2019 广源引擎 - <a href="">广告投放系统</a></p>
+        <p style="color:#fff" class="copyright"> Copyright © 2020 鑫传媒 广源引擎 - <a href="" style="color:#fff">广告投放系统</a></p>
     </div>
 </div>
 </template>
@@ -162,6 +162,11 @@ import store from 'js/vuex/store.js';
 export default {
     data() {
         return {
+            Bg: {
+                backgroundImage: 'url(http://news.zizhengjiankang.com/sspBg/sspBg_1.jpg)',
+                backgroundSize:"100% 100%",
+                backgroundRepeat:"no-repeat",
+            },
             login: Login.parse({}),
             loading: false,
             uuid: this.uid(),

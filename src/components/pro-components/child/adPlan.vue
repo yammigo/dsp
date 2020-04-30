@@ -278,8 +278,8 @@
                         <div class="required-item"></div>
                     </div>
                     <div class="input-item">
-                        <FormItem prop="putStartDate" label="开始时间"  :showLabel="false" style="display:inline-block;width:200px;">
-                            <DatePicker v-model="formData.putStartDate"  aria-disabled placeholder="请选择开始日期" :option="{end:formData.putEndDate,start:dateParam.start}" v-width="200"></DatePicker>
+                        <FormItem prop="putStartDate" label="开始时间" :showLabel="false" style="display:inline-block;width:200px;">
+                            <DatePicker v-model="formData.putStartDate" aria-disabled placeholder="请选择开始日期" :option="{end:formData.putEndDate,start:dateParam.start}" v-width="200"></DatePicker>
                         </FormItem>
                         <span style="margin-lefy:10px;margin-tight:10px;">-</span>
                         <FormItem prop="putEndDate" label="开始时间" :showLabel="false" style="display:inline-block;width:200px;">
@@ -326,7 +326,7 @@
         <div class="panel_moduler" style="min-width: 1048px;padding-top: 24px; padding-bottom: 24px;text-align:right;">
             <Button color="primary" size="l">取消</Button>
             <Button color="primary" size="l" @click="submit">保存并关闭</Button>
-            <Button color="primary" size="l" @click="submitNext">提交并编辑创意</Button>
+            <Button color="primary" size="l" @click="submitNext">提交并添加创意</Button>
         </div>
     </Form>
 </div>
@@ -384,8 +384,8 @@ export default {
                 }
             ],
             putType: {
-                1: '匀速',
-                2: '快速'
+                "1": '均衡投放',
+                "2": '优先跑量'
             },
             bidType: {
                 1: 'cpc',
@@ -397,7 +397,6 @@ export default {
             },
             rules: {
                 required: [
-
                     'planName',
                     'platformType',
                     'putStartDate',
@@ -451,6 +450,8 @@ export default {
             }
         },
         submitNext() {
+            let validResult = this.$refs.form.valid();
+            if (!validResult.result) return;
             if (this.planId) {
                 R.adPlan
                     .update({

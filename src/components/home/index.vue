@@ -3,6 +3,32 @@
     width: 1200px;
     margin: auto;
 
+    .component-name-tip {
+        border-left: none;
+        border-radius: 5px;
+        padding: 8px 24px 8px 40px;
+        // margin: 1.5em 0;
+        position: relative;
+        background: #fff;
+        box-shadow: 0px 0px 10px #eee;
+        font-weight: bold;
+    }
+
+    .component-name-tip:before {
+        content: "!";
+        background-color: #f9bc0b;
+        position: absolute;
+        top: 8px;
+        left: 10px;
+        color: #fff;
+        width: 20px;
+        height: 20px;
+        border-radius: 100%;
+        text-align: center;
+        line-height: 20px;
+        font-weight: 700;
+    }
+
     .byted-card {
         background: #fff;
         border-radius: 4px;
@@ -233,8 +259,11 @@
                     text-align: center;
                     margin-bottom: 10px;
                     letter-spacing: 2px;
-                    font-size: 16px;
-                    color: #555
+                    font-size: 14px;
+                    color: #999;
+                    font-weight: bold;
+                    // color: #555;
+                    // text-shadow: 0px 0px 1px #000;
                 }
 
                 .number {
@@ -259,6 +288,7 @@
 </style>
 <template>
 <div class="app-home-vue frame-page">
+    <p class="component-name-tip" v-if="data.qaAdPutStatus==-2||data.qaCompanyStatus==-2">您还没有完成资质认证！ 请到个人中心完成相关认证后进行推广投放</p>
     <div class="dashboard-content">
         <div class="card byted-card byted-card-shadow">
             <!---->
@@ -333,7 +363,7 @@
             <div class="byted-card byted-card-shadow">
                 <!---->
                 <div class="byted-card-body">
-                    <div class="plan-card-item"><span class="font24 ad-color-text-link bui-num">{{data.putPlanCount}}</span> <span class="ad-color-text ad-font-size-sm plan-type-name">
+                    <div class="plan-card-item"><span class="font24 ad-color-text-link bui-num">{{data.putPlanCount||0}}</span> <span class="ad-color-text ad-font-size-sm plan-type-name">
                             <div class="byted-icon bui-icon-angle-right" style="width: 16px; height: 16px; visibility: hidden;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
                                     <defs>
                                         <path id="angle-right_svg__a" d="M0 0h48v48H0z"></path>
@@ -360,13 +390,13 @@
                                         <path fill-rule="nonzero" d="M16.586 35.324a2 2 0 0 0 2.828 2.828l12-12a2 2 0 0 0 0-2.828l-12-12a2 2 0 0 0-2.828 2.828l10.586 10.586-10.586 10.586z" transform="rotate(90 24 24.738)"></path>
                                     </g>
                                 </svg> -->
-                                </div>
+                            </div>
                         </span></div>
                 </div>
 
             </div>
             <!-- <div class="byted-card byted-card-shadow">
-               
+
                 <div class="byted-card-body">
                     <div class="plan-card-item"><span class="font24  bui-num">{{data.noAmountPlanCount}}</span> <span class="ad-color-text ad-font-size-sm plan-type-name">
                             <div class="byted-icon bui-icon-angle-right" style="width: 16px; height: 16px; visibility: hidden;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" width="100%" height="100%">
@@ -419,8 +449,8 @@
                     <div class="dataItem">
                         <div>
                             <div class="item-data">
-                                <div class="title">广告请求</div>
-                                <div class="number bui-num">{{data.sendCount||0}}</div>
+                                <div class="title">消耗</div>
+                                <div class="number bui-num">{{data.useAmountDay|NumFormat}}</div>
                             </div>
                         </div>
                     </div>
@@ -438,6 +468,23 @@
                                 <div class="title">点击量</div>
                                 <div class="number bui-num">{{data.clickCount||0}}</div>
 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dataItem">
+                        <div>
+                            <div class="item-data">
+                                <div class="title">平均ecpm</div>
+                                <!-- <div class="number bui-num">{{1/3*1000|NumFormat}}</div> -->
+                                <div class="number bui-num">{{data.useAmountDay/data.showCount*1000|NumFormat}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dataItem">
+                        <div>
+                            <div class="item-data">
+                                <div class="title">平均cpc</div>
+                                <div class="number bui-num">{{(data.useAmountDay/data.clickCount)|NumFormat}}</div>
                             </div>
                         </div>
                     </div>
@@ -473,7 +520,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="dataItem">
+                    <!-- <div class="dataItem">
                         <div>
                             <div class="item-data">
                                 <div class="title">播放开始</div>
@@ -488,7 +535,7 @@
                                 <div class="number bui-num">{{data.playEndCount||0}}</div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- 概览数据结束 -->
                 </div>
             </div>

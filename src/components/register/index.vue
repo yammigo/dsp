@@ -34,8 +34,9 @@
 
                 &.register-input {
                     position: relative;
-                    width:50%;
+                    width: 50%;
                     float: left;
+
                     .placeholder {
                         position: absolute;
                         color: @placeholder-color;
@@ -128,19 +129,19 @@
 </style>
 
 <template>
-<div class="register-vue">
+<div class="register-vue" :style="Bg">
     <div class="register-container">
 
         <div class="register-content">
             <div class="register-title">注册</div>
             <div class="register-input">
                 <input type="text" name="loginName" v-model="register.loginName" @keyup.enter="submit" autocomplete="off" />
-                <span class="placeholder" :class="{fixed: register.loginName != '' && register.loginName != null}">登录账号</span>
+                <span class="placeholder" :class="{fixed: register.loginName != '' && register.loginName != null}">用户名</span>
             </div>
 
             <div class="register-input">
                 <input type="password" name="passWord" v-model="register.passWord" @keyup.enter="submit" autocomplete="off" />
-                <span class="placeholder" :class="{fixed: register.passWord != '' && register.passWord != null}">登录密码</span>
+                <span class="placeholder" :class="{fixed: register.passWord != '' && register.passWord != null}">密码</span>
             </div>
             <div class="register-input">
                 <input type="text" name="userName" v-model="register.userName" @keyup.enter="submit" autocomplete="off" />
@@ -161,12 +162,12 @@
             </div>
             <div class="buttonDiv">
                 <Button :loading="loading" block color="primary" size="l" @click="submit">注册</Button>
-                 
+
             </div>
             <a style="margin-top:10px;">已有账号？</a>
             <a style="margin-top:10px;" href="#/login">去登录</a>
         </div>
-       <p class="copyright"> Copyright © 2019 广源引擎 - <a href="">广告投放系统</a></p>
+        <p style="color:#fff" class="copyright">Copyright © 2020 鑫传媒 广源引擎 - <a href="" style="color:#fff">广告投放系统</a></p>
     </div>
 </div>
 </template>
@@ -176,9 +177,14 @@ import md5 from 'js-md5';
 // import Login from 'model/login/Login';
 // import store from 'js/vuex/store.js';
 export default {
-    name:'Register',
+    name: 'Register',
     data() {
         return {
+            Bg: {
+                backgroundImage: 'url(http://news.zizhengjiankang.com/sspBg/sspBg_1.jpg)',
+                backgroundSize: "100% 100%",
+                backgroundRepeat: "no-repeat",
+            },
             register: {},
             loading: false,
             smsText: "获取验证码",
@@ -227,12 +233,16 @@ export default {
             }, 1000);
         },
         submit() {
-            let data = {...this.register};
-            data.passWord&&(data.passWord=md5(data.passWord));
+            let data = {
+                ...this.register
+            };
+            data.passWord && (data.passWord = md5(data.passWord));
             R.Register.addUser(data).then(res => {
                 if (res.ok) {
                     this.$Confirm('您的账号正在审核中....', '注册成功').then(() => {
-                         this.$router.push({name:'Login'});
+                        this.$router.push({
+                            name: 'Login'
+                        });
                     })
                 }
             })
