@@ -495,7 +495,11 @@
             <TableItem :width="40" title="ID" prop="id">
             </TableItem>
             <TableItem :width="200" title="所属组" prop="groupName"></TableItem>
-            <TableItem :width="200" title="所属计划" prop="planName"></TableItem>
+            <TableItem :width="200" title="所属计划" prop="planName">
+                <template slot-scope="{data}">
+                    <div>投放中</div>
+                </template>
+            </TableItem>
             <TableItem :width="200" title="创意名称" prop="ideaName"></TableItem>
             <TableItem :width="100" align="left" title="状态">
                 <template slot-scope="{data}">

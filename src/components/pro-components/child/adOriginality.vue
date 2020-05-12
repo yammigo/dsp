@@ -383,7 +383,7 @@
 </style>
 <template>
 <div class="adOrigin">
-    <Form :model="formData" ref="form" :rules="rules" :showErrorTip="true">
+    <Form :model="formData" ref="form" :rules="rules" :validOnChange="true">
         <div class="moduler ad-group-moduler" v-listenTop:0="testall">
             <div class="ad-row-title moduler-title">
                 所属计划
@@ -806,7 +806,7 @@ export default {
                 clickType: 1,
                 planId: this.planId,
                 id: this.ideaid, //默认取生成的如果拉取的数据有则此Id 会被拉取的id 替换 //默认取传入id
-                ideaName: !this.ideaid && this.planName + "_"
+                ideaName: !this.ideaid && this.planName + "_",  
             },
             styleFm: 0, //视频封面的标识
             videwList: [],
@@ -1115,8 +1115,8 @@ export default {
         submit() {
     
             let validResult = this.$refs.form.valid();
-            console.log(validResult);
-            return 
+            // console.log(this.$refs.form);
+            // return 
             if (!validResult.result) return;
             this.submitLoading=true;
             if (this.ideaid) {
