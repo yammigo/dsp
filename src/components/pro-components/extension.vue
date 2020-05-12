@@ -632,10 +632,9 @@ export default {
         this.getSearch.pageData && (this.pagination = {
             ...this.getSearch.pageData
         });
-        R.Home.userIndex({}).then(res => {
+        R.Home.userIndex({queryStartTime:Manba().format(),queryEndTime:Manba().format()}).then(res => {
             if (res.ok) {
                 this.userAmountData = res.data;
-            
             }
         })
         this.init();

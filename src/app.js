@@ -11,7 +11,7 @@ import 'js/vue/filters';
 import 'js/vue/directives';
 import './css/app.less';
 G.set('env', {
-  apiDomin:process.env.NODE_ENV == 'development' ? '//10.0.0.84' : 'http://dsp-user-api.xcmad.com' 
+  apiDomin:process.env.NODE_ENV == 'development' ? 'http://dsp-user-api.xcmad.com' : 'http://dsp-user-api.xcmad.com' 
   // apiDomin:process.env.NODE_ENV == 'development' ? '//10.0.0.111:8084' : '//103.22.43.12:8000'
   // apiDomin:process.env.NODE_ENV == 'development' ? '//10.0.0.84' : '//10.0.0.84'
   

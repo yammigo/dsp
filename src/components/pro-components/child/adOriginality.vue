@@ -750,7 +750,7 @@
                 </waterfall> -->
             </div>
             <!-- 素材库 end-->
-            <fileUpload :data="uploadData" :multiple="true" :drop="true" input-id="fileUplaod" ref="uploader" :thread="5" v-model="files" :accept="styleFm==1?'image/*':uploadFilter.accept" extensions="jpg,gif,png,webp,mp4" :post-action="uplodUrl" @input-file="inputFile">
+            <fileUpload :data="uploadData" :multiple="true" :drop="true" input-id="fileUplaod" ref="uploader" :thread="5" v-model="files" :accept="styleFm==1?'image/*':uploadFilter.accept" :post-action="uplodUrl" @input-file="inputFile">
             </fileUpload>
             <div slot="footer">
                 <Pagination v-if="selected=='module2'" v-model="pagination" @change="currentChange" layout="pager" small></Pagination>

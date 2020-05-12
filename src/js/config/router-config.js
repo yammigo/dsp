@@ -94,7 +94,7 @@ const initRouter = () => {
 
     HeyUI.$LoadingBar.start();
     if (to.meta && to.meta.title) {
-      document.title = to.meta.title + ' - 管理';
+      document.title = to.meta.title + ' - 广源引擎';
     } else {
       document.title = '广源引擎广告投放系统';
     }
