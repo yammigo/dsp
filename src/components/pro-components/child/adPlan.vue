@@ -323,10 +323,11 @@
                 </div>
             </div>
         </div>
-        <div class="panel_moduler" style="min-width: 1048px;padding-top: 24px; padding-bottom: 24px;text-align:right;">
-            <Button color="primary" size="l">取消</Button>
-            <Button color="primary" size="l" @click="submit">保存并关闭</Button>
-            <Button color="primary" size="l" @click="submitNext">提交并添加创意</Button>
+        <div class="panel_moduler" style="padding-top: 24px; padding-bottom: 24px;padding-right:10px;text-align:right">
+            <Button color="primary" size="l"  @click="histroy" style="text-align:right">取消</Button>
+            <Button color="primary" size="l" @click="submit" style="text-align:right">保存并关闭</Button>
+            <Button color="primary" size="l" @click="submitNext" style="text-align:right">提交并添加创意</Button>
+            <span></span>
         </div>
     </Form>
 </div>
@@ -420,6 +421,9 @@ export default {
                     step: step
                 });
             }
+        },
+        histroy(){
+            this.$router.go(-1);
         },
         submit() {
             let validResult = this.$refs.form.valid();
