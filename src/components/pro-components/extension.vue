@@ -1,5 +1,68 @@
 <style lang="less">
 .extension {
+    .small-tag {
+        min-width: 60px;
+        height: 24px;
+        line-height: 25px;
+        display: inline-block;
+        text-align: center;
+        margin-right:10px;
+        // background:#ddecff;
+        border-radius: 24px;
+        font-size: 0px;
+        cursor: pointer;
+        -moz-user-select: none;
+        /*火狐*/
+        -webkit-user-select: none;
+        /*webkit浏览器*/
+        -ms-user-select: none;
+        /*IE10*/
+        -khtml-user-select: none;
+        /*早期浏览器*/
+        user-select: none;
+        transition:all ease .5s;
+        // box-shadow:0px 2px 5px #dcdcdc;
+    
+        span {
+            font-size: 12px;
+            margin: 0px 4px;
+
+        }
+
+    }
+
+    .small-tag.primary:hover {
+        background: #1162c8;
+
+        span {
+            color: #fff;
+        }
+    }
+
+    .small-tag.primary {
+        background: #ddecff;
+
+        span {
+            color: #1162c8;
+        }
+    }
+
+    .small-tag.error:hover {
+        background: #ed667d;
+
+        span {
+            color: #fff;
+        }
+    }
+
+    .small-tag.error {
+        background: #ffe8ec;
+
+        span {
+            color: #f1556c;
+        }
+    }
+
     .slot-panel {
         background: #fff;
         position: absolute;
@@ -292,32 +355,32 @@
                     <span class="h-tag-circle" :class="[styleColor[data.status]]"></span>{{dictStatus[data.status]}}
                 </template>
             </TableItem>
-            <TableItem :width="100" align="right" title="日预算">
+            <!-- <TableItem :width="100" align="right" title="日预算">
                 <template slot-scope="{data}">
                     <span class="bui-num">{{data.putAmountDay|NumFormat}}</span>
                 </template>
 
-            </TableItem>
-            <TableItem :width="100" align="right" title="出价金额">
+            </TableItem> -->
+            <!-- <TableItem :width="100" align="right" title="出价金额">
                 <template slot-scope="{data}">
                     <span class="bui-num">{{data.bidAmount|NumFormat}}</span>
                 </template>
-            </TableItem>
-            <TableItem :width="100" align="right" title="消费金额">
+            </TableItem> -->
+            <!-- <TableItem :width="100" align="right" title="消费金额">
                 <template slot-scope="{data}">
                     <span class="bui-num">{{data.income|NumFormat}}</span>
                 </template>
-            </TableItem>
-            <TableItem :width="100" align="right" title="ecpm">
+            </TableItem> -->
+            <!-- <TableItem :width="100" align="right" title="ecpm">
                 <template slot-scope="{data}">
                     <span class="bui-num">{{data.income/data.showCount*1000|NumFormat}}</span>
                 </template>
-            </TableItem>
-            <TableItem :width="100" align="right" title="cpc">
+            </TableItem> -->
+            <!-- <TableItem :width="100" align="right" title="cpc">
                 <template slot-scope="{data}">
                     <span class="bui-num">{{(data.income/data.clickCount)|NumFormat}}</span>
                 </template>
-            </TableItem>
+            </TableItem> -->
             <TableItem :width="100" align="right" title="展现数" prop="showCount"></TableItem>
             <TableItem :width="100" align="right" title="点击数" prop="clickCount"></TableItem>
             <TableItem :width="100" align="right" title="点击率">
@@ -349,12 +412,19 @@
         <Table v-if="selected=='planName'" :datas="datas" :border="border" :stripe="stripe" :loading="loading">
             <TableItem :width="40" title="ID" prop="id">
             </TableItem>
+            <TableItem :width="200" title="所属广告组" prop="groupName"></TableItem>
             <TableItem :width="200" title="计划名称">
                 <template slot-scope="{data}">
                     <a v-tooltip placement="right" content="查看该计划的所有创意" @click="toSearchData('planId',data.id)">{{data.planName}}</a>
                 </template>
             </TableItem>
-            <TableItem :width="200" title="所属广告组" prop="groupName"></TableItem>
+            <TableItem :width="200" align="left" title="计划创意">
+                <template slot-scope="{data}">
+                    <div class="small-tag primary"><span class="tagNum">6个</span><span class="tagText">启用中</span></div>
+                    <div class="small-tag error"><span class="tagNum">12个</span><span class="tagText">禁用中</span></div>
+                </template>
+            </TableItem>
+
             <TableItem :width="100" align="left" title="状态">
                 <template slot-scope="{data}">
                     <span class="h-tag-circle" :class="[styleColor[data.status]]"></span>{{dictStatus[data.status]}}
@@ -439,32 +509,32 @@
                 </template>
             </TableItem>
             <TableItem :width="200" title="跳转链接" prop="clickUrl"></TableItem>
-            <TableItem :width="100" align="right" title="日预算">
+            <!-- <TableItem :width="100" align="right" title="日预算">
                 <template slot-scope="{data}">
                     <span class="bui-num">{{data.putAmountDay|NumFormat}}</span>
                 </template>
 
-            </TableItem>
-            <TableItem :width="100" align="right" title="出价金额">
+            </TableItem> -->
+            <!-- <TableItem :width="100" align="right" title="出价金额">
                 <template slot-scope="{data}">
                     <span class="bui-num">{{data.bidAmount|NumFormat}}</span>
                 </template>
-            </TableItem>
-            <TableItem :width="100" align="right" title="消费金额">
+            </TableItem> -->
+            <!-- <TableItem :width="100" align="right" title="消费金额">
                 <template slot-scope="{data}">
                     <span class="bui-num">{{data.income|NumFormat}}</span>
                 </template>
-            </TableItem>
-            <TableItem :width="100" align="right" title="ecpm">
+            </TableItem> -->
+            <!-- <TableItem :width="100" align="right" title="ecpm">
                 <template slot-scope="{data}">
                     <span class="bui-num">{{data.income/data.showCount*1000|NumFormat}}</span>
                 </template>
-            </TableItem>
-            <TableItem :width="100" align="right" title="cpc">
+            </TableItem> -->
+            <!-- <TableItem :width="100" align="right" title="cpc">
                 <template slot-scope="{data}">
                     <span class="bui-num">{{(data.income/data.clickCount)|NumFormat}}</span>
                 </template>
-            </TableItem>
+            </TableItem> -->
             <TableItem :width="100" align="right" title="展现数" prop="showCount"></TableItem>
             <TableItem :width="100" align="right" title="点击数" prop="clickCount"></TableItem>
             <TableItem :width="100" align="right" title="点击率">
@@ -504,7 +574,7 @@ import {
 export default {
     data() {
         return {
-            userAmountData:{},
+            userAmountData: {},
             searchFiled: "", //当前查询的字段
             searchText: "", //当前搜索框内容
             PickerData: {
@@ -635,7 +705,7 @@ export default {
         R.Home.userIndex({}).then(res => {
             if (res.ok) {
                 this.userAmountData = res.data;
-            
+
             }
         })
         this.init();

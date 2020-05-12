@@ -782,7 +782,7 @@
             </div>
         </Modal>
         <div class="panel_moduler" style="min-width: 1048px;padding-top: 24px; padding-bottom: 24px;text-align:right;">
-            <Button color="primary" size="l" @click="submit">提交</Button>
+            <Button color="primary" size="l" @click="submit" :loading="submitLoading">提交</Button>
         </div>
     </Form>
 </div>
@@ -800,6 +800,7 @@ export default {
     },
     data() {
         return {
+            submitLoading:false,
             formData: {
                 clickType: 1,
                 planId: this.planId,
@@ -1111,13 +1112,16 @@ export default {
             })
         },
         submit() {
+    
             let validResult = this.$refs.form.valid();
             if (!validResult.result) return;
+            this.submitLoading=true;
             if (this.ideaid) {
                 R.adIdea.update({
                     ...this.formData
                 }).then(res => {
                     if (res.ok) {
+                         this.submitLoading=false;
                         this.$Message.success(res.msg);
                         this.$router.replace({
                             name: 'extension'
@@ -1129,6 +1133,7 @@ export default {
                     ...this.formData
                 }).then(res => {
                     if (res.ok) {
+                        this.submitLoading=false;
                         this.$Message.success(res.msg);
                         this.$router.replace({
                             name: 'extension'
