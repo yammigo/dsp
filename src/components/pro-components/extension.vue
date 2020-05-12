@@ -6,7 +6,7 @@
         line-height: 25px;
         display: inline-block;
         text-align: center;
-        margin-right:10px;
+        margin-right: 10px;
         // background:#ddecff;
         border-radius: 24px;
         font-size: 0px;
@@ -20,9 +20,9 @@
         -khtml-user-select: none;
         /*早期浏览器*/
         user-select: none;
-        transition:all ease .5s;
+        transition: all ease .5s;
         // box-shadow:0px 2px 5px #dcdcdc;
-    
+
         span {
             font-size: 12px;
             margin: 0px 4px;
@@ -350,6 +350,18 @@
                     <span></span>{{Extension[data.groupTarget]}}
                 </template>
             </TableItem>
+            <TableItem :width="200" title="投放计划">
+                <template slot-scope="{data}">
+                    <div class="small-tag primary"><span class="tagNum">6个</span><span class="tagText">投放中</span></div>
+                    <div class="small-tag error"><span class="tagNum">12个</span><span class="tagText">未投放</span></div>
+                </template>
+            </TableItem>
+            <TableItem :width="200" title="投放创意">
+                <template slot-scope="{data}">
+                    <div class="small-tag primary"><span class="tagNum">6个</span><span class="tagText">投放中</span></div>
+                    <div class="small-tag error"><span class="tagNum">12个</span><span class="tagText">未投放</span></div>
+                </template>
+            </TableItem>
             <TableItem :width="100" align="center" title="状态">
                 <template slot-scope="{data}">
                     <span class="h-tag-circle" :class="[styleColor[data.status]]"></span>{{dictStatus[data.status]}}
@@ -416,12 +428,16 @@
             <TableItem :width="200" title="计划名称">
                 <template slot-scope="{data}">
                     <a v-tooltip placement="right" content="查看该计划的所有创意" @click="toSearchData('planId',data.id)">{{data.planName}}</a>
+                    <div>
+                        <span class="blue-color">投放中</span>
+                    </div>
                 </template>
             </TableItem>
-            <TableItem :width="200" align="left" title="计划创意">
+
+            <TableItem :width="200" align="left" title="投放创意">
                 <template slot-scope="{data}">
-                    <div class="small-tag primary"><span class="tagNum">6个</span><span class="tagText">启用中</span></div>
-                    <div class="small-tag error"><span class="tagNum">12个</span><span class="tagText">禁用中</span></div>
+                    <div class="small-tag primary"><span class="tagNum">6个</span><span class="tagText">投放中</span></div>
+                    <div class="small-tag error"><span class="tagNum">12个</span><span class="tagText">未投放</span></div>
                 </template>
             </TableItem>
 
@@ -497,7 +513,7 @@
             <TableItem :width="200" title="所属组" prop="groupName"></TableItem>
             <TableItem :width="200" title="所属计划" prop="planName">
                 <template slot-scope="{data}">
-                    <div>投放中</div>
+                    <div class="blue-color">投放中</div>
                 </template>
             </TableItem>
             <TableItem :width="200" title="创意名称" prop="ideaName"></TableItem>
@@ -579,7 +595,8 @@ export default {
     data() {
         return {
             userAmountData: {},
-            searchFiled: "", //当前查询的字段
+            searchFiled: this.$route.query.searchFiled || "", //当前点击列表查询的字段
+            searchFiledId: this.$route.query.searchFiledId || "", // 当前点击列表查询的ID
             searchText: "", //当前搜索框内容
             PickerData: {
                 start: Manba().format(),
@@ -676,7 +693,7 @@ export default {
                     icon: 'M14 1.509a3 3 0 0 1 3 3v11a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-11a3 3 0 0 1 3-3h8zm1 9.882H5v3.62h10v-3.62zm-4.462.881a.941.941 0 0 1 0 1.882H9.421a.941.941 0 1 1 0-1.882h1.117zM14 3.51H6a1 1 0 0 0-1 1v5h10v-5a1 1 0 0 0-1-1z'
                 }
             ],
-            selected: Utils.getCookie('pageSelect') || 'groupName',
+            selected: this.$route.query.tab || 'groupName',
             //
             soltPanel: false,
             param0: {
@@ -700,6 +717,7 @@ export default {
         };
     },
     mounted() {
+
         this.getSearch.data && (this.formSearch = {
             ...this.getSearch.data
         });
@@ -761,9 +779,9 @@ export default {
             this.getData();
         },
         toSearchData(filed, id) {
-
             this.searchFiled = filed;
             this.formSearch[filed] = id;
+            this.searchFiledId = id;
             switch (filed) {
                 case "groupId":
                     this.selected = "planName";
@@ -775,12 +793,17 @@ export default {
                     break;
             }
             // Utils.saveCookie('pageSelect',this.selected);
-
         },
         //切换数据
         change(data) {
             //切换后重置分页信息
-            Utils.saveCookie('pageSelect', data.key);
+            //初始化返回参数start
+            this.formSearch.groupId = "";
+            this.formSearch.planId = "";
+            this.formSearch.ideaId = "";
+            this.searchFiled = "";
+            this.searchFiledId = "";
+            //初始化返回参数end
             this.getData(true);
         },
         updataStatus(api, data) {
@@ -792,7 +815,7 @@ export default {
                     this.$Message.success(res.msg);
                     this.getData();
                     //查询成功之后请求该请求字段
-                    this.searchFiled && (this.formSearch[this.searchFiled] = "");
+                    // this.searchFiled && (this.formSearch[this.searchFiled] = "");
                 }
             })
         },
@@ -815,7 +838,7 @@ export default {
                             this.datas = res.data.list;
                             this.pagination.total = res.data.total;
                             //查询成功之后请求该请求字段
-                            this.searchFiled && (this.formSearch[this.searchFiled] = "");
+                            // this.searchFiled && (this.formSearch[this.searchFiled] = "");
                         }
                     })
                     break;
@@ -832,7 +855,7 @@ export default {
                             this.datas = res.data.list;
                             this.pagination.total = res.data.total;
                             //查询成功之后请求该请求字段
-                            this.searchFiled && (this.formSearch[this.searchFiled] = "");
+                            // this.searchFiled && (this.formSearch[this.searchFiled] = "");
                         }
                     })
                     break;
@@ -866,8 +889,29 @@ export default {
 
     },
     computed: {
+        //获取全局查询参数
         ...mapGetters(['getSearch'])
     },
+    watch: {
+        "selected": {
+            handler: function (newVal, old) {
+                let query = {
+                    tab: newVal
+                };
+                this.searchFiled && this.searchFiledId && (query.searchFiled = this.searchFiled, query.searchFiledId = this.searchFiledId);
+                this.$router.push({
+                    path: "/extension",
+                    query
+                });
+            },
+            immediate: true
+        },
+        $route(to, from) {
+            this.selected = this.$route.query.tab;
+            //这里需要判断
+            this.getData(true);
+        },
 
+    },
 };
 </script>
