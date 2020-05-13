@@ -785,12 +785,14 @@ export default {
             switch (filed) {
                 case "groupId":
                     this.selected = "planName";
-                    this.getData(true);
+                    // this.getData(true);
                     break;
                 case "planId":
                     this.selected = "ideaName";
-                    this.getData(true);
+                    // this.getData(true);
                     break;
+                case "groupId":
+                    this.selected = "groupName";
             }
             // Utils.saveCookie('pageSelect',this.selected);
         },
@@ -804,7 +806,8 @@ export default {
             this.searchFiled = "";
             this.searchFiledId = "";
             //初始化返回参数end
-            this.getData(true);
+            // this.getData(true);
+            // console.log('切换tab发请求');
         },
         updataStatus(api, data) {
 
@@ -898,7 +901,6 @@ export default {
                 let query = {
                     tab: newVal
                 };
-                this.searchFiled && this.searchFiledId && (query.searchFiled = this.searchFiled, query.searchFiledId = this.searchFiledId);
                 this.$router.push({
                     path: "/extension",
                     query
@@ -908,7 +910,6 @@ export default {
         },
         $route(to, from) {
             this.selected = this.$route.query.tab;
-            //这里需要判断
             this.getData(true);
         },
 
