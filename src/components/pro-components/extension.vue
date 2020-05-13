@@ -3,6 +3,7 @@
     .small-tag {
         min-width: 60px;
         height: 24px;
+        padding: 0 10px;
         line-height: 25px;
         display: inline-block;
         text-align: center;
@@ -350,13 +351,13 @@
                     <span></span>{{Extension[data.groupTarget]}}
                 </template>
             </TableItem>
-            <TableItem :width="200" title="投放计划">
+            <TableItem :width="240" title="投放计划">
                 <template slot-scope="{data}">
                     <div class="small-tag primary"><span class="tagNum">6个</span><span class="tagText">投放中</span></div>
                     <div class="small-tag error"><span class="tagNum">12个</span><span class="tagText">未投放</span></div>
                 </template>
             </TableItem>
-            <TableItem :width="200" title="投放创意">
+            <TableItem :width="240" title="投放创意">
                 <template slot-scope="{data}">
                     <div class="small-tag primary"><span class="tagNum">6个</span><span class="tagText">投放中</span></div>
                     <div class="small-tag error"><span class="tagNum">12个</span><span class="tagText">未投放</span></div>
@@ -415,7 +416,6 @@
                     </span>
                     <span><a class="text-hover" @click="editData('/adGroup',{groupId:data.id,type:'edit'})">编辑</a></span>
                     <span><a class="text-hover" @click="addRouter('adPlan',{groupId:data.id,groupName:data.groupName})">添加计划</a></span>
-                    <!-- http://localhost:9012/#/adPlan?groupId=67&groupName=123123 -->
                 </template>
             </TableItem>
             <div slot="empty">暂无广告组数据</div>
@@ -428,16 +428,13 @@
             <TableItem :width="200" title="计划名称">
                 <template slot-scope="{data}">
                     <a v-tooltip placement="right" content="查看该计划的所有创意" @click="toSearchData('planId',data.id)">{{data.planName}}</a>
-                    <div>
-                        <span class="blue-color">投放中</span>
-                    </div>
                 </template>
             </TableItem>
 
-            <TableItem :width="200" align="left" title="投放创意">
+            <TableItem :width="240" align="left" title="投放创意">
                 <template slot-scope="{data}">
-                    <div class="small-tag primary"><span class="tagNum">6个</span><span class="tagText">投放中</span></div>
-                    <div class="small-tag error"><span class="tagNum">12个</span><span class="tagText">未投放</span></div>
+                    <div class="small-tag primary"><span class="tagNum">6个</span><span class="tagText">生效</span></div>
+                    <div class="small-tag error"><span class="tagNum">12个</span><span class="tagText">未生效</span></div>
                 </template>
             </TableItem>
 
@@ -510,10 +507,20 @@
         <Table v-if="selected=='ideaName'" :datas="datas" :border="border" :stripe="stripe" :loading="loading">
             <TableItem :width="40" title="ID" prop="id">
             </TableItem>
-            <TableItem :width="200" title="所属组" prop="groupName"></TableItem>
-            <TableItem :width="200" title="所属计划" prop="planName">
+            <TableItem :width="200" title="所属组">
                 <template slot-scope="{data}">
-                    <div class="blue-color">投放中</div>
+                    <a v-tooltip placement="right" content="查看" @click="searchForm('groupId',data.groupId)">{{data.groupName}}</a>
+                    <div>
+                        <span class="h-tag-circle" :class="[styleColor[data.groupStatus]]"></span>{{dictStatus[data.groupStatus]}}
+                    </div>
+                </template>
+            </TableItem>
+            <TableItem :width="200" title="所属计划">
+                <template slot-scope="{data}">
+                    <a v-tooltip placement="right" content="查看" @click="searchForm('planId',data.planId)">{{data.planName}}</a>
+                    <div>
+                        <span class="h-tag-circle" :class="[styleColor[data.planStatus]]"></span>{{dictStatus[data.planStatus]}}
+                    </div>
                 </template>
             </TableItem>
             <TableItem :width="200" title="创意名称" prop="ideaName"></TableItem>
@@ -778,28 +785,48 @@ export default {
         changePage() {
             this.getData();
         },
+        //查看某个条件下的列表
         toSearchData(filed, id) {
+            this.formSearch.id && (delete this.formSearch.id);
             this.searchFiled = filed;
             this.formSearch[filed] = id;
             this.searchFiledId = id;
             switch (filed) {
                 case "groupId":
+                   
                     this.selected = "planName";
                     // this.getData(true);
                     break;
                 case "planId":
+                  
                     this.selected = "ideaName";
                     // this.getData(true);
                     break;
-                case "groupId":
-                    this.selected = "groupName";
+
             }
             // Utils.saveCookie('pageSelect',this.selected);
+        },
+        searchForm(filed, id) {
+            this.formSearch.id = id;
+            switch (filed) {
+                case "groupId":
+                    this.selected = "groupName";
+                    // this.getData(true);
+                    break;
+                case "planId":
+                    this.selected = "planName";
+                    // this.getData(true);
+                    break;
+                case "ideaId":
+                    this.selected = "ideaName";
+            }
+            console.log("查找数据")
         },
         //切换数据
         change(data) {
             //切换后重置分页信息
             //初始化返回参数start
+            this.formSearch.id && (delete this.formSearch.id);
             this.formSearch.groupId = "";
             this.formSearch.planId = "";
             this.formSearch.ideaId = "";
@@ -910,6 +937,8 @@ export default {
         },
         $route(to, from) {
             this.selected = this.$route.query.tab;
+            //防止按idea直接查询
+            this.selected=="ideaName"&&(this.formSearch.id="");
             this.getData(true);
         },
 
