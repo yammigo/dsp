@@ -201,6 +201,42 @@
                 <div class="row-item">
                     <div class="hint-item"></div>
                     <div class="label-item label-size-normal">
+                        <div class="text-item">网络</div>
+                        <div class="required-item"></div>
+                    </div>
+                    <div class="input-item">
+                        <FormItem prop="connectType" label="必选项" :showLabel="false">
+                            <Checkbox v-model="formData.connectType" :datas="connectType"></Checkbox>
+                        </FormItem>
+                    </div>
+                </div>
+                <div class="row-item">
+                    <div class="hint-item"></div>
+                    <div class="label-item label-size-normal">
+                        <div class="text-item">性别</div>
+                        <div class="required-item"></div>
+                    </div>
+                    <div class="input-item">
+                        <FormItem prop="sexType" label="必选项" :showLabel="false">
+                            <Checkbox v-model="formData.sexType" :datas="sexType"></Checkbox>
+                        </FormItem>
+                    </div>
+                </div>
+                <div class="row-item">
+                    <div class="hint-item"></div>
+                    <div class="label-item label-size-normal">
+                        <div class="text-item">年龄</div>
+                        <div class="required-item"></div>
+                    </div>
+                    <div class="input-item">
+                        <FormItem prop="ageType" label="必选项" :showLabel="false">
+                            <Checkbox v-model="formData.ageType" :datas="ageType"></Checkbox>
+                        </FormItem>
+                    </div>
+                </div>
+                <div class="row-item">
+                    <div class="hint-item"></div>
+                    <div class="label-item label-size-normal">
                         <div class="text-item">地域</div>
                         <div class="required-item"></div>
                     </div>
@@ -210,6 +246,72 @@
                         </FormItem>
                     </div>
                 </div>
+                <div class="row-item" v-show="formData.platformType.length>0">
+                    <div class="hint-item"></div>
+                    <div class="label-item label-size-normal">
+                        <div class="text-item">系统版本</div>
+                        <div class="required-item"></div>
+                    </div>
+                    <div class="input-item">
+                        <div style="width:500px;">
+                            <div v-if="formData.platformType.indexOf(1)>-1" class="campaign-have-list" style="margin-left: 0px; margin-right: 0px;border-radius:0px;width:50%;float:left;height:auto">
+                                <div class="campaign-have-header">
+                                    <strong>Android最小版本</strong>
+                                </div>
+                                <ul style="overflow:auto;height:192px;">
+                                    <li class="ad-d-flex ad-d-flex-between" v-for="(item,index) in platformVerAndroid" :key="index">
+                                        <div>
+                                            <Radio :value='item.key' v-model="formData.versionMiniAndroid">{{item.title}}</Radio>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div v-if="formData.platformType.indexOf(2)>-1" class="campaign-have-list" style="margin-left: 0px; margin-right: 0px;border-radius:0px;width:50%;float:left;height:auto;margin-left:-1px;">
+                                <div class="campaign-have-header">
+                                    <strong>IOS最小版本</strong>
+                                </div>
+                                <ul style="overflow:auto;height:192px;">
+                                    <li class="ad-d-flex ad-d-flex-between" v-for="(item,index) in platformVerIos" :key="index">
+                                        <div>
+                                            <Radio :value='item.key' v-model="formData.versionMiniIos">{{item.title}}</Radio>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- 手机品牌 -->
+                <div class="row-item">
+                    <div class="hint-item"></div>
+                    <div class="label-item label-size-normal">
+                        <div class="text-item">手机品牌</div>
+                        <div class="required-item"></div>
+                    </div>
+                    <div class="input-item">
+                        <div style="width:500px;">
+                            <div class="campaign-have-list" style="margin-left: 0px; margin-right: 0px;border-radius:0px;width:50%;float:left;height:auto">
+                                <div class="campaign-have-header">
+                                    <strong>可选品牌</strong>
+                                </div>
+                                <ul style="overflow:auto;height:192px;">
+                                    <li class="ad-d-flex ad-d-flex-between">
+                                        <div>
+                                            <Checkbox :checked="formData.deviceBrand==false||!formData.deviceBrand" @click.native="checkAllBrand">不限</Checkbox>
+                                        </div>
+                                    </li>
+                                    <li class="ad-d-flex ad-d-flex-between" v-for="(item,index) in deviceBrand" :key="index">
+                                        <div>
+                                            <Checkbox :value='item.key' v-model="formData.deviceBrand">{{item.title}}</Checkbox>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end -->
             </div>
         </div>
 
@@ -323,11 +425,10 @@
                 </div>
             </div>
         </div>
-        <div class="panel_moduler" style="padding-top: 24px; padding-bottom: 24px;padding-right:10px;text-align:right">
-            <Button color="primary" size="l"  @click="histroy" style="text-align:right">取消</Button>
-            <Button color="primary" size="l" @click="submit" style="text-align:right">保存并关闭</Button>
-            <Button color="primary" size="l" @click="submitNext" style="text-align:right">提交并添加创意</Button>
-            <span></span>
+        <div class="panel_moduler" style="min-width: 1048px;padding-top: 24px; padding-bottom: 24px;text-align:right;">
+            <!-- <Button color="primary" size="l">取消</Button> -->
+            <Button color="primary" size="l" @click="submit">保存并关闭</Button>
+            <Button color="primary" size="l" @click="submitNext">提交并添加创意</Button>
         </div>
     </Form>
 </div>
@@ -347,6 +448,7 @@ export default {
     props: ['groupId', 'groupName', 'planId'],
     data() {
         return {
+
             dateParam: {
 
                 start: Manba().format('YYYY-MM-DD'),
@@ -355,7 +457,13 @@ export default {
             formData: {
                 putStartDate: '',
                 putEndDate: '',
-                platformType: [1], //投放平台
+                platformType: [1, 2], //投放平台
+                connectType: [100, 2, 3, 4, 5], //网络类型
+                sexType: [0, 1], //性别
+                ageType:[1,2,3,4,5],//年龄
+                versionMiniAndroid: "0", //安卓最小版本
+                versionMiniIos:"0",//ios最小版本
+                deviceBrand: [], //手机品牌
                 cityCodes: [], //投放城市
                 weekHours: [
                     [],
@@ -384,6 +492,57 @@ export default {
                     title: 'IOS'
                 }
             ],
+            sexType: [{
+                    key: 0,
+                    title: '女'
+                },
+                {
+                    key: 1,
+                    title: '男'
+                }
+            ],
+            ageType: [{
+                    key: 1,
+                    title: '18-23岁'
+
+                }, {
+                    key: 2,
+                    title: '24-30岁'
+                },
+                {
+                    key: 3,
+                    title: '31-40岁'
+                },
+                {
+                    key: 4,
+                    title: '41-49岁'
+                },
+                {
+                    key: 5,
+                    title: '50岁+'
+                }
+            ],
+            connectType: [{
+                    key: 100,
+                    title: 'WIFI'
+                },
+                {
+                    key: 2,
+                    title: '2G'
+                },
+                {
+                    key: 3,
+                    title: '3G'
+                },
+                {
+                    key: 4,
+                    title: '4G'
+                },
+                {
+                    key: 5,
+                    title: '5G'
+                }
+            ],
             putType: {
                 "1": '均衡投放',
                 "2": '优先跑量'
@@ -396,11 +555,165 @@ export default {
                 1: '启用',
                 0: '禁用'
             },
+            platformVerAndroid: [{
+                    title: "不限",
+                    key: '0'
+                },
+                {
+                    title: 'Android 8.0及以上',
+                    key: '8.0'
+                }, {
+                    title: 'Android 7.1及以上',
+                    key: '7.1'
+                }, {
+                    title: 'Android 7.0及以上',
+                    key: '7.0'
+                },
+                {
+                    title: 'Android 6.0及以上',
+                    key: '6.0'
+                },
+                {
+                    title: 'Android 5.1及以上',
+                    key: '5.1'
+                },
+                {
+                    title: 'Android 4.5及以上',
+                    key: '4.5'
+                },
+                {
+                    title: 'Android 4.4及以上',
+                    key: '4.4'
+                },
+                {
+                    title: 'Android 4.3及以上',
+                    key: '4.3'
+                },
+                {
+                    title: 'Android 4.2及以上',
+                    key: '4.2'
+                },
+                {
+                    title: 'Android 4.1及以上',
+                    key: '4.1'
+                },
+                {
+                    title: 'Android 4.0及以上',
+                    key: '4.0'
+                },
+                {
+                    title: 'Android 3.2及以上',
+                    key: '3.2'
+                },
+                {
+                    title: 'Android 3.1及以上',
+                    key: '3.1'
+                },
+                {
+                    title: 'Android 3.0及以上',
+                    key: '3.0'
+                },
+                {
+                    title: 'Android 2.3及以上',
+                    key: '2.3'
+                },
+                {
+                    title: 'Android 2.2及以上',
+                    key: '2.2'
+                },
+                {
+                    title: 'Android 2.1及以上',
+                    key: '2.1'
+                },
+                {
+                    title: 'Android 2.0及以上',
+                    key: '2.0'
+                }
+            ],
+            platformVerIos: [{
+                    title: "不限",
+                    key: '0'
+                },
+                {
+                    title: 'IOS 13.0及以上',
+                    key: '13.0'
+                }, {
+                    title: 'IOS 12.0及以上',
+                    key: '12.0'
+                }, {
+                    title: 'IOS 11.0及以上',
+                    key: '11.0'
+                },
+                {
+                    title: 'IOS 10.0及以上',
+                    key: '10.0'
+                },
+                {
+                    title: 'IOS 9.0及以上',
+                    key: '9.0'
+                },
+                {
+                    title: 'IOS 8.0及以上',
+                    key: '8.0'
+                },
+                {
+                    title: 'IOS 7.0及以上',
+                    key: '7.0'
+                },
+                {
+                    title: 'IOS 6.0及上',
+                    key: '6.0'
+                },
+            ],
+            deviceBrand: [{
+                    key: "samsung",
+                    title: "三星"
+                },
+                {
+                    key: 'Meizu',
+                    title: "魅族"
+                },
+                {
+                    key: 'xiaomi',
+                    title: "小米"
+                },
+                {
+                    key: 'Coolpad',
+                    title: "酷派"
+                },
+                {
+                    key: 'APPLE',
+                    title: 'iphone'
+                },
+                {
+                    key: "OPPO",
+                    title: "OPPO"
+                },
+                {
+                    key: 'LeEco',
+                    title: "乐视"
+                },
+                {
+                    key: "HUAWEI",
+                    title: "华为"
+                },
+                {
+                    key: "OnePlus",
+                    title: "一加"
+                },
+                {
+                    key: "vivo",
+                    title: "vivo"
+                }
+            ],
             rules: {
                 required: [
                     'planName',
                     'platformType',
+                    'sexType',
                     'putStartDate',
+                    'connectType',
+                    'ageType',
                     'putEndDate',
                     'cityCodes',
                     'putType',
@@ -408,12 +721,19 @@ export default {
                     'bidType',
                     'bidAmount',
                     'weekHours',
-                    'groupId'
+                    'groupId',
+                    'versionMiniAndroid',
+                    'versionMiniIos',
                 ]
             }
         };
     },
     methods: {
+        checkAllBrand() {
+            if (this.formData.deviceBrand && this.formData.deviceBrand.length > 0) {
+                this.formData.deviceBrand = [];
+            }
+        },
         testall(val, step) {
             if (val.top <= 130) {
                 this.$emit('activeStep', {
@@ -506,7 +826,8 @@ export default {
                     .then(res => {
                         if (res.ok) {
                             this.$Loading.close();
-                            this.formData = res.data.list[0];
+                            //这里进行数据合并防止未初始化数据不展示
+                            this.formData = Utils.extend({}, this.formData, res.data.list[0]);
 
                         }
                     });
@@ -514,6 +835,8 @@ export default {
         }
     },
     mounted() {
+        //合并参数
+        // console.log(Utils.extend({},{a:{a:0},b:[0,1]},{a:{},b:[0]}));
         this.$emit('activeStep', {
             key: '1',
             step: '0'

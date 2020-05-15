@@ -64,6 +64,29 @@
         }
     }
 
+    .tag_box {
+        cursor: pointer;
+    }
+
+    .tag_box:hover {
+        .small-tag.primary {
+            background: #1162c8;
+
+            span {
+                color: #fff;
+            }
+        }
+
+        .small-tag.error {
+            background: #ed667d;
+
+            span {
+                color: #fff;
+            }
+        }
+
+    }
+
     .slot-panel {
         background: #fff;
         position: absolute;
@@ -341,10 +364,10 @@
         <Table v-if="selected=='groupName'" :datas="datas" :border="border" :stripe="stripe" :loading="loading">
             <TableItem :width="40" title="ID" prop="id">
             </TableItem>
-            <TableItem :width="200" title="广告组名称">
-                <template slot-scope="{data}">
+            <TableItem :width="200" title="广告组名称" prop="groupName">
+                <!-- <template slot-scope="{data}">
                     <a v-tooltip placement="right" content="查看该组下的所有计划" @click="toSearchData('groupId',data.id)">{{data.groupName}}</a>
-                </template>
+                </template> -->
             </TableItem>
             <TableItem :width="200" title="推广目的">
                 <template slot-scope="{data}">
@@ -353,14 +376,18 @@
             </TableItem>
             <TableItem :width="240" title="投放计划">
                 <template slot-scope="{data}">
-                    <div class="small-tag primary"><span class="tagNum">6个</span><span class="tagText">投放中</span></div>
-                    <div class="small-tag error"><span class="tagNum">12个</span><span class="tagText">未投放</span></div>
+                    <div class="tag_box" @click="tabSearch('planName','groupId',data.id)">
+                        <div class="small-tag primary"><span class="tagNum">{{data.countPlanOpen}}个</span><span class="tagText">生效</span></div>
+                        <div class="small-tag error"><span class="tagNum">{{data.countPlanClose}}个</span><span class="tagText">未生效</span></div>
+                    </div>
                 </template>
             </TableItem>
             <TableItem :width="240" title="投放创意">
                 <template slot-scope="{data}">
-                    <div class="small-tag primary"><span class="tagNum">6个</span><span class="tagText">投放中</span></div>
-                    <div class="small-tag error"><span class="tagNum">12个</span><span class="tagText">未投放</span></div>
+                    <div class="tag_box" @click="tabSearch('ideaName','groupId',data.id)">
+                        <div class="small-tag primary"><span class="tagNum">{{data.countIdeaOpen}}个</span><span class="tagText">生效</span></div>
+                        <div class="small-tag error"><span class="tagNum">{{data.countIdeaClose}}个</span><span class="tagText">未生效</span></div>
+                    </div>
                 </template>
             </TableItem>
             <TableItem :width="100" align="center" title="状态">
@@ -424,17 +451,26 @@
         <Table v-if="selected=='planName'" :datas="datas" :border="border" :stripe="stripe" :loading="loading">
             <TableItem :width="40" title="ID" prop="id">
             </TableItem>
-            <TableItem :width="200" title="所属广告组" prop="groupName"></TableItem>
-            <TableItem :width="200" title="计划名称">
+            <TableItem :width="200" title="所属广告组">
                 <template slot-scope="{data}">
-                    <a v-tooltip placement="right" content="查看该计划的所有创意" @click="toSearchData('planId',data.id)">{{data.planName}}</a>
+                    <a v-tooltip placement="right" content="查看" @click="searchForm('groupId',data.groupId)">{{data.groupName}}</a>
+                    <div>
+                        <span class="h-tag-circle" :class="[styleColor[data.groupStatus]]"></span>{{dictStatus[data.groupStatus]}}
+                    </div>
                 </template>
+            </TableItem>
+            <TableItem :width="200" title="计划名称" prop="planName">
+                <!-- <template slot-scope="{data}">
+                    <a v-tooltip placement="right" content="查看该计划的所有创意" @click="toSearchData('planId',data.id)">{{data.planName}}</a>
+                </template> -->
             </TableItem>
 
             <TableItem :width="240" align="left" title="投放创意">
                 <template slot-scope="{data}">
-                    <div class="small-tag primary"><span class="tagNum">6个</span><span class="tagText">生效</span></div>
-                    <div class="small-tag error"><span class="tagNum">12个</span><span class="tagText">未生效</span></div>
+                    <div class="tag_box" @click="tabSearch('ideaName','planId',data.id)">
+                        <div class="small-tag primary"><span class="tagNum">{{data.countIdeaOpen}}个</span><span class="tagText">生效</span></div>
+                        <div class="small-tag error"><span class="tagNum">{{data.countIdeaClose}}个</span><span class="tagText">未生效</span></div>
+                    </div>
                 </template>
             </TableItem>
 
@@ -731,10 +767,12 @@ export default {
         this.getSearch.pageData && (this.pagination = {
             ...this.getSearch.pageData
         });
-        R.Home.userIndex({}).then(res => {
+        R.Home.userIndex({
+            queryStartTime: Manba().format(),
+            queryEndTime: Manba().format()
+        }).then(res => {
             if (res.ok) {
                 this.userAmountData = res.data;
-
             }
         })
         this.init();
@@ -793,18 +831,23 @@ export default {
             this.searchFiledId = id;
             switch (filed) {
                 case "groupId":
-                   
                     this.selected = "planName";
                     // this.getData(true);
                     break;
                 case "planId":
-                  
                     this.selected = "ideaName";
                     // this.getData(true);
                     break;
 
             }
             // Utils.saveCookie('pageSelect',this.selected);
+        },
+        tabSearch(tab, filed, id) {
+            this.formSearch.id && (delete this.formSearch.id);
+            this.searchFiled = filed;
+            this.formSearch[filed] = id;
+            this.searchFiledId = id;
+            this.selected = tab;
         },
         searchForm(filed, id) {
             this.formSearch.id = id;
@@ -938,7 +981,7 @@ export default {
         $route(to, from) {
             this.selected = this.$route.query.tab;
             //防止按idea直接查询
-            this.selected=="ideaName"&&(this.formSearch.id="");
+            this.selected == "ideaName" && (this.formSearch.id = "");
             this.getData(true);
         },
 

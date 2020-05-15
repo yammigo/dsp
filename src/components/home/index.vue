@@ -570,7 +570,7 @@ export default {
     methods: {
         init() {
             this.loadingData = true;
-            R.Home.userIndex({}).then(res => {
+            R.Home.userIndex({queryStartTime:Manba().format(),queryEndTime:Manba().format()}).then(res => {
                 if (res.ok) {
                     this.data = res.data;
                     this.loadingData = false;
