@@ -285,7 +285,7 @@
                             <div class="h-input-addon">
                                 <Select v-model="selected" :datas="param" :no-border="true" :null-option="false" @change="searchName"></Select>
                             </div>
-                            <input type="text" v-model="searchText" placeholder="请输入名称或ID搜索" />
+                            <input type="text" v-model="searchText" placeholder="请输入名称查询" />
                             <Button :no-border="true" class="h-btn h-btn-gray" style="background:#eee;" @click="searchName">
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 49 49" width="12" height="12">
                                     <defs>
