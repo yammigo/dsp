@@ -1,15 +1,17 @@
 <style lang="less">
 .extension {
     .small-tag {
-        min-width: 60px;
+        // min-width: 60px;
         height: 24px;
-        padding: 0 10px;
+        // padding: 0 10px;
         line-height: 25px;
-        display: inline-block;
-        text-align: center;
-        margin-right: 10px;
+        // display: inline-block;
+        margin-top: 2px;
+        text-align: left;
+        // margin-right: 10px;
         // background:#ddecff;
         border-radius: 24px;
+        // transform:scale(0.8);
         font-size: 0px;
         cursor: pointer;
         -moz-user-select: none;
@@ -364,35 +366,35 @@
         <Table v-if="selected=='groupName'" :datas="datas" :border="border" :stripe="stripe" :loading="loading">
             <TableItem :width="40" title="ID" prop="id">
             </TableItem>
-            <TableItem :width="200" title="广告组名称" prop="groupName">
+            <TableItem :width="150" title="广告组名称" prop="groupName">
                 <!-- <template slot-scope="{data}">
                     <a v-tooltip placement="right" content="查看该组下的所有计划" @click="toSearchData('groupId',data.id)">{{data.groupName}}</a>
                 </template> -->
             </TableItem>
-            <TableItem :width="200" title="推广目的">
+            <TableItem :width="150" title="推广目的">
                 <template slot-scope="{data}">
                     <span></span>{{Extension[data.groupTarget]}}
                 </template>
             </TableItem>
-            <TableItem :width="240" title="投放计划">
-                <template slot-scope="{data}">
-                    <div class="tag_box" @click="tabSearch('planName','groupId',data.id)">
-                        <div class="small-tag primary"><span class="tagNum">{{data.countPlanOpen}}个</span><span class="tagText">生效</span></div>
-                        <div class="small-tag error"><span class="tagNum">{{data.countPlanClose}}个</span><span class="tagText">未生效</span></div>
-                    </div>
-                </template>
-            </TableItem>
-            <TableItem :width="240" title="投放创意">
-                <template slot-scope="{data}">
-                    <div class="tag_box" @click="tabSearch('ideaName','groupId',data.id)">
-                        <div class="small-tag primary"><span class="tagNum">{{data.countIdeaOpen}}个</span><span class="tagText">生效</span></div>
-                        <div class="small-tag error"><span class="tagNum">{{data.countIdeaClose}}个</span><span class="tagText">未生效</span></div>
-                    </div>
-                </template>
-            </TableItem>
-            <TableItem :width="100" align="center" title="状态">
+            <TableItem :width="80" align="center" title="状态">
                 <template slot-scope="{data}">
                     <span class="h-tag-circle" :class="[styleColor[data.status]]"></span>{{dictStatus[data.status]}}
+                </template>
+            </TableItem>
+            <TableItem :width="90" align="center" title="计划">
+                <template slot-scope="{data}">
+                    <div class="tag_box" @click="tabSearch('planName','groupId',data.id)">
+                        <div class="small-tag primary"><span class="tagNum">{{data.countPlanOpen}}</span><span class="tagText">生效</span></div>
+                        <div class="small-tag error"><span class="tagNum">{{data.countPlanClose}}</span><span class="tagText">未生效</span></div>
+                    </div>
+                </template>
+            </TableItem>
+            <TableItem :width="90" align="center" title="创意">
+                <template slot-scope="{data}">
+                    <div class="tag_box" @click="tabSearch('ideaName','groupId',data.id)">
+                        <div class="small-tag primary"><span class="tagNum">{{data.countIdeaOpen}}</span><span class="tagText">生效</span></div>
+                        <div class="small-tag error"><span class="tagNum">{{data.countIdeaClose}}</span><span class="tagText">未生效</span></div>
+                    </div>
                 </template>
             </TableItem>
             <!-- <TableItem :width="100" align="right" title="日预算">
@@ -422,19 +424,19 @@
                 </template>
             </TableItem> -->
             <TableItem :width="100" align="right" title="展现数" prop="showCount"></TableItem>
-            <TableItem :width="100" align="right" title="点击数" prop="clickCount"></TableItem>
-            <TableItem :width="100" align="right" title="点击率">
+            <TableItem :width="80" align="right" title="点击数" prop="clickCount"></TableItem>
+            <TableItem :width="80" align="right" title="点击率">
                 <template slot-scope="{data}">
                     <span class="bui-num" style="font-size:10px;">{{(data.clickCount/data.showCount*100)|NumFormat}}%</span>
                 </template>
             </TableItem>
-            <TableItem :width="100" align="right" title="开始下载" prop="downStartCount"></TableItem>
-            <TableItem :width="100" align="right" title="完成下载" prop="downEndCount"></TableItem>
-            <TableItem :width="100" align="right" title="开始安装" prop="installStartCount"></TableItem>
-            <TableItem :width="100" align="right" title="安装完成" prop="installEndCount"></TableItem>
-            <TableItem :width="100" align="right" title="开始播放" prop="playStartCount"></TableItem>
-            <TableItem :width="100" align="right" title="完成播放" prop="playEndCount"></TableItem>
-            <TableItem :width="100" align="right" title="完成播放" prop="playEndCount"></TableItem>
+            <TableItem :width="80" align="right" title="开始下载" prop="downStartCount"></TableItem>
+            <TableItem :width="80" align="right" title="完成下载" prop="downEndCount"></TableItem>
+            <TableItem :width="80" align="right" title="开始安装" prop="installStartCount"></TableItem>
+            <TableItem :width="80" align="right" title="安装完成" prop="installEndCount"></TableItem>
+            <TableItem :width="80" align="right" title="开始播放" prop="playStartCount"></TableItem>
+            <TableItem :width="80" align="right" title="完成播放" prop="playEndCount"></TableItem>
+            <TableItem :width="80" align="right" title="完成播放" prop="playEndCount"></TableItem>
             <TableItem :width="200" title="创建时间" prop="createTime"></TableItem>
             <TableItem :width="200" title="操作" align="center" fixed="right">
                 <template slot-scope="{data}">
@@ -451,7 +453,7 @@
         <Table v-if="selected=='planName'" :datas="datas" :border="border" :stripe="stripe" :loading="loading">
             <TableItem :width="40" title="ID" prop="id">
             </TableItem>
-            <TableItem :width="200" title="所属广告组">
+            <TableItem :width="150" title="所属广告组">
                 <template slot-scope="{data}">
                     <a v-tooltip placement="right" content="查看" @click="searchForm('groupId',data.groupId)">{{data.groupName}}</a>
                     <div>
@@ -459,13 +461,17 @@
                     </div>
                 </template>
             </TableItem>
-            <TableItem :width="200" title="计划名称" prop="planName">
+            <TableItem :width="150" title="计划名称" prop="planName">
                 <!-- <template slot-scope="{data}">
                     <a v-tooltip placement="right" content="查看该计划的所有创意" @click="toSearchData('planId',data.id)">{{data.planName}}</a>
                 </template> -->
             </TableItem>
-
-            <TableItem :width="240" align="left" title="投放创意">
+             <TableItem :width="80" align="left" title="状态">
+                <template slot-scope="{data}">
+                    <span class="h-tag-circle" :class="[styleColor[data.status]]"></span>{{dictStatus[data.status]}}
+                </template>
+            </TableItem>
+            <TableItem :width="90" align="left" title="投放创意">
                 <template slot-scope="{data}">
                     <div class="tag_box" @click="tabSearch('ideaName','planId',data.id)">
                         <div class="small-tag primary"><span class="tagNum">{{data.countIdeaOpen}}个</span><span class="tagText">生效</span></div>
@@ -473,61 +479,56 @@
                     </div>
                 </template>
             </TableItem>
-
-            <TableItem :width="100" align="left" title="状态">
-                <template slot-scope="{data}">
-                    <span class="h-tag-circle" :class="[styleColor[data.status]]"></span>{{dictStatus[data.status]}}
-                </template>
-            </TableItem>
-            <TableItem :width="100" align="center" title="投放方式">
+            <TableItem :width="80" align="center" title="投放方式">
                 <template slot-scope="{data}">
                     {{putType[data.putType]}}
                 </template>
             </TableItem>
-            <TableItem :width="100" align="center" title="出价方式">
+           
+            <TableItem :width="80" align="center" title="出价方式">
                 <template slot-scope="{data}">
                     <span class="bui-num">{{bidType[data.bidType]}}</span>
                 </template>
             </TableItem>
-            <TableItem :width="100" align="right" title="日预算">
-                <template slot-scope="{data}">
-                    <span class="bui-num">{{data.putAmountDay|NumFormat}}</span>
-                </template>
-            </TableItem>
-            <TableItem :width="100" align="right" title="出价金额">
+            <TableItem :width="70" align="right" title="出价金额">
                 <template slot-scope="{data}">
                     <span class="bui-num">{{data.bidAmount|NumFormat}}</span>
                 </template>
             </TableItem>
-            <TableItem :width="100" align="right" title="消费金额">
+             <TableItem :width="90" align="right" title="日预算">
+                <template slot-scope="{data}">
+                    <span class="bui-num">{{data.putAmountDay|NumFormat}}</span>
+                </template>
+            </TableItem>
+            <TableItem :width="90" align="right" title="今日消耗">
                 <template slot-scope="{data}">
                     <span class="bui-num">{{data.income|NumFormat}}</span>
                 </template>
             </TableItem>
-            <TableItem :width="100" align="right" title="ecpm">
+            <TableItem :width="70" align="right" title="ecpm">
                 <template slot-scope="{data}">
                     <span class="bui-num">{{data.income/data.showCount*1000|NumFormat}}</span>
                 </template>
             </TableItem>
-            <TableItem :width="100" align="right" title="cpc">
+            <TableItem :width="70" align="right" title="cpc">
                 <template slot-scope="{data}">
                     <span class="bui-num">{{(data.income/data.clickCount)|NumFormat}}</span>
                 </template>
             </TableItem>
-            <TableItem :width="100" align="right" title="展现数" prop="showCount"></TableItem>
-            <TableItem :width="100" align="right" title="点击数" prop="clickCount"></TableItem>
-            <TableItem :width="100" align="right" title="点击率">
+            <TableItem :width="90" align="right" title="展现数" prop="showCount"></TableItem>
+            <TableItem :width="80" align="right" title="点击数" prop="clickCount"></TableItem>
+            <TableItem :width="80" align="right" title="点击率">
                 <template slot-scope="{data}">
                     <span class="bui-num" style="font-size:10px;">{{(data.clickCount/data.showCount*100)|NumFormat}}%</span>
                 </template>
             </TableItem>
-            <TableItem :width="100" align="right" title="开始下载" prop="downStartCount"></TableItem>
-            <TableItem :width="100" align="right" title="完成下载" prop="downEndCount"></TableItem>
-            <TableItem :width="100" align="right" title="开始安装" prop="installStartCount"></TableItem>
-            <TableItem :width="100" align="right" title="安装完成" prop="installEndCount"></TableItem>
-            <TableItem :width="100" align="right" title="开始播放" prop="playStartCount"></TableItem>
-            <TableItem :width="100" align="right" title="完成播放" prop="playEndCount"></TableItem>
-            <TableItem :width="100" align="right" title="完成播放" prop="playEndCount"></TableItem>
+            <TableItem :width="80" align="right" title="开始下载" prop="downStartCount"></TableItem>
+            <TableItem :width="80" align="right" title="完成下载" prop="downEndCount"></TableItem>
+            <TableItem :width="80" align="right" title="开始安装" prop="installStartCount"></TableItem>
+            <TableItem :width="80" align="right" title="安装完成" prop="installEndCount"></TableItem>
+            <TableItem :width="80" align="right" title="开始播放" prop="playStartCount"></TableItem>
+            <TableItem :width="80" align="right" title="完成播放" prop="playEndCount"></TableItem>
+            <TableItem :width="80" align="right" title="完成播放" prop="playEndCount"></TableItem>
             <TableItem :width="200" title="操作" align="center" fixed="right">
                 <template slot-scope="{data}">
                     <span v-if="data.status!==-1&&data.status!==-2">
@@ -543,7 +544,7 @@
         <Table v-if="selected=='ideaName'" :datas="datas" :border="border" :stripe="stripe" :loading="loading">
             <TableItem :width="40" title="ID" prop="id">
             </TableItem>
-            <TableItem :width="200" title="所属组">
+            <TableItem :width="150" title="所属组">
                 <template slot-scope="{data}">
                     <a v-tooltip placement="right" content="查看" @click="searchForm('groupId',data.groupId)">{{data.groupName}}</a>
                     <div>
@@ -551,7 +552,7 @@
                     </div>
                 </template>
             </TableItem>
-            <TableItem :width="200" title="所属计划">
+            <TableItem :width="150" title="所属计划">
                 <template slot-scope="{data}">
                     <a v-tooltip placement="right" content="查看" @click="searchForm('planId',data.planId)">{{data.planName}}</a>
                     <div>
@@ -559,19 +560,19 @@
                     </div>
                 </template>
             </TableItem>
-            <TableItem :width="200" title="创意名称" prop="ideaName"></TableItem>
-            <TableItem :width="100" align="left" title="状态">
+            <TableItem :width="150" title="创意名称" prop="ideaName"></TableItem>
+            <TableItem :width="80" align="left" title="状态">
                 <template slot-scope="{data}">
                     <span class="h-tag-circle" :class="[styleColor[data.status]]"></span>{{dictStatus[data.status]}}
                 </template>
             </TableItem>
             <TableItem :width="100" title="产品名称" prop="productName"></TableItem>
-            <TableItem :width="100" title="跳转类型">
+            <TableItem :width="80" title="跳转类型">
                 <template slot-scope="{data}">
                     {{clickType[data.clickType]}}
                 </template>
             </TableItem>
-            <TableItem :width="200" title="跳转链接" prop="clickUrl"></TableItem>
+            <!-- <TableItem :width="200" title="跳转链接" prop="clickUrl"></TableItem> -->
             <!-- <TableItem :width="100" align="right" title="日预算">
                 <template slot-scope="{data}">
                     <span class="bui-num">{{data.putAmountDay|NumFormat}}</span>
@@ -598,20 +599,20 @@
                     <span class="bui-num">{{(data.income/data.clickCount)|NumFormat}}</span>
                 </template>
             </TableItem> -->
-            <TableItem :width="100" align="right" title="展现数" prop="showCount"></TableItem>
-            <TableItem :width="100" align="right" title="点击数" prop="clickCount"></TableItem>
-            <TableItem :width="100" align="right" title="点击率">
+            <TableItem :width="90" align="right" title="展现数" prop="showCount"></TableItem>
+            <TableItem :width="80" align="right" title="点击数" prop="clickCount"></TableItem>
+            <TableItem :width="80" align="right" title="点击率">
                 <template slot-scope="{data}">
                     <span class="bui-num" style="font-size:10px;">{{(data.clickCount/data.showCount*100)|NumFormat}}%</span>
                 </template>
             </TableItem>
-            <TableItem :width="100" align="right" title="开始下载" prop="downStartCount"></TableItem>
-            <TableItem :width="100" align="right" title="完成下载" prop="downEndCount"></TableItem>
-            <TableItem :width="100" align="right" title="开始安装" prop="installStartCount"></TableItem>
-            <TableItem :width="100" align="right" title="安装完成" prop="installEndCount"></TableItem>
-            <TableItem :width="100" align="right" title="开始播放" prop="playStartCount"></TableItem>
-            <TableItem :width="100" align="right" title="完成播放" prop="playEndCount"></TableItem>
-            <TableItem :width="100" align="right" title="完成播放" prop="playEndCount"></TableItem>
+            <TableItem :width="80" align="right" title="开始下载" prop="downStartCount"></TableItem>
+            <TableItem :width="80" align="right" title="完成下载" prop="downEndCount"></TableItem>
+            <TableItem :width="80" align="right" title="开始安装" prop="installStartCount"></TableItem>
+            <TableItem :width="80" align="right" title="安装完成" prop="installEndCount"></TableItem>
+            <TableItem :width="80" align="right" title="开始播放" prop="playStartCount"></TableItem>
+            <TableItem :width="80" align="right" title="完成播放" prop="playEndCount"></TableItem>
+            <TableItem :width="80" align="right" title="完成播放" prop="playEndCount"></TableItem>
             <TableItem :width="150" title="创建时间" prop="createTime"></TableItem>
             <TableItem :width="100" title="操作" align="center" fixed="right">
                 <template slot-scope="{data}">
