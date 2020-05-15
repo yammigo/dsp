@@ -448,7 +448,7 @@ export default {
     props: ['groupId', 'groupName', 'planId'],
     data() {
         return {
-
+            bigData: null,
             dateParam: {
 
                 start: Manba().format('YYYY-MM-DD'),
@@ -729,18 +729,33 @@ export default {
                     //异步验证投放
                     bidAmount: {
                         type: 'number',
-                        validAsync:(prop, next, parent, data)=>{
-                            R.Common.getMinxMoney({}).then(res => {
-                                if (res.ok) {
-                                    if(this.formData.bidType==1&&prop<res.data.cpc){
-                                         next("最小投放出价不得少于"+res.data.cpc);
-                                    }
-                                    if(this.formData.bidType==2&&prop<res.data.cpm){
-                                         next("最小投放出价不得少于"+res.data.cpm);
-                                    }
+                        valid: (prop, parent, data) => {
+                            if (this.bigData) {
+                                if (this.formData.bidType == 1 && prop < this.bigData.cpc) {
+                                    return ("最小投放出价不得少于" + this.bigData.cpc);
                                 }
-                            })
-                        }
+                                if (this.formData.bidType == 2 && prop < this.bigData.cpm) {
+                                    return ("最小投放出价不得少于" + this.bigData.cpm);
+                                }
+                                return true;
+                            } else {
+                                return "未获取到最小投放金额"
+                            }
+
+                        },
+                        //异步验证
+                        // validAsync: (prop, next, parent, data) => {
+                        //     R.Common.getMinxMoney({}).then(res => {
+                        //         if (res.ok) {
+                        //             if (this.formData.bidType == 1 && prop < res.data.cpc) {
+                        //                 next("最小投放出价不得少于" + res.data.cpc);
+                        //             }
+                        //             if (this.formData.bidType == 2 && prop < res.data.cpm) {
+                        //                 next("最小投放出价不得少于" + res.data.cpm);
+                        //             }
+                        //         }
+                        //     })
+                        // }
                     }
                 }
             }
@@ -864,7 +879,11 @@ export default {
                 this.dictCity = res.data;
             }
         });
-
+        R.Common.getMinxMoney({}).then(res => {
+            if (res.ok) {
+               this.bigData=res.data;
+            }
+        })
         this.initData();
     },
     computed: {
