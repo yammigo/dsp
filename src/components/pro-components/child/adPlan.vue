@@ -460,9 +460,9 @@ export default {
                 platformType: [1, 2], //投放平台
                 connectType: [100, 2, 3, 4, 5], //网络类型
                 sexType: [0, 1], //性别
-                ageType:[1,2,3,4,5],//年龄
+                ageType: [1, 2, 3, 4, 5], //年龄
                 versionMiniAndroid: "0", //安卓最小版本
-                versionMiniIos:"0",//ios最小版本
+                versionMiniIos: "0", //ios最小版本
                 deviceBrand: [], //手机品牌
                 cityCodes: [], //投放城市
                 weekHours: [
@@ -724,7 +724,25 @@ export default {
                     'groupId',
                     'versionMiniAndroid',
                     'versionMiniIos',
-                ]
+                ],
+                rules: {
+                    //异步验证投放
+                    bidAmount: {
+                        type: 'number',
+                        validAsync:(prop, next, parent, data)=>{
+                            R.Common.getMinxMoney({}).then(res => {
+                                if (res.ok) {
+                                    if(this.formData.bidType==1&&prop<res.data.cpc){
+                                         next("最小投放出价不得少于"+res.data.cpc);
+                                    }
+                                    if(this.formData.bidType==2&&prop<res.data.cpm){
+                                         next("最小投放出价不得少于"+res.data.cpm);
+                                    }
+                                }
+                            })
+                        }
+                    }
+                }
             }
         };
     },
@@ -846,6 +864,7 @@ export default {
                 this.dictCity = res.data;
             }
         });
+
         this.initData();
     },
     computed: {

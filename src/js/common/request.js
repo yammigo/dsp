@@ -4,6 +4,9 @@ const Request = {
   Common:{
     sityList(params){
       return Ajax.post("/base/city/list.do",params)
+    },
+    getMinxMoney(params){
+      return Ajax.post("/base/conf/bid/mini.do",params)
     }
   },
   adGroup: {
