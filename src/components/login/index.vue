@@ -198,11 +198,12 @@ export default {
                     let userInfo = {
                         ...resp.data
                     };
-                    Utils.saveCookie('token', resp.data.token);
-                    resp.data.avatar = require('../../images/avatar.png');
-                    Utils.saveCookie('userInfo', resp.data);
+                    userInfo.avatar = require('../../images/avatar.png');
+                    Utils.saveCookie('token', userInfo.token);
+                    Utils.saveCookie('userInfo', userInfo);
+                    Utils.saveCookie('agentType',userInfo.agentType);
                     G.set('account', {
-                        ...resp.data
+                        ...userInfo
                     });
                     store.dispatch('updateAccount', {
                         ...resp.data

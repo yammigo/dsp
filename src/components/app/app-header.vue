@@ -31,9 +31,10 @@
         height: @layout-header-height;
         line-height: @layout-header-height;
         margin-right: 10px;
+        color: #fff;
 
         &:hover {
-            background: @hover-background-color;
+            // background: @hover-background-color;
         }
 
         i {
@@ -138,18 +139,18 @@
 
 <template>
 <div class="app-header">
-    <div style="margin-left:30px;float:left;color:#eee;"><img src="../../images/logo.png" width="30" style="display:inline-block;vertical-align: middle;"/><span style="margin-left:10px;">广告投放平台</span></div>
+    <div style="margin-left:30px;float:left;color:#eee;"><img src="../../images/logo.png" width="30" style="display:inline-block;vertical-align: middle;" /><span style="margin-left:10px;">广告投放平台</span></div>
     <div style="margin-left:30px;float:left">
         <router-link to="/home" class="app-header-navItem">首页</router-link>
         <router-link to="/extension" class="app-header-navItem">推广</router-link>
-        <!-- <router-link to="/table-basic" class="app-header-navItem">报表</router-link> -->
+        <router-link v-if="agentType&&agentType==1" to="/childUsers" class="app-header-navItem">子账户管理</router-link>
     </div>
     <!-- <div style="width:50px;float:left;"><Button :icon="siderCollapsed ? 'icon-align-right':'icon-align-left'" size="l" noBorder class="font20" @click="siderCollapsed=!siderCollapsed"></Button></div> -->
     <div class="float-right app-header-info">
         <!-- <AutoComplete :showDropdownWhenNoResult="false" v-model="searchText" config="globalSearch" placeholder="全局搜索.."></AutoComplete> -->
-        <!-- <div class="app-header-icon-item" v-tooltip content="系统布局配置" theme="white" @click="showSettingModal">
-        <i class="icon-content-left"></i>
-      </div> -->
+        <div v-if="agentType&&agentType==1" class="app-header-icon-item" placement="left" v-tooltip content="切换操作账户" theme="white" @click="showSettingModal">
+            <i class="h-icon-user" style="font-size:13px"></i><span style="margin-left:10px;">切换账户<i class="h-icon-angle-down" style="position:relative;top:2px;"></i></span>
+        </div>
         <!-- <appHeaderMessage></appHeaderMessage> -->
         <!-- <div class="app-header-icon-item" v-tooltip content="GitHub" theme="white" @click="goGithub">
         <i class="h-icon-github"></i>
@@ -158,7 +159,7 @@
         <i class="h-icon-help"></i>
       </div> -->
         <DropdownMenu className="app-header-dropdown" trigger="hover" offset="0,5" :width="150" placement="bottom-end" :datas="infoMenu" @onclick="trigger">
-            <Avatar :src="userInfo.avatar" :width="30"><span>{{userInfo.loginName}}</span></Avatar>
+            <Avatar :src="userInfo.avatar" :width="30"><span>{{childUser.loginName||userInfo.loginName}}</span></Avatar>
         </DropdownMenu>
     </div>
 </div>
@@ -179,8 +180,12 @@ export default {
     },
     data() {
         return {
+            agentType:Utils.getCookie('agentType'),
             searchText: '',
-            userInfo: {avatar:'',loginName:''},
+            userInfo: {
+                avatar: '',
+                loginName: ''
+            },
             infoMenu: [{
                     key: 'info',
                     title: '个人信息',
@@ -195,7 +200,7 @@ export default {
         };
     },
     computed: {
-        ...mapState(['User']),
+        ...mapState(["childUser"]),
         siderCollapsed: {
             get() {
                 return this.$store.state.siderCollapsed;
@@ -207,6 +212,7 @@ export default {
         }
     },
     mounted() {
+      
         try {
             this.userInfo = JSON.parse(Utils.getCookie("userInfo"));
 
@@ -245,6 +251,7 @@ export default {
         trigger(data) {
             if (data == 'logout') {
                 Utils.clearCookie();
+                this.$store.commit('setChildUserInfo',{id:'',loginName:this.userInfo.loginName});
                 this.$router.replace({
                     name: 'Login'
                 });

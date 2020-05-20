@@ -602,7 +602,7 @@
                         <SwitchList v-model="formData.clickType" :datas="clickType"></SwitchList>
                     </div>
                 </div>
-                <div class="row-item">
+                <div class="row-item" style="margin-top:30px;">
                     <div class="hint-item">
                     </div>
                     <div class="label-item label-size-normal">

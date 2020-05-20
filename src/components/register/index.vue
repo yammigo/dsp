@@ -131,14 +131,12 @@
 <template>
 <div class="register-vue" :style="Bg">
     <div class="register-container">
-
         <div class="register-content">
             <div class="register-title">注册</div>
             <div class="register-input">
                 <input type="text" name="loginName" v-model="register.loginName" @keyup.enter="submit" autocomplete="off" />
                 <span class="placeholder" :class="{fixed: register.loginName != '' && register.loginName != null}">用户名</span>
             </div>
-
             <div class="register-input">
                 <input type="password" name="passWord" v-model="register.passWord" @keyup.enter="submit" autocomplete="off" />
                 <span class="placeholder" :class="{fixed: register.passWord != '' && register.passWord != null}">密码</span>
@@ -162,7 +160,6 @@
             </div>
             <div class="buttonDiv">
                 <Button :loading="loading" block color="primary" size="l" @click="submit">注册</Button>
-
             </div>
             <a style="margin-top:10px;">已有账号？</a>
             <a style="margin-top:10px;" href="#/login">去登录</a>

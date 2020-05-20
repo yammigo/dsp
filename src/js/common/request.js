@@ -2,11 +2,21 @@ import Ajax from './ajax';
 
 const Request = {
   Common:{
+    //广告样式
     sityList(params){
       return Ajax.post("/base/city/list.do",params)
     },
+    //最小投放金额
     getMinxMoney(params){
       return Ajax.post("/base/conf/bid/mini.do",params)
+    },
+    //获取子账号列表
+    getChildUsers(params){
+      return Ajax.post("/user/agent/user/list.do",params)
+    },
+    //添加子账户
+    addChildUser(params){
+      return Ajax.post("/user/agent/user/add.do",params)
     }
   },
   adGroup: {

@@ -42,24 +42,25 @@ let ajax = {
     var params = {
       url,
       method: 'POST'
-      
+
     };
-     let paramA = {
+    let paramA = {
       body: param,
       header: {
-          token:  Utils.getCookie('token'),
-          cmdType:'1'
+        childId: Utils.getCookie('childId'),
+        token: Utils.getCookie('token'),
+        cmdType: '1'
       }
-  };
+    };
     if (param) params.data = JSON.stringify(paramA);
-    return this.ajax(params,extendParam);
+    return this.ajax(params, extendParam);
   },
   postJson: function (url, paramJson, extendParam) {
     return this.ajax({
       url,
       method: 'POST',
       data: paramJson
-    },extendParam);
+    }, extendParam);
   },
   patchJson: function (url, paramJson, dataType, extendParam) {
     return this.ajax({
@@ -76,7 +77,7 @@ let ajax = {
   },
   ajax: function (param, extendParam) {
     let params = Utils.extend({}, DefaultParam, param, extendParam || {});
-   
+
     params.crossDomain = params.url.indexOf('http') === 0;
     let url = params.url;
     if (!params.crossDomain) {
@@ -104,7 +105,7 @@ let ajax = {
         return true;
       },
       paramsSerializer: (params) => {
-       
+
         return qs.stringify(params, { allowDots: true });
       }
     };
@@ -131,13 +132,13 @@ let ajax = {
             HeyUI.$Message.error(data._msg || '请求异常');
           }
         }
-        if(data.code==-2){
-            Utils.clearCookie();
-            Utils.removeCookie('token');
-            window.location.reload();
+        if (data.code == -2) {
+          Utils.clearCookie();
+          Utils.removeCookie('token');
+          window.location.reload();
         }
         data.ok = data.code == 0;
-        if(!data.ok){
+        if (!data.ok) {
           HeyUI.$Message.error(data.msg);
         }
         resolve(data);

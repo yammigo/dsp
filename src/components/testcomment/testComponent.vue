@@ -12,11 +12,11 @@
     <!-- </v-scrollbar> -->
     <!-- <weekTime v-model="timeValue"></weekTime>
     <selectCity v-model="selectCity"></selectCity> -->
-    <Waterfall :datas="propdata">
+    <!-- <Waterfall :datas="propdata">
         <template v-slot:default="slotProps">
              <img :src="slotProps.item.libraryUrl" />
         </template>
-    </Waterfall>
+    </Waterfall> -->
 </div>
 </template>
 

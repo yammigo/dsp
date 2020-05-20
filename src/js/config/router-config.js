@@ -28,7 +28,8 @@ const initRouter = () => {
             name: 'Home',
             component: (resolve) => require(['components/home/index'], resolve),
             meta: { title: '首页', icon: 'icon-monitor' }
-          }, {
+          },
+          {
             path: '/system-error',
             name: 'SystemError',
             component: (resolve) => require(['components/error-pages/500'], resolve),
@@ -44,12 +45,6 @@ const initRouter = () => {
             name: 'NotfoundError',
             component: (resolve) => require(['components/error-pages/404'], resolve),
             meta: { title: '页面找不到' }
-          },
-          {
-            path: '/users',
-            name: 'Users',
-            component: (resolve) => require(['components/management/users'], resolve),
-            meta: { title: '用户管理' }
           },
           ...demoComponents,
           {
@@ -77,14 +72,14 @@ const initRouter = () => {
     //   return;
     // }
     let eRouter = ["Login", "Register"]
-    let token =Utils.getCookie('token');
-    if (!token && eRouter.indexOf(to.name)==-1) {
+    let token = Utils.getCookie('token');
+    if (!token && eRouter.indexOf(to.name) == -1) {
       next({
         name: 'Login'
       });
       return false
     } else {
-      if (token && eRouter.indexOf(to.name)>0) {
+      if (token && eRouter.indexOf(to.name) > 0) {
         next({
           name: from.name
         });
