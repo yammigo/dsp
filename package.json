@@ -34,7 +34,7 @@
     "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1",
     "manba": "^1.3.2",
-    "marked": "^0.7.0",
+    "marked": "^4.0.10",
     "plupload-es6": "^2.1.11",
     "qiniu-js-es6": "^1.0.31",
     "qs": "^6.4.0",
